@@ -181,7 +181,7 @@ public class XmlFormatter2 : IFormatter
 			{
 				return s_conv.Convert( val, type );
 			}
-			catch( Exception e )
+			catch( Exception )
 			{
 				return GetDefault( type );
 			}

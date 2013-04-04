@@ -78,7 +78,7 @@ public class Conn
 
 				m_streamNet.Flush();
 			}
-			catch( Exception e )
+			catch( Exception )
 			{
 				//m_streamNet.Close();
 				//m_socket.Close();
