@@ -14,7 +14,6 @@ bin/
 obj/
 
 #Project/User Preference Files
-*.csproj
 *.pidb
 *.userprefs
 *.user
