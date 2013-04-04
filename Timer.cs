@@ -232,12 +232,14 @@ namespace lib
 				freq = 1000 * 1000;
 				freq_millis = freq / 1000;
 
+				Start();
 			}
 
 			// Start the timer
 
 			public void Start()
 			{
+				m_watch.Start();
 				startTime = m_watch.ElapsedMicroseconds;
 				stopTime  = m_watch.ElapsedMicroseconds;
 			}
@@ -246,6 +248,7 @@ namespace lib
 
 			public void Stop()
 			{
+				m_watch.Stop();
 				stopTime  = m_watch.ElapsedMicroseconds;
 			}
 

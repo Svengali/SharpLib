@@ -134,7 +134,7 @@ namespace lib
 
 					String finalMsg = String.Format( "{0,-10}{1}| {2}", type, sym, msg );
 
-					//Console.WriteLine( finalMsg );
+					Console.WriteLine( finalMsg );
 					//Console.Out.Write( finalMsg );
 
 					foreach( var l_obj in Debug.Listeners )
