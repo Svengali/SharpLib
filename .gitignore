@@ -1,0 +1,31 @@
+###################################
+# Git ignore file for Molyjam2012 #
+###################################
+
+#Folders
+Library/
+Temp/
+Builds/
+Libraries/
+Debug/
+Release/
+run/
+bin/
+obj/
+
+#Project/User Preference Files
+*.csproj
+*.pidb
+*.userprefs
+*.user
+*.suo
+
+#OS Junk
+Thumbs.db
+.DS_Store*
+ehthumbs.db
+Icon7
+
+
+
+#*.sln
