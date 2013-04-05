@@ -71,6 +71,7 @@ public class Conn
 
 				//var str = System.Text.Encoding.Default.GetString( mm_buffer, 0, (int)ms.Position );
 				//lib.Log.info( "Sent data {0} of length {1}", str, ms.Position );
+				lib.Log.info( "Sent {0}", obj );
 
 				byte[] byteSize = BitConverter.GetBytes( (uint)ms.Position );
 				m_streamNet.Write( byteSize, 0, 4 );
