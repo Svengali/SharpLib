@@ -79,8 +79,9 @@ public class Conn
 
 				m_streamNet.Flush();
 			}
-			catch( Exception )
+			catch( Exception e )
 			{
+				lib.Log.warn( "Exception sending obj {0} of {1}", obj, e );
 				//m_streamNet.Close();
 				//m_socket.Close();
 			}
