@@ -44,7 +44,7 @@ public class Conn
 	public object recieveObject( Stream stream )
 	{
 		object obj = null;
-		lock( this )
+		lock( m_formatter )
 		{
 			try
 			{
@@ -62,7 +62,7 @@ public class Conn
 
 	public void send( object obj )
 	{
-		lock( this )
+		lock( m_formatter )
 		{
 			try
 			{
@@ -82,8 +82,7 @@ public class Conn
 			catch( Exception e )
 			{
 				lib.Log.warn( "Exception sending obj {0} of {1}", obj, e );
-				//m_streamNet.Close();
-				//m_socket.Close();
+				throw;
 			}
 		}
 	}
