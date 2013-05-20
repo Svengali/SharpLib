@@ -223,6 +223,8 @@ public class XmlFormatter2 : IFormatter
 		return null;
 	}
 
+	private Type[] mm_consType = new Type[ 2 ];
+	private object[] mm_args = new object[ 2 ];
 	private object DeserializeObject( XmlElement elem, Type type )
 	{
 		string refString = elem.GetAttribute( "ref" );
@@ -249,16 +251,58 @@ public class XmlFormatter2 : IFormatter
 
 		Type typeISerializable = typeof( ISerializable );
 
-		//*
-		/*
 		if( obj is ISerializable ) //   type.IsSubclassOf( typeISerializable ) )
 		{
 			XmlNodeList allChildren = elem.ChildNodes;
 
-			ISerializable ser = obj as ISerializable;
+			//ISerializable ser = obj as ISerializable;
 
-			var serInfo = new SerializationInfo( type, new FormatterConverter() );
+			var serInfo = new SerializationInfo( finalType, new FormatterConverter() );
 
+			//var serInfoForTypes = new SerializationInfo( type, new FormatterConverter() );
+
+			//ser.GetObjectData( serInfoForTypes, Context );
+
+			foreach( var objNode in allChildren )
+			{
+				var node = objNode as XmlElement;
+
+				String name = node.Name;
+
+				String childType = node.GetAttribute( "t" );
+
+				name = name.Replace( '+', '-' );
+				name = name.Replace( '`', '_' );
+
+				XmlElement childElem = getNamedChild( allChildren, name );
+
+				var des = Deserialize( childElem, childType );
+
+				serInfo.AddValue( name, des, des.GetType() );
+			}
+
+			//ConstructorInfo[] allCons = obj.GetType().GetConstructors( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic );
+
+			//var serMem = FormatterServices.GetSerializableMembers( finalType );
+
+			//object objUn = FormatterServices.GetSafeUninitializedObject( finalType );
+
+			IDeserializationCallback objUnOnDeser = obj as IDeserializationCallback;
+
+			mm_consType[ 0 ] = typeof( SerializationInfo );
+			mm_consType[ 1 ] = typeof( StreamingContext );
+			ConstructorInfo serCons = finalType.GetConstructor( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, mm_consType, null );
+
+			mm_args[0] = serInfo;
+			mm_args[1] = Context;
+			serCons.Invoke( obj, mm_args );
+
+			if( objUnOnDeser != null )
+			{
+				objUnOnDeser.OnDeserialization( objUnOnDeser );
+			}
+
+			/*
 			ser.GetObjectData( serInfo, Context );
 
 			//var serEnum = ;
@@ -274,9 +318,9 @@ public class XmlFormatter2 : IFormatter
 
 				var des = Deserialize( childElem, name );
 			}
+			*/
 		}
 		else
-		*/
 		{
 			MemberInfo[] miArr = FormatterServices.GetSerializableMembers( finalType );
 
@@ -448,11 +492,11 @@ public class XmlFormatter2 : IFormatter
 	private void Serialize( XmlWriter writer, object root )
 	{
 		//writer.WriteStartDocument();
-		Serialize( writer, root, "root" );
+		Serialize( writer, root, "root", true );
 		//writer.WriteEndDocument();
 	}
 
-	private void Serialize( XmlWriter writer, object root, string name )
+	private void Serialize( XmlWriter writer, object root, string name, bool forceType )
 	{
 		writer.WriteStartElement( name );
 
@@ -464,7 +508,7 @@ public class XmlFormatter2 : IFormatter
 
 			if( typeCode != TypeCode.Object )
 			{
-				SerializeConcrete( writer, root );
+				SerializeConcrete( writer, root, forceType );
 			}
 			else
 			{
@@ -486,10 +530,13 @@ public class XmlFormatter2 : IFormatter
 		writer.WriteEndElement();
 	}
 
-	private void SerializeConcrete( XmlWriter writer, object root )
+	private void SerializeConcrete( XmlWriter writer, object root, bool forceType )
 	{
 		//TODO: Only write this out if debugging.
-		//writer.WriteAttributeString( "t", getTypeName( root.GetType() ) );
+		if( forceType )
+		{
+			writer.WriteAttributeString( "t", getTypeName( root.GetType() ) );
+		}
 		writer.WriteAttributeString( "v", root.ToString() );
 	}
 
@@ -540,7 +587,7 @@ public class XmlFormatter2 : IFormatter
 					name = name.Replace( '+', '-' );
 					name = name.Replace( '`', '_' );
 
-					Serialize( writer, serMember.Value, name );
+					Serialize( writer, serMember.Value, name, true );
 				}
 
 				//var sc = new SerializationContext( 
@@ -568,7 +615,7 @@ public class XmlFormatter2 : IFormatter
 					name = name.Replace( '+', '-' );
 					name = name.Replace( '`', '_' );
 
-					Serialize( writer, childFi.GetValue( root ), name );
+					Serialize( writer, childFi.GetValue( root ), name, false );
 				}
 			}
 		}
@@ -580,7 +627,9 @@ public class XmlFormatter2 : IFormatter
 
 		Type typeElem = arr.GetType().GetElementType();
 
-		writer.WriteAttributeString( "t", getTypeName( typeElem ) );
+		Type type = root.GetType();
+
+		writer.WriteAttributeString( "t", getTypeName( type ) );
 
 		bool first;
 
@@ -595,7 +644,7 @@ public class XmlFormatter2 : IFormatter
 
 			for( int i = 0; i < arr.Length; ++i )
 			{
-				Serialize( writer, arr.GetValue( i ), "i" + i.ToString() );
+				Serialize( writer, arr.GetValue( i ), "i" + i.ToString(), false );
 			}
 		}
 	}
