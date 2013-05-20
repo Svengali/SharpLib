@@ -39,6 +39,11 @@ public struct Token
 		return m_hash;
 	}
 
+	public override string ToString()
+	{
+		return m_str;
+	}
+
 	int			m_hash;
 	String	m_str;
 }
