@@ -102,6 +102,7 @@ public class Mgr
 		Resource.mgr.m_loaders[ typeof( T ) ] = loader;
 	}
 
+	//Register all subclasses of a particular type
 	static public void registerSub<T>( Load loaderOfType )
 	{
 		
@@ -155,6 +156,12 @@ public class Mgr
 
 		return new Ref<object>( filename );
 	}
+
+	private Mgr()
+	{
+		
+	}
+
 
 	private Dictionary<Type, Load> m_loaders = new Dictionary<Type, Load>();
 	//private Dictionary<Type, LoadType> m_loadersOfType = new Dictionary<Type, LoadType>();

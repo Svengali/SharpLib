@@ -66,6 +66,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="mod\Modules.cs" />
     <Compile Include="NetMsg.cs" />
     <Compile Include="Pos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
