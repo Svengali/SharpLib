@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>lib</RootNamespace>
     <AssemblyName>SharpLib</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -29,7 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="att\CanBeNullAttribute.cs" />
+    <Compile Include="att\NotNullAttribute.cs" />
     <Compile Include="Conn.cs" />
     <Compile Include="Clock.cs" />
     <Compile Include="Config.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="math\ColorExtensions.cs" />
     <Compile Include="math\ColorHSV.cs" />
     <Compile Include="math\ContainmentType.cs" />
+    <Compile Include="math\DataMemberIgnoreAttribute.cs" />
     <Compile Include="math\DataStyleAttribute.cs" />
     <Compile Include="math\Double2.cs" />
     <Compile Include="math\Double3.cs" />
@@ -96,12 +99,10 @@
     <Compile Include="math\Int4.cs" />
     <Compile Include="math\MathUtil.cs" />
     <Compile Include="math\Matrix.cs" />
-    <Compile Include="math\Module.cs" />
     <Compile Include="math\NamespaceDoc.cs" />
     <Compile Include="math\Plane.cs" />
     <Compile Include="math\PlaneIntersectionType.cs" />
     <Compile Include="math\Point.cs" />
-    <Compile Include="math\Properties\AssemblyInfo.cs" />
     <Compile Include="math\Quaternion.cs" />
     <Compile Include="math\RandomSeed.cs" />
     <Compile Include="math\Ray.cs" />
@@ -124,6 +125,8 @@
     <Compile Include="SerializableDictionary.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities.Interop.cs" />
     <Compile Include="VersionFormatter.cs" />
     <Compile Include="XmlFormatter.cs" />
     <Compile Include="XmlFormatter2.cs" />

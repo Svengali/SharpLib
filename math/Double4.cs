@@ -21,7 +21,7 @@ namespace math
         /// <summary>
         /// The size of the <see cref="math.Double4"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Double4>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Double4>();
 
         /// <summary>
         /// A <see cref="math.Double4"/> with all of its components set to zero.

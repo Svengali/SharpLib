@@ -24,7 +24,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using Xenko.Core.Serialization;
+
 using System.Runtime.Serialization;
 
 namespace math

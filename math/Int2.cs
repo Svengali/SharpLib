@@ -44,7 +44,7 @@ namespace math
         /// <summary>
         /// The size of the <see cref="math.Int2"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Int2>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Int2>();
 
         /// <summary>
         /// A <see cref="math.Int2"/> with all of its components set to zero.

@@ -44,7 +44,7 @@ namespace math
         /// <summary>
         /// The size of the <see cref="math.Quaternion"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Quaternion>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Quaternion>();
 
         /// <summary>
         /// A <see cref="math.Quaternion"/> with all of its components set to zero.

@@ -21,7 +21,7 @@ namespace math
         /// <summary>
         /// The size of the <see cref="math.Double3"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Double3>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Double3>();
 
         /// <summary>
         /// A <see cref="math.Double3"/> with all of its components set to zero.

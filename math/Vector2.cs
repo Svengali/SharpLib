@@ -46,7 +46,7 @@ namespace math
         /// <summary>
         /// The size of the <see cref="math.Vec2"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Vec2>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Vec2>();
 
         /// <summary>
         /// A <see cref="math.Vec2"/> with all of its components set to zero.

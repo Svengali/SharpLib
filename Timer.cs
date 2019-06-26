@@ -237,22 +237,24 @@ namespace lib
 
 			// Start the timer
 
-			public void Start()
+			public Timer Start()
 			{
 				m_watch.Start();
 				startTime = m_watch.ElapsedMicroseconds;
 				stopTime  = m_watch.ElapsedMicroseconds;
+				return this;
 			}
 
 			// Stop the timer
 
-			public void Stop()
+			public Timer Stop()
 			{
 				m_watch.Stop();
 				stopTime  = m_watch.ElapsedMicroseconds;
+				return this;
 			}
 
-			public double Seconds
+		public double Seconds
 			{
 				get
 				{

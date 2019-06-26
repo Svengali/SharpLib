@@ -97,7 +97,7 @@ namespace math
         // ReSharper restore UnusedParameter.Local
         {
             if (l > maxOrder - 1)
-                throw new IndexOutOfRangeException("'l' parameter should be between '0' and '{0}' (order-1).".ToFormat(maxOrder-1));
+                throw new IndexOutOfRangeException($"'l' parameter should be between '0' and '{maxOrder-1}' (order-1).");
 
             if (Math.Abs(m) > l)
                 throw new IndexOutOfRangeException("'m' parameter should be between '-l' and '+l'.");

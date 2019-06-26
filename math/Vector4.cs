@@ -45,7 +45,7 @@ namespace math
         /// <summary>
         /// The size of the <see cref="math.Vector4"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Vector4>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Vector4>();
 
         /// <summary>
         /// A <see cref="math.Vector4"/> with all of its components set to zero.

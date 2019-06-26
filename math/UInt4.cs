@@ -23,7 +23,6 @@
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using Xenko.Core.Serialization;
 using System.Runtime.Serialization;
 
 namespace math
@@ -38,7 +37,7 @@ namespace math
         /// <summary>
         ///   The size of the <see cref = "UInt4" /> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<UInt4>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<UInt4>();
 
         /// <summary>
         ///   A <see cref = "UInt4" /> with all of its components set to zero.

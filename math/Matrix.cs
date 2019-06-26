@@ -47,7 +47,7 @@ namespace math
         /// <summary>
         /// The size of the <see cref="math.Matrix"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Utilities.SizeOf<Matrix>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Matrix>();
 
         /// <summary>
         /// A <see cref="math.Matrix"/> with all of its components set to zero.

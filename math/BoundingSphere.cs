@@ -195,7 +195,7 @@ namespace math
             if (points == null) throw new ArgumentNullException("points");
             fixed (void* pointsPtr = points)
             {
-                FromPoints((IntPtr)pointsPtr, 0, points.Length, Utilities.SizeOf<Vector3>(), out result);
+                FromPoints((IntPtr)pointsPtr, 0, points.Length, lib.Util.SizeOf<Vector3>(), out result);
             }
         }
 
