@@ -43,24 +43,24 @@ namespace math
         /// <summary>
         /// A <see cref="BoundingBox"/> which represents an empty space.
         /// </summary>
-        public static readonly BoundingBox Empty = new BoundingBox(new Vector3(float.MaxValue), new Vector3(float.MinValue));
+        public static readonly BoundingBox Empty = new BoundingBox(new Vec3(float.MaxValue), new Vec3(float.MinValue));
 
         /// <summary>
         /// The minimum point of the box.
         /// </summary>
-        public Vector3 Minimum;
+        public Vec3 Minimum;
 
         /// <summary>
         /// The maximum point of the box.
         /// </summary>
-        public Vector3 Maximum;
+        public Vec3 Maximum;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="math.BoundingBox"/> struct.
         /// </summary>
         /// <param name="minimum">The minimum vertex of the bounding box.</param>
         /// <param name="maximum">The maximum vertex of the bounding box.</param>
-        public BoundingBox(Vector3 minimum, Vector3 maximum)
+        public BoundingBox(Vec3 minimum, Vec3 maximum)
         {
             this.Minimum = minimum;
             this.Maximum = maximum;
@@ -69,7 +69,7 @@ namespace math
         /// <summary>
         /// Gets the center of this bouding box.
         /// </summary>
-        public Vector3 Center
+        public Vec3 Center
         {
             get { return (Minimum + Maximum) / 2; }
         }
@@ -77,7 +77,7 @@ namespace math
         /// <summary>
         /// Gets the extent of this bouding box.
         /// </summary>
-        public Vector3 Extent
+        public Vec3 Extent
         {
             get { return (Maximum - Minimum) / 2; }
         }
@@ -86,17 +86,17 @@ namespace math
         /// Retrieves the eight corners of the bounding box.
         /// </summary>
         /// <returns>An array of points representing the eight corners of the bounding box.</returns>
-        public Vector3[] GetCorners()
+        public Vec3[] GetCorners()
         {
-            Vector3[] results = new Vector3[8];
-            results[0] = new Vector3(Minimum.X, Maximum.Y, Maximum.Z);
-            results[1] = new Vector3(Maximum.X, Maximum.Y, Maximum.Z);
-            results[2] = new Vector3(Maximum.X, Minimum.Y, Maximum.Z);
-            results[3] = new Vector3(Minimum.X, Minimum.Y, Maximum.Z);
-            results[4] = new Vector3(Minimum.X, Maximum.Y, Minimum.Z);
-            results[5] = new Vector3(Maximum.X, Maximum.Y, Minimum.Z);
-            results[6] = new Vector3(Maximum.X, Minimum.Y, Minimum.Z);
-            results[7] = new Vector3(Minimum.X, Minimum.Y, Minimum.Z);
+            Vec3[] results = new Vec3[8];
+            results[0] = new Vec3(Minimum.X, Maximum.Y, Maximum.Z);
+            results[1] = new Vec3(Maximum.X, Maximum.Y, Maximum.Z);
+            results[2] = new Vec3(Maximum.X, Minimum.Y, Maximum.Z);
+            results[3] = new Vec3(Minimum.X, Minimum.Y, Maximum.Z);
+            results[4] = new Vec3(Minimum.X, Maximum.Y, Minimum.Z);
+            results[5] = new Vec3(Maximum.X, Maximum.Y, Minimum.Z);
+            results[6] = new Vec3(Maximum.X, Minimum.Y, Minimum.Z);
+            results[7] = new Vec3(Minimum.X, Minimum.Y, Minimum.Z);
             return results;
         }
 
@@ -128,9 +128,9 @@ namespace math
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Ray ray, out Vector3 point)
+        public bool Intersects(ref Ray ray, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsBox(ref ray, ref this, out point);
         }
@@ -184,7 +184,7 @@ namespace math
         /// </summary>
         /// <param name="point">The point to test.</param>
         /// <returns>The type of containment the two objects have.</returns>
-        public ContainmentType Contains(ref Vector3 point)
+        public ContainmentType Contains(ref Vec3 point)
         {
             return CollisionHelper.BoxContainsPoint(ref this, ref point);
         }
@@ -229,18 +229,18 @@ namespace math
         /// <param name="points">The points that will be contained by the box.</param>
         /// <param name="result">When the method completes, contains the newly constructed bounding box.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="points"/> is <c>null</c>.</exception>
-        public static void FromPoints(Vector3[] points, out BoundingBox result)
+        public static void FromPoints(Vec3[] points, out BoundingBox result)
         {
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            Vector3 min = new Vector3(float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue);
+            Vec3 min = new Vec3(float.MaxValue);
+            Vec3 max = new Vec3(float.MinValue);
 
             for (int i = 0; i < points.Length; ++i)
             {
-                Vector3.Min(ref min, ref points[i], out min);
-                Vector3.Max(ref max, ref points[i], out max);
+                Vec3.Min(ref min, ref points[i], out min);
+                Vec3.Max(ref max, ref points[i], out max);
             }
 
             result = new BoundingBox(min, max);
@@ -252,18 +252,18 @@ namespace math
         /// <param name="points">The points that will be contained by the box.</param>
         /// <returns>The newly constructed bounding box.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="points"/> is <c>null</c>.</exception>
-        public static BoundingBox FromPoints(Vector3[] points)
+        public static BoundingBox FromPoints(Vec3[] points)
         {
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            Vector3 min = new Vector3(float.MaxValue);
-            Vector3 max = new Vector3(float.MinValue);
+            Vec3 min = new Vec3(float.MaxValue);
+            Vec3 max = new Vec3(float.MinValue);
 
             for (int i = 0; i < points.Length; ++i)
             {
-                Vector3.Min(ref min, ref points[i], out min);
-                Vector3.Max(ref max, ref points[i], out max);
+                Vec3.Min(ref min, ref points[i], out min);
+                Vec3.Max(ref max, ref points[i], out max);
             }
 
             return new BoundingBox(min, max);
@@ -276,8 +276,8 @@ namespace math
         /// <param name="result">When the method completes, contains the newly constructed bounding box.</param>
         public static void FromSphere(ref BoundingSphere sphere, out BoundingBox result)
         {
-            result.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
-            result.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
+            result.Minimum = new Vec3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
+            result.Maximum = new Vec3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
         }
 
         /// <summary>
@@ -288,8 +288,8 @@ namespace math
         public static BoundingBox FromSphere(BoundingSphere sphere)
         {
             BoundingBox box;
-            box.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
-            box.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
+            box.Minimum = new Vec3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
+            box.Maximum = new Vec3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
             return box;
         }
 
@@ -312,10 +312,10 @@ namespace math
         /// <param name="value1">The box to merge.</param>
         /// <param name="value2">The point to merge.</param>
         /// <param name="result">When the method completes, contains the newly constructed bounding box.</param>
-        public static void Merge(ref BoundingBox value1, ref Vector3 value2, out BoundingBox result)
+        public static void Merge(ref BoundingBox value1, ref Vec3 value2, out BoundingBox result)
         {
-            Vector3.Min(ref value1.Minimum, ref value2, out result.Minimum);
-            Vector3.Max(ref value1.Maximum, ref value2, out result.Maximum);
+            Vec3.Min(ref value1.Minimum, ref value2, out result.Minimum);
+            Vec3.Max(ref value1.Maximum, ref value2, out result.Maximum);
         }
         
         /// <summary>
@@ -326,8 +326,8 @@ namespace math
         /// <param name="result">When the method completes, contains the newly constructed bounding box.</param>
         public static void Merge(ref BoundingBox value1, ref BoundingBox value2, out BoundingBox result)
         {
-            Vector3.Min(ref value1.Minimum, ref value2.Minimum, out result.Minimum);
-            Vector3.Max(ref value1.Maximum, ref value2.Maximum, out result.Maximum);
+            Vec3.Min(ref value1.Minimum, ref value2.Minimum, out result.Minimum);
+            Vec3.Max(ref value1.Maximum, ref value2.Maximum, out result.Maximum);
         }
 
         /// <summary>
@@ -339,8 +339,8 @@ namespace math
         public static BoundingBox Merge(BoundingBox value1, BoundingBox value2)
         {
             BoundingBox box;
-            Vector3.Min(ref value1.Minimum, ref value2.Minimum, out box.Minimum);
-            Vector3.Max(ref value1.Maximum, ref value2.Maximum, out box.Maximum);
+            Vec3.Min(ref value1.Minimum, ref value2.Minimum, out box.Minimum);
+            Vec3.Max(ref value1.Maximum, ref value2.Maximum, out box.Maximum);
             return box;
         }
 
@@ -434,11 +434,11 @@ namespace math
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="math.Vector4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="math.Vec4"/> is equal to this instance.
         /// </summary>
-        /// <param name="value">The <see cref="math.Vector4"/> to compare with this instance.</param>
+        /// <param name="value">The <see cref="math.Vec4"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="math.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="math.Vec4"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(BoundingBox value)
         {

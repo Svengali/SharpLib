@@ -626,11 +626,11 @@ namespace math
         /// <param name="value">The vector to snap.</param>
         /// <param name="gap">The interval gap.</param>
         /// <returns>A vector which components are snapped to the nearest interval.</returns>
-        public static Vector3 Snap(Vector3 value, float gap)
+        public static Vec3 Snap(Vec3 value, float gap)
         {
             if (gap == 0)
                 return value;
-            return new Vector3(
+            return new Vec3(
                 (float)Math.Round((value.X / gap), MidpointRounding.AwayFromZero) * gap,
                 (float)Math.Round((value.Y / gap), MidpointRounding.AwayFromZero) * gap,
                 (float)Math.Round((value.Z / gap), MidpointRounding.AwayFromZero) * gap);
@@ -642,11 +642,11 @@ namespace math
         /// <param name="value">The vector to snap.</param>
         /// <param name="gap">The interval gap.</param>
         /// <returns>A vector which components are snapped to the nearest interval.</returns>
-        public static Vector4 Snap(Vector4 value, float gap)
+        public static Vec4 Snap(Vec4 value, float gap)
         {
             if (gap == 0)
                 return value;
-            return new Vector4(
+            return new Vec4(
                 (float)Math.Round((value.X / gap), MidpointRounding.AwayFromZero) * gap,
                 (float)Math.Round((value.Y / gap), MidpointRounding.AwayFromZero) * gap,
                 (float)Math.Round((value.Z / gap), MidpointRounding.AwayFromZero) * gap,

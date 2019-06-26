@@ -93,7 +93,7 @@ namespace math
         /// Initializes a new instance of the <see cref="ColorBGRA"/> struct.
         /// </summary>
         /// <param name="value">The red, green, blue, and alpha components of the color.</param>
-        public ColorBGRA(Vector4 value)
+        public ColorBGRA(Vec4 value)
         {
             R = ToByte(value.X);
             G = ToByte(value.Y);
@@ -106,7 +106,7 @@ namespace math
         /// </summary>
         /// <param name="value">The red, green, and blue components of the color.</param>
         /// <param name="alpha">The alpha component of the color.</param>
-        public ColorBGRA(Vector3 value, float alpha)
+        public ColorBGRA(Vec3 value, float alpha)
         {
             R = ToByte(value.X);
             G = ToByte(value.Y);
@@ -243,9 +243,9 @@ namespace math
         /// Converts the color into a three component vector.
         /// </summary>
         /// <returns>A three component vector containing the red, green, and blue components of the color.</returns>
-        public Vector3 ToVector3()
+        public Vec3 ToVector3()
         {
-            return new Vector3(R / 255.0f, G / 255.0f, B / 255.0f);
+            return new Vec3(R / 255.0f, G / 255.0f, B / 255.0f);
         }
 
         /// <summary>
@@ -261,9 +261,9 @@ namespace math
         /// Converts the color into a four component vector.
         /// </summary>
         /// <returns>A four component vector containing all four color components.</returns>
-        public Vector4 ToVector4()
+        public Vec4 ToVector4()
         {
-            return new Vector4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
+            return new Vec4(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
         }
 
         /// <summary>
@@ -879,23 +879,23 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="ColorBGRA"/> to <see cref="Vector3"/>.
+        /// Performs an explicit conversion from <see cref="ColorBGRA"/> to <see cref="Vec3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(ColorBGRA value)
+        public static explicit operator Vec3(ColorBGRA value)
         {
-            return new Vector3(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f);
+            return new Vec3(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f);
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="ColorBGRA"/> to <see cref="Vector4"/>.
+        /// Performs an explicit conversion from <see cref="ColorBGRA"/> to <see cref="Vec4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector4(ColorBGRA value)
+        public static explicit operator Vec4(ColorBGRA value)
         {
-            return new Vector4(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
+            return new Vec4(value.R / 255.0f, value.G / 255.0f, value.B / 255.0f, value.A / 255.0f);
         }
 
         /// <summary>
@@ -909,11 +909,11 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="Vector3"/> to <see cref="ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="Vec3"/> to <see cref="ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator ColorBGRA(Vector3 value)
+        public static explicit operator ColorBGRA(Vec3 value)
         {
             return new ColorBGRA(value.X / 255.0f, value.Y / 255.0f, value.Z / 255.0f, 1.0f);
         }
@@ -929,11 +929,11 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="Vec4"/> to <see cref="ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator ColorBGRA(Vector4 value)
+        public static explicit operator ColorBGRA(Vec4 value)
         {
             return new ColorBGRA(value.X, value.Y, value.Z, value.W);
         }

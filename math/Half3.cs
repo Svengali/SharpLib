@@ -161,23 +161,23 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="Vector3"/> to <see cref="Half3"/>.
+        /// Performs an explicit conversion from <see cref="Vec3"/> to <see cref="Half3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Half3(Vector3 value)
+        public static explicit operator Half3(Vec3 value)
         {
             return new Half3((Half)value.X, (Half)value.Y, (Half)value.Z);
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="Half3"/> to <see cref="Vector3"/>.
+        /// Performs an explicit conversion from <see cref="Half3"/> to <see cref="Vec3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(Half3 value)
+        public static explicit operator Vec3(Half3 value)
         {
-            return new Vector3(value.X, value.Y, value.Z);
+            return new Vec3(value.X, value.Y, value.Z);
         }
 
         /// <summary>

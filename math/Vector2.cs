@@ -894,7 +894,7 @@ namespace math
         /// </summary>
         /// <param name="vector">The vector to rotate.</param>
         /// <param name="rotation">The <see cref="math.Quaternion"/> rotation to apply.</param>
-        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vector4"/>.</param>
+        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vec4"/>.</param>
         public static void Transform(ref Vec2 vector, ref Quaternion rotation, out Vec2 result)
         {
             float x = rotation.X + rotation.X;
@@ -914,7 +914,7 @@ namespace math
         /// </summary>
         /// <param name="vector">The vector to rotate.</param>
         /// <param name="rotation">The <see cref="math.Quaternion"/> rotation to apply.</param>
-        /// <returns>The transformed <see cref="math.Vector4"/>.</returns>
+        /// <returns>The transformed <see cref="math.Vec4"/>.</returns>
         public static Vec2 Transform(Vec2 vector, Quaternion rotation)
         {
             Vec2 result;
@@ -967,10 +967,10 @@ namespace math
         /// </summary>
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="math.Matrix"/>.</param>
-        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vector4"/>.</param>
-        public static void Transform(ref Vec2 vector, ref Matrix transform, out Vector4 result)
+        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vec4"/>.</param>
+        public static void Transform(ref Vec2 vector, ref Matrix transform, out Vec4 result)
         {
-            result = new Vector4(
+            result = new Vec4(
                 (vector.X * transform.M11) + (vector.Y * transform.M21) + transform.M41,
                 (vector.X * transform.M12) + (vector.Y * transform.M22) + transform.M42,
                 (vector.X * transform.M13) + (vector.Y * transform.M23) + transform.M43,
@@ -982,10 +982,10 @@ namespace math
         /// </summary>
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="math.Matrix"/>.</param>
-        /// <returns>The transformed <see cref="math.Vector4"/>.</returns>
-        public static Vector4 Transform(Vec2 vector, Matrix transform)
+        /// <returns>The transformed <see cref="math.Vec4"/>.</returns>
+        public static Vec4 Transform(Vec2 vector, Matrix transform)
         {
-            Vector4 result;
+            Vec4 result;
             Transform(ref vector, ref transform, out result);
             return result;
         }
@@ -998,7 +998,7 @@ namespace math
         /// <param name="destination">The array for which the transformed vectors are stored.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Transform(Vec2[] source, ref Matrix transform, Vector4[] destination)
+        public static void Transform(Vec2[] source, ref Matrix transform, Vec4[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -1028,7 +1028,7 @@ namespace math
         /// </remarks>
         public static void TransformCoordinate(ref Vec2 coordinate, ref Matrix transform, out Vec2 result)
         {
-            Vector4 vector = new Vector4();
+            Vec4 vector = new Vec4();
             vector.X = (coordinate.X * transform.M11) + (coordinate.Y * transform.M21) + transform.M41;
             vector.Y = (coordinate.X * transform.M12) + (coordinate.Y * transform.M22) + transform.M42;
             vector.Z = (coordinate.X * transform.M13) + (coordinate.Y * transform.M23) + transform.M43;
@@ -1300,23 +1300,23 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="math.Vec2"/> to <see cref="math.Vector3"/>.
+        /// Performs an explicit conversion from <see cref="math.Vec2"/> to <see cref="math.Vec3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(Vec2 value)
+        public static explicit operator Vec3(Vec2 value)
         {
-            return new Vector3(value, 0.0f);
+            return new Vec3(value, 0.0f);
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="math.Vec2"/> to <see cref="math.Vector4"/>.
+        /// Performs an explicit conversion from <see cref="math.Vec2"/> to <see cref="math.Vec4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector4(Vec2 value)
+        public static explicit operator Vec4(Vec2 value)
         {
-            return new Vector4(value, 0.0f, 0.0f);
+            return new Vec4(value, 0.0f, 0.0f);
         }
 
         /// <summary>

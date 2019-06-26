@@ -124,7 +124,7 @@ namespace math
         /// Initializes a new instance of the <see cref="math.Double3"/> struct.
         /// </summary>
         /// <param name="v">The Vector3 to construct the Double3 from.</param>
-        public Double3(Vector3 v)
+        public Double3(Vec3 v)
         {
             X = v.X;
             Y = v.Y;
@@ -1351,7 +1351,7 @@ namespace math
         /// <returns>The equivation yaw/pitch/roll rotation</returns>
         public static Double3 RotationYawPitchRoll(Quaternion quaternion)
         {
-            Vector3 yawPitchRoll;
+            Vec3 yawPitchRoll;
             Quaternion.RotationYawPitchRoll(ref quaternion, out yawPitchRoll.X, out yawPitchRoll.Y, out yawPitchRoll.Z);
             return yawPitchRoll;
         }
@@ -1363,7 +1363,7 @@ namespace math
         /// <param name="yawPitchRoll">The equivation yaw/pitch/roll rotation</param>
         public static void RotationYawPitchRoll(ref Quaternion quaternion, out Double3 yawPitchRoll)
         {
-            Vector3 yawPitchRollV;
+            Vec3 yawPitchRollV;
             Quaternion.RotationYawPitchRoll(ref quaternion, out yawPitchRollV.X, out yawPitchRollV.Y, out yawPitchRollV.Z);
             yawPitchRoll = yawPitchRollV;
         }
@@ -1533,21 +1533,21 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="math.Double3"/> to <see cref="math.Vector3"/>.
+        /// Performs an explicit conversion from <see cref="math.Double3"/> to <see cref="math.Vec3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(Double3 value)
+        public static explicit operator Vec3(Double3 value)
         {
-            return new Vector3((float)value.X, (float)value.Y, (float)value.Z);
+            return new Vec3((float)value.X, (float)value.Y, (float)value.Z);
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="math.Vector3"/> to <see cref="math.Double3"/>.
+        /// Performs an implicit conversion from <see cref="math.Vec3"/> to <see cref="math.Double3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator Double3(Vector3 value)
+        public static implicit operator Double3(Vec3 value)
         {
             return new Double3(value);
         }

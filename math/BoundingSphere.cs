@@ -48,7 +48,7 @@ namespace math
         /// <summary>
         /// The center of the sphere in three dimensional space.
         /// </summary>
-        public Vector3 Center;
+        public Vec3 Center;
 
         /// <summary>
         /// The radious of the sphere.
@@ -60,7 +60,7 @@ namespace math
         /// </summary>
         /// <param name="center">The center of the sphere in three dimensional space.</param>
         /// <param name="radius">The radius of the sphere.</param>
-        public BoundingSphere(Vector3 center, float radius)
+        public BoundingSphere(Vec3 center, float radius)
         {
             this.Center = center;
             this.Radius = radius;
@@ -94,9 +94,9 @@ namespace math
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Ray ray, out Vector3 point)
+        public bool Intersects(ref Ray ray, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsSphere(ref ray, ref this, out point);
         }
@@ -118,7 +118,7 @@ namespace math
         /// <param name="vertex2">The second vertex of the triagnle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
+        public bool Intersects(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3)
         {
             return CollisionHelper.SphereIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
         }
@@ -148,7 +148,7 @@ namespace math
         /// </summary>
         /// <param name="point">The point to test.</param>
         /// <returns>The type of containment the two objects have.</returns>
-        public ContainmentType Contains(ref Vector3 point)
+        public ContainmentType Contains(ref Vec3 point)
         {
             return CollisionHelper.SphereContainsPoint(ref this, ref point);
         }
@@ -160,7 +160,7 @@ namespace math
         /// <param name="vertex2">The second vertex of the triagnle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <returns>The type of containment the two objects have.</returns>
-        public ContainmentType Contains(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
+        public ContainmentType Contains(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3)
         {
             return CollisionHelper.SphereContainsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
         }
@@ -190,12 +190,12 @@ namespace math
         /// </summary>
         /// <param name="points">The points that will be contained by the sphere.</param>
         /// <param name="result">When the method completes, contains the newly constructed bounding sphere.</param>
-        public static unsafe void FromPoints(Vector3[] points, out BoundingSphere result)
+        public static unsafe void FromPoints(Vec3[] points, out BoundingSphere result)
         {
             if (points == null) throw new ArgumentNullException("points");
             fixed (void* pointsPtr = points)
             {
-                FromPoints((IntPtr)pointsPtr, 0, points.Length, lib.Util.SizeOf<Vector3>(), out result);
+                FromPoints((IntPtr)pointsPtr, 0, points.Length, lib.Util.SizeOf<Vec3>(), out result);
             }
         }
 
@@ -217,11 +217,11 @@ namespace math
             var startPoint = (byte*)vertexBufferPtr + vertexPositionOffsetInBytes;
 
             //Find the center of all points.
-            Vector3 center = Vector3.Zero;
+            Vec3 center = Vec3.Zero;
             var nextPoint = startPoint;
             for (int i = 0; i < vertexCount; ++i)
             {
-                Vector3.Add(ref *(Vector3*)nextPoint, ref center, out center);
+                Vec3.Add(ref *(Vec3*)nextPoint, ref center, out center);
                 nextPoint += vertexStride;
             }
 
@@ -236,7 +236,7 @@ namespace math
                 //We are doing a relative distance comparasin to find the maximum distance
                 //from the center of our sphere.
                 float distance;
-                Vector3.DistanceSquared(ref center, ref *(Vector3*)nextPoint, out distance);
+                Vec3.DistanceSquared(ref center, ref *(Vec3*)nextPoint, out distance);
 
                 if (distance > radius)
                     radius = distance;
@@ -256,7 +256,7 @@ namespace math
         /// </summary>
         /// <param name="points">The points that will be contained by the sphere.</param>
         /// <returns>The newly constructed bounding sphere.</returns>
-        public static BoundingSphere FromPoints(Vector3[] points)
+        public static BoundingSphere FromPoints(Vec3[] points)
         {
             BoundingSphere result;
             FromPoints(points, out result);
@@ -270,7 +270,7 @@ namespace math
         /// <param name="result">When the method completes, the newly constructed bounding sphere.</param>
         public static void FromBox(ref BoundingBox box, out BoundingSphere result)
         {
-            Vector3.Lerp(ref box.Minimum, ref box.Maximum, 0.5f, out result.Center);
+            Vec3.Lerp(ref box.Minimum, ref box.Maximum, 0.5f, out result.Center);
 
             float x = box.Minimum.X - box.Maximum.X;
             float y = box.Minimum.Y - box.Maximum.Y;
@@ -300,7 +300,7 @@ namespace math
         /// <param name="result">The transformed bounding sphere.</param>
         public static void Transform(ref BoundingSphere value, ref Matrix transform, out BoundingSphere result)
         {
-            Vector3.TransformCoordinate(ref value.Center, ref transform, out result.Center);
+            Vec3.TransformCoordinate(ref value.Center, ref transform, out result.Center);
 
             var majorAxisLengthSquared = Math.Max(
                 (transform.M11 * transform.M11) + (transform.M12 * transform.M12) + (transform.M13 * transform.M13), Math.Max(
@@ -331,7 +331,7 @@ namespace math
                 return;
             }
 
-            Vector3 difference = value2.Center - value1.Center;
+            Vec3 difference = value2.Center - value1.Center;
 
             float length = difference.Length();
             float radius = value1.Radius;
@@ -352,7 +352,7 @@ namespace math
                 }
             }
 
-            Vector3 vector = difference * (1.0f / length);
+            Vec3 vector = difference * (1.0f / length);
             float min = Math.Min(-radius, length - radius2);
             float max = (Math.Max(radius, length + radius2) - min) * 0.5f;
 
@@ -463,11 +463,11 @@ namespace math
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="math.Vector4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="math.Vec4"/> is equal to this instance.
         /// </summary>
-        /// <param name="value">The <see cref="math.Vector4"/> to compare with this instance.</param>
+        /// <param name="value">The <see cref="math.Vec4"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="math.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="math.Vec4"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(BoundingSphere value)
         {

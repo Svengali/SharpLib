@@ -43,19 +43,19 @@ namespace math
         /// <summary>
         /// The position in three dimensional space where the ray starts.
         /// </summary>
-        public Vector3 Position;
+        public Vec3 Position;
 
         /// <summary>
         /// The normalized direction in which the ray points.
         /// </summary>
-        public Vector3 Direction;
+        public Vec3 Direction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="math.Ray"/> struct.
         /// </summary>
         /// <param name="position">The position in three dimensional space of the origin of the ray.</param>
         /// <param name="direction">The normalized direction of the ray.</param>
-        public Ray(Vector3 position, Vector3 direction)
+        public Ray(Vec3 position, Vec3 direction)
         {
             this.Position = position;
             this.Direction = direction;
@@ -66,7 +66,7 @@ namespace math
         /// </summary>
         /// <param name="point">The point to test.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Vector3 point)
+        public bool Intersects(ref Vec3 point)
         {
             return CollisionHelper.RayIntersectsPoint(ref this, ref point);
         }
@@ -78,7 +78,7 @@ namespace math
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Ray ray)
         {
-            Vector3 point;
+            Vec3 point;
             return CollisionHelper.RayIntersectsRay(ref this, ref ray, out point);
         }
 
@@ -87,9 +87,9 @@ namespace math
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Ray ray, out Vector3 point)
+        public bool Intersects(ref Ray ray, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsRay(ref this, ref ray, out point);
         }
@@ -122,9 +122,9 @@ namespace math
         /// </summary>
         /// <param name="plane">The plane to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Plane plane, out Vector3 point)
+        public bool Intersects(ref Plane plane, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsPlane(ref this, ref plane, out point);
         }
@@ -136,7 +136,7 @@ namespace math
         /// <param name="vertex2">The second vertex of the triangle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
+        public bool Intersects(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3)
         {
             float distance;
             return CollisionHelper.RayIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3, out distance);
@@ -151,7 +151,7 @@ namespace math
         /// <param name="distance">When the method completes, contains the distance of the intersection,
         /// or 0 if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out float distance)
+        public bool Intersects(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3, out float distance)
         {
             return CollisionHelper.RayIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3, out distance);
         }
@@ -163,9 +163,9 @@ namespace math
         /// <param name="vertex2">The second vertex of the triangle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
+        public bool Intersects(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3, out point);
         }
@@ -198,9 +198,9 @@ namespace math
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref BoundingBox box, out Vector3 point)
+        public bool Intersects(ref BoundingBox box, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsBox(ref this, ref box, out point);
         }
@@ -233,9 +233,9 @@ namespace math
         /// </summary>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref BoundingSphere sphere, out Vector3 point)
+        public bool Intersects(ref BoundingSphere sphere, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsSphere(ref this, ref sphere, out point);
         }
@@ -324,11 +324,11 @@ namespace math
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="math.Vector4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="math.Vec4"/> is equal to this instance.
         /// </summary>
-        /// <param name="value">The <see cref="math.Vector4"/> to compare with this instance.</param>
+        /// <param name="value">The <see cref="math.Vec4"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="math.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="math.Vec4"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(Ray value)
         {

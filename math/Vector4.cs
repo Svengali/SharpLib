@@ -40,42 +40,42 @@ namespace math
     [DataContract( Name = "float4")]
     [DataStyle(DataStyle.Compact)]
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct Vector4 : IEquatable<Vector4>, IFormattable
+    public struct Vec4 : IEquatable<Vec4>, IFormattable
     {
         /// <summary>
-        /// The size of the <see cref="math.Vector4"/> type, in bytes.
+        /// The size of the <see cref="math.Vec4"/> type, in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = lib.Util.SizeOf<Vector4>();
+        public static readonly int SizeInBytes = lib.Util.SizeOf<Vec4>();
 
         /// <summary>
-        /// A <see cref="math.Vector4"/> with all of its components set to zero.
+        /// A <see cref="math.Vec4"/> with all of its components set to zero.
         /// </summary>
-        public static readonly Vector4 Zero = new Vector4();
+        public static readonly Vec4 Zero = new Vec4();
 
         /// <summary>
-        /// The X unit <see cref="math.Vector4"/> (1, 0, 0, 0).
+        /// The X unit <see cref="math.Vec4"/> (1, 0, 0, 0).
         /// </summary>
-        public static readonly Vector4 UnitX = new Vector4(1.0f, 0.0f, 0.0f, 0.0f);
+        public static readonly Vec4 UnitX = new Vec4(1.0f, 0.0f, 0.0f, 0.0f);
 
         /// <summary>
-        /// The Y unit <see cref="math.Vector4"/> (0, 1, 0, 0).
+        /// The Y unit <see cref="math.Vec4"/> (0, 1, 0, 0).
         /// </summary>
-        public static readonly Vector4 UnitY = new Vector4(0.0f, 1.0f, 0.0f, 0.0f);
+        public static readonly Vec4 UnitY = new Vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
         /// <summary>
-        /// The Z unit <see cref="math.Vector4"/> (0, 0, 1, 0).
+        /// The Z unit <see cref="math.Vec4"/> (0, 0, 1, 0).
         /// </summary>
-        public static readonly Vector4 UnitZ = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+        public static readonly Vec4 UnitZ = new Vec4(0.0f, 0.0f, 1.0f, 0.0f);
 
         /// <summary>
-        /// The W unit <see cref="math.Vector4"/> (0, 0, 0, 1).
+        /// The W unit <see cref="math.Vec4"/> (0, 0, 0, 1).
         /// </summary>
-        public static readonly Vector4 UnitW = new Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+        public static readonly Vec4 UnitW = new Vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
         /// <summary>
-        /// A <see cref="math.Vector4"/> with all of its components set to one.
+        /// A <see cref="math.Vec4"/> with all of its components set to one.
         /// </summary>
-        public static readonly Vector4 One = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+        public static readonly Vec4 One = new Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
         /// <summary>
         /// The X component of the vector.
@@ -102,10 +102,10 @@ namespace math
         public float W;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="math.Vector4"/> struct.
+        /// Initializes a new instance of the <see cref="math.Vec4"/> struct.
         /// </summary>
         /// <param name="value">The value that will be assigned to all components.</param>
-        public Vector4(float value)
+        public Vec4(float value)
         {
             X = value;
             Y = value;
@@ -114,13 +114,13 @@ namespace math
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="math.Vector4"/> struct.
+        /// Initializes a new instance of the <see cref="math.Vec4"/> struct.
         /// </summary>
         /// <param name="x">Initial value for the X component of the vector.</param>
         /// <param name="y">Initial value for the Y component of the vector.</param>
         /// <param name="z">Initial value for the Z component of the vector.</param>
         /// <param name="w">Initial value for the W component of the vector.</param>
-        public Vector4(float x, float y, float z, float w)
+        public Vec4(float x, float y, float z, float w)
         {
             X = x;
             Y = y;
@@ -129,11 +129,11 @@ namespace math
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="math.Vector4"/> struct.
+        /// Initializes a new instance of the <see cref="math.Vec4"/> struct.
         /// </summary>
         /// <param name="value">A vector containing the values with which to initialize the X, Y, and Z components.</param>
         /// <param name="w">Initial value for the W component of the vector.</param>
-        public Vector4(Vector3 value, float w)
+        public Vec4(Vec3 value, float w)
         {
             X = value.X;
             Y = value.Y;
@@ -142,12 +142,12 @@ namespace math
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="math.Vector4"/> struct.
+        /// Initializes a new instance of the <see cref="math.Vec4"/> struct.
         /// </summary>
         /// <param name="value">A vector containing the values with which to initialize the X and Y components.</param>
         /// <param name="z">Initial value for the Z component of the vector.</param>
         /// <param name="w">Initial value for the W component of the vector.</param>
-        public Vector4(Vec2 value, float z, float w)
+        public Vec4(Vec2 value, float z, float w)
         {
             X = value.X;
             Y = value.Y;
@@ -156,12 +156,12 @@ namespace math
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="math.Vector4"/> struct.
+        /// Initializes a new instance of the <see cref="math.Vec4"/> struct.
         /// </summary>
         /// <param name="values">The values to assign to the X, Y, Z, and W components of the vector. This must be an array with four elements.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than four elements.</exception>
-        public Vector4(float[] values)
+        public Vec4(float[] values)
         {
             if (values == null)
                 throw new ArgumentNullException("values");
@@ -222,7 +222,7 @@ namespace math
         /// </summary>
         /// <returns>The length of the vector.</returns>
         /// <remarks>
-        /// <see cref="math.Vector4.LengthSquared"/> may be preferred when only the relative length is needed
+        /// <see cref="math.Vec4.LengthSquared"/> may be preferred when only the relative length is needed
         /// and speed is of the essence.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -236,7 +236,7 @@ namespace math
         /// </summary>
         /// <returns>The squared length of the vector.</returns>
         /// <remarks>
-        /// This method may be preferred to <see cref="math.Vector4.Length"/> when only a relative length is needed
+        /// This method may be preferred to <see cref="math.Vec4.Length"/> when only a relative length is needed
         /// and speed is of the essence.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -290,9 +290,9 @@ namespace math
         /// <param name="right">The second vector to add.</param>
         /// <param name="result">When the method completes, contains the sum of the two vectors.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Add(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void Add(ref Vec4 left, ref Vec4 right, out Vec4 result)
         {
-            result = new Vector4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            result = new Vec4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -302,9 +302,9 @@ namespace math
         /// <param name="right">The second vector to add.</param>
         /// <returns>The sum of the two vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Add(Vector4 left, Vector4 right)
+        public static Vec4 Add(Vec4 left, Vec4 right)
         {
-            return new Vector4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            return new Vec4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -314,9 +314,9 @@ namespace math
         /// <param name="right">The second vector to subtract.</param>
         /// <param name="result">When the method completes, contains the difference of the two vectors.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Subtract(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void Subtract(ref Vec4 left, ref Vec4 right, out Vec4 result)
         {
-            result = new Vector4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            result = new Vec4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -326,9 +326,9 @@ namespace math
         /// <param name="right">The second vector to subtract.</param>
         /// <returns>The difference of the two vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Subtract(Vector4 left, Vector4 right)
+        public static Vec4 Subtract(Vec4 left, Vec4 right)
         {
-            return new Vector4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            return new Vec4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -338,9 +338,9 @@ namespace math
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <param name="result">When the method completes, contains the scaled vector.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Multiply(ref Vector4 value, float scale, out Vector4 result)
+        public static void Multiply(ref Vec4 value, float scale, out Vec4 result)
         {
-            result = new Vector4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            result = new Vec4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -350,9 +350,9 @@ namespace math
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Multiply(Vector4 value, float scale)
+        public static Vec4 Multiply(Vec4 value, float scale)
         {
-            return new Vector4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new Vec4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -362,9 +362,9 @@ namespace math
         /// <param name="right">The second vector to modulate.</param>
         /// <param name="result">When the method completes, contains the modulated vector.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Modulate(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void Modulate(ref Vec4 left, ref Vec4 right, out Vec4 result)
         {
-            result = new Vector4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
+            result = new Vec4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
         }
 
         /// <summary>
@@ -374,9 +374,9 @@ namespace math
         /// <param name="right">The second vector to modulate.</param>
         /// <returns>The modulated vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Modulate(Vector4 left, Vector4 right)
+        public static Vec4 Modulate(Vec4 left, Vec4 right)
         {
-            return new Vector4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
+            return new Vec4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
         }
 
         /// <summary>
@@ -386,9 +386,9 @@ namespace math
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <param name="result">When the method completes, contains the scaled vector.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Divide(ref Vector4 value, float scale, out Vector4 result)
+        public static void Divide(ref Vec4 value, float scale, out Vec4 result)
         {
-            result = new Vector4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            result = new Vec4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
 
         /// <summary>
@@ -398,9 +398,9 @@ namespace math
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Divide(Vector4 value, float scale)
+        public static Vec4 Divide(Vec4 value, float scale)
         {
-            return new Vector4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            return new Vec4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
         
         /// <summary>
@@ -410,9 +410,9 @@ namespace math
         /// <param name="right">The second vector to demodulate.</param>
         /// <param name="result">When the method completes, contains the demodulated vector.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Demodulate(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void Demodulate(ref Vec4 left, ref Vec4 right, out Vec4 result)
         {
-            result = new Vector4(left.X / right.X, left.Y / right.Y, left.Z / right.Z, left.W / right.W);
+            result = new Vec4(left.X / right.X, left.Y / right.Y, left.Z / right.Z, left.W / right.W);
         }
 
         /// <summary>
@@ -422,9 +422,9 @@ namespace math
         /// <param name="right">The second vector to demodulate.</param>
         /// <returns>The demodulated vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Demodulate(Vector4 left, Vector4 right)
+        public static Vec4 Demodulate(Vec4 left, Vec4 right)
         {
-            return new Vector4(left.X / right.X, left.Y / right.Y, left.Z / right.Z, left.W / right.W);
+            return new Vec4(left.X / right.X, left.Y / right.Y, left.Z / right.Z, left.W / right.W);
         }
 
         /// <summary>
@@ -433,9 +433,9 @@ namespace math
         /// <param name="value">The vector to negate.</param>
         /// <param name="result">When the method completes, contains a vector facing in the opposite direction.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Negate(ref Vector4 value, out Vector4 result)
+        public static void Negate(ref Vec4 value, out Vec4 result)
         {
-            result = new Vector4(-value.X, -value.Y, -value.Z, -value.W);
+            result = new Vec4(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
@@ -444,23 +444,23 @@ namespace math
         /// <param name="value">The vector to negate.</param>
         /// <returns>A vector facing in the opposite direction.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Negate(Vector4 value)
+        public static Vec4 Negate(Vec4 value)
         {
-            return new Vector4(-value.X, -value.Y, -value.Z, -value.W);
+            return new Vec4(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
-        /// Returns a <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
+        /// Returns a <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
         /// </summary>
-        /// <param name="value1">A <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
-        /// <param name="value2">A <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
-        /// <param name="value3">A <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
+        /// <param name="value1">A <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
+        /// <param name="value2">A <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
+        /// <param name="value3">A <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
         /// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
         /// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
         /// <param name="result">When the method completes, contains the 4D Cartesian coordinates of the specified point.</param>
-        public static void Barycentric(ref Vector4 value1, ref Vector4 value2, ref Vector4 value3, float amount1, float amount2, out Vector4 result)
+        public static void Barycentric(ref Vec4 value1, ref Vec4 value2, ref Vec4 value3, float amount1, float amount2, out Vec4 result)
         {
-            result = new Vector4(
+            result = new Vec4(
                 (value1.X + (amount1 * (value2.X - value1.X))) + (amount2 * (value3.X - value1.X)),
                 (value1.Y + (amount1 * (value2.Y - value1.Y))) + (amount2 * (value3.Y - value1.Y)),
                 (value1.Z + (amount1 * (value2.Z - value1.Z))) + (amount2 * (value3.Z - value1.Z)),
@@ -468,17 +468,17 @@ namespace math
         }
 
         /// <summary>
-        /// Returns a <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
+        /// Returns a <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of a point specified in Barycentric coordinates relative to a 4D triangle.
         /// </summary>
-        /// <param name="value1">A <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
-        /// <param name="value2">A <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
-        /// <param name="value3">A <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
+        /// <param name="value1">A <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of vertex 1 of the triangle.</param>
+        /// <param name="value2">A <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of vertex 2 of the triangle.</param>
+        /// <param name="value3">A <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of vertex 3 of the triangle.</param>
         /// <param name="amount1">Barycentric coordinate b2, which expresses the weighting factor toward vertex 2 (specified in <paramref name="value2"/>).</param>
         /// <param name="amount2">Barycentric coordinate b3, which expresses the weighting factor toward vertex 3 (specified in <paramref name="value3"/>).</param>
-        /// <returns>A new <see cref="math.Vector4"/> containing the 4D Cartesian coordinates of the specified point.</returns>
-        public static Vector4 Barycentric(Vector4 value1, Vector4 value2, Vector4 value3, float amount1, float amount2)
+        /// <returns>A new <see cref="math.Vec4"/> containing the 4D Cartesian coordinates of the specified point.</returns>
+        public static Vec4 Barycentric(Vec4 value1, Vec4 value2, Vec4 value3, float amount1, float amount2)
         {
-            Vector4 result;
+            Vec4 result;
             Barycentric(ref value1, ref value2, ref value3, amount1, amount2, out result);
             return result;
         }
@@ -490,7 +490,7 @@ namespace math
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
         /// <param name="result">When the method completes, contains the clamped value.</param>
-        public static void Clamp(ref Vector4 value, ref Vector4 min, ref Vector4 max, out Vector4 result)
+        public static void Clamp(ref Vec4 value, ref Vec4 min, ref Vec4 max, out Vec4 result)
         {
             float x = value.X;
             x = (x > max.X) ? max.X : x;
@@ -508,7 +508,7 @@ namespace math
             w = (w > max.W) ? max.W : w;
             w = (w < min.W) ? min.W : w;
 
-            result = new Vector4(x, y, z, w);
+            result = new Vec4(x, y, z, w);
         }
 
         /// <summary>
@@ -518,9 +518,9 @@ namespace math
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
         /// <returns>The clamped value.</returns>
-        public static Vector4 Clamp(Vector4 value, Vector4 min, Vector4 max)
+        public static Vec4 Clamp(Vec4 value, Vec4 min, Vec4 max)
         {
-            Vector4 result;
+            Vec4 result;
             Clamp(ref value, ref min, ref max, out result);
             return result;
         }
@@ -532,10 +532,10 @@ namespace math
         /// <param name="value2">The second vector.</param>
         /// <param name="result">When the method completes, contains the distance between the two vectors.</param>
         /// <remarks>
-        /// <see cref="math.Vector4.DistanceSquared(ref Vector4, ref Vector4, out float)"/> may be preferred when only the relative distance is needed
+        /// <see cref="math.Vec4.DistanceSquared(ref Vec4, ref Vec4, out float)"/> may be preferred when only the relative distance is needed
         /// and speed is of the essence.
         /// </remarks>
-        public static void Distance(ref Vector4 value1, ref Vector4 value2, out float result)
+        public static void Distance(ref Vec4 value1, ref Vec4 value2, out float result)
         {
             float x = value1.X - value2.X;
             float y = value1.Y - value2.Y;
@@ -552,10 +552,10 @@ namespace math
         /// <param name="value2">The second vector.</param>
         /// <returns>The distance between the two vectors.</returns>
         /// <remarks>
-        /// <see cref="math.Vector4.DistanceSquared(Vector4, Vector4)"/> may be preferred when only the relative distance is needed
+        /// <see cref="math.Vec4.DistanceSquared(Vec4, Vec4)"/> may be preferred when only the relative distance is needed
         /// and speed is of the essence.
         /// </remarks>
-        public static float Distance(Vector4 value1, Vector4 value2)
+        public static float Distance(Vec4 value1, Vec4 value2)
         {
             float x = value1.X - value2.X;
             float y = value1.Y - value2.Y;
@@ -578,7 +578,7 @@ namespace math
         /// involves two square roots, which are computationally expensive. However, using distance squared 
         /// provides the same information and avoids calculating two square roots.
         /// </remarks>
-        public static void DistanceSquared(ref Vector4 value1, ref Vector4 value2, out float result)
+        public static void DistanceSquared(ref Vec4 value1, ref Vec4 value2, out float result)
         {
             float x = value1.X - value2.X;
             float y = value1.Y - value2.Y;
@@ -601,7 +601,7 @@ namespace math
         /// involves two square roots, which are computationally expensive. However, using distance squared 
         /// provides the same information and avoids calculating two square roots.
         /// </remarks>
-        public static float DistanceSquared(Vector4 value1, Vector4 value2)
+        public static float DistanceSquared(Vec4 value1, Vec4 value2)
         {
             float x = value1.X - value2.X;
             float y = value1.Y - value2.Y;
@@ -618,7 +618,7 @@ namespace math
         /// <param name="right">Second source vector.</param>
         /// <param name="result">When the method completes, contains the dot product of the two vectors.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Dot(ref Vector4 left, ref Vector4 right, out float result)
+        public static void Dot(ref Vec4 left, ref Vec4 right, out float result)
         {
             result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
@@ -630,7 +630,7 @@ namespace math
         /// <param name="right">Second source vector.</param>
         /// <returns>The dot product of the two vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Dot(Vector4 left, Vector4 right)
+        public static float Dot(Vec4 left, Vec4 right)
         {
             return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
@@ -641,9 +641,9 @@ namespace math
         /// <param name="value">The vector to normalize.</param>
         /// <param name="result">When the method completes, contains the normalized vector.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Normalize(ref Vector4 value, out Vector4 result)
+        public static void Normalize(ref Vec4 value, out Vec4 result)
         {
-            Vector4 temp = value;
+            Vec4 temp = value;
             result = temp;
             result.Normalize();
         }
@@ -654,7 +654,7 @@ namespace math
         /// <param name="value">The vector to normalize.</param>
         /// <returns>The normalized vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Normalize(Vector4 value)
+        public static Vec4 Normalize(Vec4 value)
         {
             value.Normalize();
             return value;
@@ -672,7 +672,7 @@ namespace math
         /// <code>start + (end - start) * amount</code>
         /// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
         /// </remarks>
-        public static void Lerp(ref Vector4 start, ref Vector4 end, float amount, out Vector4 result)
+        public static void Lerp(ref Vec4 start, ref Vec4 end, float amount, out Vec4 result)
         {
             result.X = start.X + ((end.X - start.X) * amount);
             result.Y = start.Y + ((end.Y - start.Y) * amount);
@@ -692,9 +692,9 @@ namespace math
         /// <code>start + (end - start) * amount</code>
         /// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
         /// </remarks>
-        public static Vector4 Lerp(Vector4 start, Vector4 end, float amount)
+        public static Vec4 Lerp(Vec4 start, Vec4 end, float amount)
         {
-            Vector4 result;
+            Vec4 result;
             Lerp(ref start, ref end, amount, out result);
             return result;
         }
@@ -706,7 +706,7 @@ namespace math
         /// <param name="end">End vector.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
         /// <param name="result">When the method completes, contains the cubic interpolation of the two vectors.</param>
-        public static void SmoothStep(ref Vector4 start, ref Vector4 end, float amount, out Vector4 result)
+        public static void SmoothStep(ref Vec4 start, ref Vec4 end, float amount, out Vec4 result)
         {
             amount = (amount > 1.0f) ? 1.0f : ((amount < 0.0f) ? 0.0f : amount);
             amount = (amount * amount) * (3.0f - (2.0f * amount));
@@ -724,9 +724,9 @@ namespace math
         /// <param name="end">End vector.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
         /// <returns>The cubic interpolation of the two vectors.</returns>
-        public static Vector4 SmoothStep(Vector4 start, Vector4 end, float amount)
+        public static Vec4 SmoothStep(Vec4 start, Vec4 end, float amount)
         {
-            Vector4 result;
+            Vec4 result;
             SmoothStep(ref start, ref end, amount, out result);
             return result;
         }
@@ -740,7 +740,7 @@ namespace math
         /// <param name="tangent2">Second source tangent vector.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Hermite spline interpolation.</param>
-        public static void Hermite(ref Vector4 value1, ref Vector4 tangent1, ref Vector4 value2, ref Vector4 tangent2, float amount, out Vector4 result)
+        public static void Hermite(ref Vec4 value1, ref Vec4 tangent1, ref Vec4 value2, ref Vec4 tangent2, float amount, out Vec4 result)
         {
             float squared = amount * amount;
             float cubed = amount * squared;
@@ -749,7 +749,7 @@ namespace math
             float part3 = (cubed - (2.0f * squared)) + amount;
             float part4 = cubed - squared;
 
-            result = new Vector4(
+            result = new Vec4(
                 (((value1.X * part1) + (value2.X * part2)) + (tangent1.X * part3)) + (tangent2.X * part4),
                 (((value1.Y * part1) + (value2.Y * part2)) + (tangent1.Y * part3)) + (tangent2.Y * part4),
                 (((value1.Z * part1) + (value2.Z * part2)) + (tangent1.Z * part3)) + (tangent2.Z * part4),
@@ -765,9 +765,9 @@ namespace math
         /// <param name="tangent2">Second source tangent vector.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <returns>The result of the Hermite spline interpolation.</returns>
-        public static Vector4 Hermite(Vector4 value1, Vector4 tangent1, Vector4 value2, Vector4 tangent2, float amount)
+        public static Vec4 Hermite(Vec4 value1, Vec4 tangent1, Vec4 value2, Vec4 tangent2, float amount)
         {
-            Vector4 result;
+            Vec4 result;
             Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out result);
             return result;
         }
@@ -781,7 +781,7 @@ namespace math
         /// <param name="value4">The fourth position in the interpolation.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <param name="result">When the method completes, contains the result of the Catmull-Rom interpolation.</param>
-        public static void CatmullRom(ref Vector4 value1, ref Vector4 value2, ref Vector4 value3, ref Vector4 value4, float amount, out Vector4 result)
+        public static void CatmullRom(ref Vec4 value1, ref Vec4 value2, ref Vec4 value3, ref Vec4 value4, float amount, out Vec4 result)
         {
             float squared = amount * amount;
             float cubed = amount * squared;
@@ -801,9 +801,9 @@ namespace math
         /// <param name="value4">The fourth position in the interpolation.</param>
         /// <param name="amount">Weighting factor.</param>
         /// <returns>A vector that is the result of the Catmull-Rom interpolation.</returns>
-        public static Vector4 CatmullRom(Vector4 value1, Vector4 value2, Vector4 value3, Vector4 value4, float amount)
+        public static Vec4 CatmullRom(Vec4 value1, Vec4 value2, Vec4 value3, Vec4 value4, float amount)
         {
-            Vector4 result;
+            Vec4 result;
             CatmullRom(ref value1, ref value2, ref value3, ref value4, amount, out result);
             return result;
         }
@@ -815,7 +815,7 @@ namespace math
         /// <param name="right">The second source vector.</param>
         /// <param name="result">When the method completes, contains an new vector composed of the largest components of the source vectors.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Max(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void Max(ref Vec4 left, ref Vec4 right, out Vec4 result)
         {
             result.X = (left.X > right.X) ? left.X : right.X;
             result.Y = (left.Y > right.Y) ? left.Y : right.Y;
@@ -830,9 +830,9 @@ namespace math
         /// <param name="right">The second source vector.</param>
         /// <returns>A vector containing the largest components of the source vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Max(Vector4 left, Vector4 right)
+        public static Vec4 Max(Vec4 left, Vec4 right)
         {
-            Vector4 result;
+            Vec4 result;
             Max(ref left, ref right, out result);
             return result;
         }
@@ -844,7 +844,7 @@ namespace math
         /// <param name="right">The second source vector.</param>
         /// <param name="result">When the method completes, contains an new vector composed of the smallest components of the source vectors.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Min(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void Min(ref Vec4 left, ref Vec4 right, out Vec4 result)
         {
             result.X = (left.X < right.X) ? left.X : right.X;
             result.Y = (left.Y < right.Y) ? left.Y : right.Y;
@@ -859,9 +859,9 @@ namespace math
         /// <param name="right">The second source vector.</param>
         /// <returns>A vector containing the smallest components of the source vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 Min(Vector4 left, Vector4 right)
+        public static Vec4 Min(Vec4 left, Vec4 right)
         {
-            Vector4 result;
+            Vec4 result;
             Min(ref left, ref right, out result);
             return result;
         }
@@ -882,7 +882,7 @@ namespace math
         /// </remarks>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Orthogonalize(Vector4[] destination, params Vector4[] source)
+        public static void Orthogonalize(Vec4[] destination, params Vec4[] source)
         {
             //Uses the modified Gram-Schmidt process.
             //q1 = m1
@@ -900,11 +900,11 @@ namespace math
 
             for (int i = 0; i < source.Length; ++i)
             {
-                Vector4 newvector = source[i];
+                Vec4 newvector = source[i];
 
                 for (int r = 0; r < i; ++r)
                 {
-                    newvector -= (Vector4.Dot(destination[r], newvector) / Vector4.Dot(destination[r], destination[r])) * destination[r];
+                    newvector -= (Vec4.Dot(destination[r], newvector) / Vec4.Dot(destination[r], destination[r])) * destination[r];
                 }
 
                 destination[i] = newvector;
@@ -927,7 +927,7 @@ namespace math
         /// </remarks>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Orthonormalize(Vector4[] destination, params Vector4[] source)
+        public static void Orthonormalize(Vec4[] destination, params Vec4[] source)
         {
             //Uses the modified Gram-Schmidt process.
             //Because we are making unit vectors, we can optimize the math for orthogonalization
@@ -947,11 +947,11 @@ namespace math
 
             for (int i = 0; i < source.Length; ++i)
             {
-                Vector4 newvector = source[i];
+                Vec4 newvector = source[i];
 
                 for (int r = 0; r < i; ++r)
                 {
-                    newvector -= Vector4.Dot(destination[r], newvector) * destination[r];
+                    newvector -= Vec4.Dot(destination[r], newvector) * destination[r];
                 }
 
                 newvector.Normalize();
@@ -964,8 +964,8 @@ namespace math
         /// </summary>
         /// <param name="vector">The vector to rotate.</param>
         /// <param name="rotation">The <see cref="math.Quaternion"/> rotation to apply.</param>
-        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vector4"/>.</param>
-        public static void Transform(ref Vector4 vector, ref Quaternion rotation, out Vector4 result)
+        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vec4"/>.</param>
+        public static void Transform(ref Vec4 vector, ref Quaternion rotation, out Vec4 result)
         {
             float x = rotation.X + rotation.X;
             float y = rotation.Y + rotation.Y;
@@ -980,7 +980,7 @@ namespace math
             float yz = rotation.Y * z;
             float zz = rotation.Z * z;
 
-            result = new Vector4(
+            result = new Vec4(
                 ((vector.X * ((1.0f - yy) - zz)) + (vector.Y * (xy - wz))) + (vector.Z * (xz + wy)),
                 ((vector.X * (xy + wz)) + (vector.Y * ((1.0f - xx) - zz))) + (vector.Z * (yz - wx)),
                 ((vector.X * (xz - wy)) + (vector.Y * (yz + wx))) + (vector.Z * ((1.0f - xx) - yy)),
@@ -992,10 +992,10 @@ namespace math
         /// </summary>
         /// <param name="vector">The vector to rotate.</param>
         /// <param name="rotation">The <see cref="math.Quaternion"/> rotation to apply.</param>
-        /// <returns>The transformed <see cref="math.Vector4"/>.</returns>
-        public static Vector4 Transform(Vector4 vector, Quaternion rotation)
+        /// <returns>The transformed <see cref="math.Vec4"/>.</returns>
+        public static Vec4 Transform(Vec4 vector, Quaternion rotation)
         {
-            Vector4 result;
+            Vec4 result;
             Transform(ref vector, ref rotation, out result);
             return result;
         }
@@ -1009,7 +1009,7 @@ namespace math
         /// This array may be the same array as <paramref name="source"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Transform(Vector4[] source, ref Quaternion rotation, Vector4[] destination)
+        public static void Transform(Vec4[] source, ref Quaternion rotation, Vec4[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -1043,7 +1043,7 @@ namespace math
 
             for (int i = 0; i < source.Length; ++i)
             {
-                destination[i] = new Vector4(
+                destination[i] = new Vec4(
                     ((source[i].X * num1) + (source[i].Y * num2)) + (source[i].Z * num3),
                     ((source[i].X * num4) + (source[i].Y * num5)) + (source[i].Z * num6),
                     ((source[i].X * num7) + (source[i].Y * num8)) + (source[i].Z * num9),
@@ -1056,10 +1056,10 @@ namespace math
         /// </summary>
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="math.Matrix"/>.</param>
-        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vector4"/>.</param>
-        public static void Transform(ref Vector4 vector, ref Matrix transform, out Vector4 result)
+        /// <param name="result">When the method completes, contains the transformed <see cref="math.Vec4"/>.</param>
+        public static void Transform(ref Vec4 vector, ref Matrix transform, out Vec4 result)
         {
-            result = new Vector4(
+            result = new Vec4(
                 (vector.X * transform.M11) + (vector.Y * transform.M21) + (vector.Z * transform.M31) + (vector.W * transform.M41),
                 (vector.X * transform.M12) + (vector.Y * transform.M22) + (vector.Z * transform.M32) + (vector.W * transform.M42),
                 (vector.X * transform.M13) + (vector.Y * transform.M23) + (vector.Z * transform.M33) + (vector.W * transform.M43),
@@ -1071,10 +1071,10 @@ namespace math
         /// </summary>
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="math.Matrix"/>.</param>
-        /// <returns>The transformed <see cref="math.Vector4"/>.</returns>
-        public static Vector4 Transform(Vector4 vector, Matrix transform)
+        /// <returns>The transformed <see cref="math.Vec4"/>.</returns>
+        public static Vec4 Transform(Vec4 vector, Matrix transform)
         {
-            Vector4 result;
+            Vec4 result;
             Transform(ref vector, ref transform, out result);
             return result;
         }
@@ -1088,7 +1088,7 @@ namespace math
         /// This array may be the same array as <paramref name="source"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Transform(Vector4[] source, ref Matrix transform, Vector4[] destination)
+        public static void Transform(Vec4[] source, ref Matrix transform, Vec4[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -1110,9 +1110,9 @@ namespace math
         /// <param name="right">The second vector to add.</param>
         /// <returns>The sum of the two vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator +(Vector4 left, Vector4 right)
+        public static Vec4 operator +(Vec4 left, Vec4 right)
         {
-            return new Vector4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
+            return new Vec4(left.X + right.X, left.Y + right.Y, left.Z + right.Z, left.W + right.W);
         }
 
         /// <summary>
@@ -1121,7 +1121,7 @@ namespace math
         /// <param name="value">The vector to assert (unchange).</param>
         /// <returns>The asserted (unchanged) vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator +(Vector4 value)
+        public static Vec4 operator +(Vec4 value)
         {
             return value;
         }
@@ -1133,9 +1133,9 @@ namespace math
         /// <param name="right">The second vector to subtract.</param>
         /// <returns>The difference of the two vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator -(Vector4 left, Vector4 right)
+        public static Vec4 operator -(Vec4 left, Vec4 right)
         {
-            return new Vector4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
+            return new Vec4(left.X - right.X, left.Y - right.Y, left.Z - right.Z, left.W - right.W);
         }
 
         /// <summary>
@@ -1144,9 +1144,9 @@ namespace math
         /// <param name="value">The vector to negate.</param>
         /// <returns>A vector facing in the opposite direction.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator -(Vector4 value)
+        public static Vec4 operator -(Vec4 value)
         {
-            return new Vector4(-value.X, -value.Y, -value.Z, -value.W);
+            return new Vec4(-value.X, -value.Y, -value.Z, -value.W);
         }
 
         /// <summary>
@@ -1156,9 +1156,9 @@ namespace math
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator *(float scale, Vector4 value)
+        public static Vec4 operator *(float scale, Vec4 value)
         {
-            return new Vector4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new Vec4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -1168,9 +1168,9 @@ namespace math
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator *(Vector4 value, float scale)
+        public static Vec4 operator *(Vec4 value, float scale)
         {
-            return new Vector4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
+            return new Vec4(value.X * scale, value.Y * scale, value.Z * scale, value.W * scale);
         }
 
         /// <summary>
@@ -1180,9 +1180,9 @@ namespace math
         /// <param name="right">The second vector to multiply.</param>
         /// <returns>The multiplication of the two vectors.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator *(Vector4 left, Vector4 right)
+        public static Vec4 operator *(Vec4 left, Vec4 right)
         {
-            return new Vector4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
+            return new Vec4(left.X * right.X, left.Y * right.Y, left.Z * right.Z, left.W * right.W);
         }
 
         /// <summary>
@@ -1192,9 +1192,9 @@ namespace math
         /// <param name="scale">The amount by which to scale the vector.</param>
         /// <returns>The scaled vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator /(Vector4 value, float scale)
+        public static Vec4 operator /(Vec4 value, float scale)
         {
-            return new Vector4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
+            return new Vec4(value.X / scale, value.Y / scale, value.Z / scale, value.W / scale);
         }
 
         /// <summary>
@@ -1204,9 +1204,9 @@ namespace math
         /// <param name="value">The value.</param>
         /// <returns>The scaled vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator /(float numerator, Vector4 value)
+        public static Vec4 operator /(float numerator, Vec4 value)
         {
-            return new Vector4(numerator / value.X, numerator / value.Y, numerator / value.Z, numerator / value.W);
+            return new Vec4(numerator / value.X, numerator / value.Y, numerator / value.Z, numerator / value.W);
         }
 
         /// <summary>
@@ -1216,9 +1216,9 @@ namespace math
         /// <param name="by">The by.</param>
         /// <returns>The scaled vector.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector4 operator /(Vector4 value, Vector4 by)
+        public static Vec4 operator /(Vec4 value, Vec4 by)
         {
-            return new Vector4(value.X / by.X, value.Y / by.Y, value.Z / by.Z, value.W / by.W);
+            return new Vec4(value.X / by.X, value.Y / by.Y, value.Z / by.Z, value.W / by.W);
         }
 
         /// <summary>
@@ -1227,7 +1227,7 @@ namespace math
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(Vector4 left, Vector4 right)
+        public static bool operator ==(Vec4 left, Vec4 right)
         {
             return left.Equals(right);
         }
@@ -1238,29 +1238,29 @@ namespace math
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(Vector4 left, Vector4 right)
+        public static bool operator !=(Vec4 left, Vec4 right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="math.Vector4"/> to <see cref="math.Vec2"/>.
+        /// Performs an explicit conversion from <see cref="math.Vec4"/> to <see cref="math.Vec2"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vec2(Vector4 value)
+        public static explicit operator Vec2(Vec4 value)
         {
             return new Vec2(value.X, value.Y);
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="math.Vector4"/> to <see cref="math.Vector3"/>.
+        /// Performs an explicit conversion from <see cref="math.Vec4"/> to <see cref="math.Vec3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(Vector4 value)
+        public static explicit operator Vec3(Vec4 value)
         {
-            return new Vector3(value.X, value.Y, value.Z);
+            return new Vec3(value.X, value.Y, value.Z);
         }
 
         /// <summary>
@@ -1331,13 +1331,13 @@ namespace math
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="math.Vector4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="math.Vec4"/> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="math.Vector4"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="math.Vec4"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="math.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="math.Vec4"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(Vector4 other)
+        public bool Equals(Vec4 other)
         {
             return ((float)Math.Abs(other.X - X) < MathUtil.ZeroTolerance &&
                 (float)Math.Abs(other.Y - Y) < MathUtil.ZeroTolerance &&
@@ -1360,7 +1360,7 @@ namespace math
             if (value.GetType() != GetType())
                 return false;
 
-            return Equals((Vector4)value);
+            return Equals((Vec4)value);
         }
 
 #if WPFInterop

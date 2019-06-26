@@ -219,9 +219,9 @@ namespace math
         /// Gets or sets the first row in the matrix; that is M11, M12, M13, and M14.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Row1
+        public Vec4 Row1
         {
-            get { return new Vector4(M11, M12, M13, M14); }
+            get { return new Vec4(M11, M12, M13, M14); }
             set { M11 = value.X; M12 = value.Y; M13 = value.Z; M14 = value.W; }
         }
 
@@ -229,9 +229,9 @@ namespace math
         /// Gets or sets the second row in the matrix; that is M21, M22, M23, and M24.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Row2
+        public Vec4 Row2
         {
-            get { return new Vector4(M21, M22, M23, M24); }
+            get { return new Vec4(M21, M22, M23, M24); }
             set { M21 = value.X; M22 = value.Y; M23 = value.Z; M24 = value.W; }
         }
 
@@ -239,9 +239,9 @@ namespace math
         /// Gets or sets the third row in the matrix; that is M31, M32, M33, and M34.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Row3
+        public Vec4 Row3
         {
-            get { return new Vector4(M31, M32, M33, M34); }
+            get { return new Vec4(M31, M32, M33, M34); }
             set { M31 = value.X; M32 = value.Y; M33 = value.Z; M34 = value.W; }
         }
 
@@ -249,9 +249,9 @@ namespace math
         /// Gets or sets the fourth row in the matrix; that is M41, M42, M43, and M44.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Row4
+        public Vec4 Row4
         {
-            get { return new Vector4(M41, M42, M43, M44); }
+            get { return new Vec4(M41, M42, M43, M44); }
             set { M41 = value.X; M42 = value.Y; M43 = value.Z; M44 = value.W; }
         }
 
@@ -259,9 +259,9 @@ namespace math
         /// Gets or sets the first column in the matrix; that is M11, M21, M31, and M41.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Column1
+        public Vec4 Column1
         {
-            get { return new Vector4(M11, M21, M31, M41); }
+            get { return new Vec4(M11, M21, M31, M41); }
             set { M11 = value.X; M21 = value.Y; M31 = value.Z; M41 = value.W; }
         }
 
@@ -269,9 +269,9 @@ namespace math
         /// Gets or sets the second column in the matrix; that is M12, M22, M32, and M42.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Column2
+        public Vec4 Column2
         {
-            get { return new Vector4(M12, M22, M32, M42); }
+            get { return new Vec4(M12, M22, M32, M42); }
             set { M12 = value.X; M22 = value.Y; M32 = value.Z; M42 = value.W; }
         }
 
@@ -279,9 +279,9 @@ namespace math
         /// Gets or sets the third column in the matrix; that is M13, M23, M33, and M43.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Column3
+        public Vec4 Column3
         {
-            get { return new Vector4(M13, M23, M33, M43); }
+            get { return new Vec4(M13, M23, M33, M43); }
             set { M13 = value.X; M23 = value.Y; M33 = value.Z; M43 = value.W; }
         }
 
@@ -289,9 +289,9 @@ namespace math
         /// Gets or sets the fourth column in the matrix; that is M14, M24, M34, and M44.
         /// </summary>
         [DataMemberIgnore]
-        public Vector4 Column4
+        public Vec4 Column4
         {
-            get { return new Vector4(M14, M24, M34, M44); }
+            get { return new Vec4(M14, M24, M34, M44); }
             set { M14 = value.X; M24 = value.Y; M34 = value.Z; M44 = value.W; }
         }
 
@@ -299,9 +299,9 @@ namespace math
         /// Gets or sets the translation of the matrix; that is M41, M42, and M43.
         /// </summary>
         [DataMemberIgnore]
-        public Vector3 TranslationVector
+        public Vec3 TranslationVector
         {
-            get { return new Vector3(M41, M42, M43); }
+            get { return new Vec3(M41, M42, M43); }
             set { M41 = value.X; M42 = value.Y; M43 = value.Z; }
         }
 
@@ -310,69 +310,69 @@ namespace math
         /// </summary>
         /// <remarks>This property does not do any computation and will return a correct scale vector only if the matrix is a scale matrix.</remarks>
         [DataMemberIgnore]
-        public Vector3 ScaleVector
+        public Vec3 ScaleVector
         {
-            get { return new Vector3(M11, M22, M33); }
+            get { return new Vec3(M11, M22, M33); }
             set { M11 = value.X; M22 = value.Y; M33 = value.Z; }
         }
 
         /// <summary>
-        /// Gets or sets the up <see cref="Vector3"/> of the matrix; that is M21, M22, and M23.
+        /// Gets or sets the up <see cref="Vec3"/> of the matrix; that is M21, M22, and M23.
         /// </summary>
         [DataMemberIgnore]
-        public Vector3 Up
+        public Vec3 Up
         {
-            get { return new Vector3(M21, M22, M23); }
+            get { return new Vec3(M21, M22, M23); }
             set { M21 = value.X; M22 = value.Y; M23 = value.Z; }
         }
 
         /// <summary>
-        /// Gets or sets the down <see cref="Vector3"/> of the matrix; that is -M21, -M22, and -M23.
+        /// Gets or sets the down <see cref="Vec3"/> of the matrix; that is -M21, -M22, and -M23.
         /// </summary>
         [DataMemberIgnore]
-        public Vector3 Down
+        public Vec3 Down
         {
-            get { return new Vector3(-M21, -M22, -M23); }
+            get { return new Vec3(-M21, -M22, -M23); }
             set { M21 = -value.X; M22 = -value.Y; M23 = -value.Z; }
         }
 
         /// <summary>
-        /// Gets or sets the right <see cref="Vector3"/> of the matrix; that is M11, M12, and M13.
+        /// Gets or sets the right <see cref="Vec3"/> of the matrix; that is M11, M12, and M13.
         /// </summary>
         [DataMemberIgnore]
-        public Vector3 Right
+        public Vec3 Right
         {
-            get { return new Vector3(M11, M12, M13); }
+            get { return new Vec3(M11, M12, M13); }
             set { M11 = value.X; M12 = value.Y; M13 = value.Z; }
         }
 
         /// <summary>
-        /// Gets or sets the left <see cref="Vector3"/> of the matrix; that is -M11, -M12, and -M13.
+        /// Gets or sets the left <see cref="Vec3"/> of the matrix; that is -M11, -M12, and -M13.
         /// </summary>
         [DataMemberIgnore]
-        public Vector3 Left
+        public Vec3 Left
         {
-            get { return new Vector3(-M11, -M12, -M13); }
+            get { return new Vec3(-M11, -M12, -M13); }
             set { M11 = -value.X; M12 = -value.Y; M13 = -value.Z; }
         }
 
         /// <summary>
-        /// Gets or sets the forward <see cref="Vector3"/> of the matrix; that is -M31, -M32, and -M33.
+        /// Gets or sets the forward <see cref="Vec3"/> of the matrix; that is -M31, -M32, and -M33.
         /// </summary>
         [DataMemberIgnore]
-        public Vector3 Forward
+        public Vec3 Forward
         {
-            get { return new Vector3(-M31, -M32, -M33); }
+            get { return new Vec3(-M31, -M32, -M33); }
             set { M31 = -value.X; M32 = -value.Y; M33 = -value.Z; }
         }
 
         /// <summary>
-        /// Gets or sets the backward <see cref="Vector3"/> of the matrix; that is M31, M32, and M33.
+        /// Gets or sets the backward <see cref="Vec3"/> of the matrix; that is M31, M32, and M33.
         /// </summary>
         [DataMemberIgnore]
-        public Vector3 Backward
+        public Vec3 Backward
         {
-            get { return new Vector3(M31, M32, M33); }
+            get { return new Vec3(M31, M32, M33); }
             set { M31 = value.X; M32 = value.Y; M33 = value.Z; }
         }
 
@@ -573,19 +573,19 @@ namespace math
             Q.Transpose();
 
             R = new Matrix();
-            R.M11 = Vector4.Dot(Q.Column1, Column1);
-            R.M12 = Vector4.Dot(Q.Column1, Column2);
-            R.M13 = Vector4.Dot(Q.Column1, Column3);
-            R.M14 = Vector4.Dot(Q.Column1, Column4);
+            R.M11 = Vec4.Dot(Q.Column1, Column1);
+            R.M12 = Vec4.Dot(Q.Column1, Column2);
+            R.M13 = Vec4.Dot(Q.Column1, Column3);
+            R.M14 = Vec4.Dot(Q.Column1, Column4);
 
-            R.M22 = Vector4.Dot(Q.Column2, Column2);
-            R.M23 = Vector4.Dot(Q.Column2, Column3);
-            R.M24 = Vector4.Dot(Q.Column2, Column4);
+            R.M22 = Vec4.Dot(Q.Column2, Column2);
+            R.M23 = Vec4.Dot(Q.Column2, Column3);
+            R.M24 = Vec4.Dot(Q.Column2, Column4);
 
-            R.M33 = Vector4.Dot(Q.Column3, Column3);
-            R.M34 = Vector4.Dot(Q.Column3, Column4);
+            R.M33 = Vec4.Dot(Q.Column3, Column3);
+            R.M34 = Vec4.Dot(Q.Column3, Column4);
 
-            R.M44 = Vector4.Dot(Q.Column4, Column4);
+            R.M44 = Vec4.Dot(Q.Column4, Column4);
         }
 
         /// <summary>
@@ -598,19 +598,19 @@ namespace math
             Orthonormalize(ref this, out Q);
 
             L = new Matrix();
-            L.M11 = Vector4.Dot(Q.Row1, Row1);
+            L.M11 = Vec4.Dot(Q.Row1, Row1);
             
-            L.M21 = Vector4.Dot(Q.Row1, Row2);
-            L.M22 = Vector4.Dot(Q.Row2, Row2);
+            L.M21 = Vec4.Dot(Q.Row1, Row2);
+            L.M22 = Vec4.Dot(Q.Row2, Row2);
             
-            L.M31 = Vector4.Dot(Q.Row1, Row3);
-            L.M32 = Vector4.Dot(Q.Row2, Row3);
-            L.M33 = Vector4.Dot(Q.Row3, Row3);
+            L.M31 = Vec4.Dot(Q.Row1, Row3);
+            L.M32 = Vec4.Dot(Q.Row2, Row3);
+            L.M33 = Vec4.Dot(Q.Row3, Row3);
             
-            L.M41 = Vector4.Dot(Q.Row1, Row4);
-            L.M42 = Vector4.Dot(Q.Row2, Row4);
-            L.M43 = Vector4.Dot(Q.Row3, Row4);
-            L.M44 = Vector4.Dot(Q.Row4, Row4);
+            L.M41 = Vec4.Dot(Q.Row1, Row4);
+            L.M42 = Vec4.Dot(Q.Row2, Row4);
+            L.M43 = Vec4.Dot(Q.Row3, Row4);
+            L.M44 = Vec4.Dot(Q.Row4, Row4);
         }
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace math
         /// Matrix.RotationX(rotation.X) * Matrix.RotationY(rotation.Y) * Matrix.RotationZ(rotation.Z) should represent the same rotation.
         /// </summary>
         /// <param name="rotation">The vector containing the 3 rotations angles to be applied in order.</param>
-        public void DecomposeXYZ(out Vector3 rotation)
+        public void DecomposeXYZ(out Vec3 rotation)
         {
             rotation.Y = (float)Math.Asin(-M13);
             double test = Math.Cos(rotation.Y);
@@ -665,7 +665,7 @@ namespace math
         /// <param name="translation">When the method completes, contains the translation component of the decomposed matrix.</param>
         /// <returns><c>true</c> if a rotation exist for this matrix, <c>false</c> otherwise.</returns>
         /// <remarks>This method is designed to decompose an SRT transformation matrix only.</remarks>
-        public bool Decompose(out Vector3 scale, out Vector3 translation)
+        public bool Decompose(out Vec3 scale, out Vec3 translation)
         {
             //Source: Unknown
             //References: http://www.gamedev.net/community/forums/topic.asp?topic_id=441695
@@ -700,7 +700,7 @@ namespace math
         /// <remarks>
         /// This method is designed to decompose an SRT transformation matrix only.
         /// </remarks>
-        public bool Decompose(out Vector3 scale, out Quaternion rotation, out Vector3 translation)
+        public bool Decompose(out Vec3 scale, out Quaternion rotation, out Vec3 translation)
         {
             Matrix rotationMatrix;
             Decompose(out scale, out rotationMatrix, out translation);
@@ -717,7 +717,7 @@ namespace math
         /// <remarks>
         /// This method is designed to decompose an SRT transformation matrix only.
         /// </remarks>
-        public bool Decompose(out Vector3 scale, out Matrix rotation, out Vector3 translation)
+        public bool Decompose(out Vec3 scale, out Matrix rotation, out Vec3 translation)
         {
             //Source: Unknown
             //References: http://www.gamedev.net/community/forums/topic.asp?topic_id=441695
@@ -742,9 +742,9 @@ namespace math
             }
 
             // Calculate an perfect orthonormal matrix (no reflections)
-            var at = new Vector3(M31 / scale.Z, M32 / scale.Z, M33 / scale.Z);
-            var up = Vector3.Cross(at, new Vector3(M11 / scale.X, M12 / scale.X, M13 / scale.X));
-            var right = Vector3.Cross(up, at);
+            var at = new Vec3(M31 / scale.Z, M32 / scale.Z, M33 / scale.Z);
+            var up = Vec3.Cross(at, new Vec3(M11 / scale.X, M12 / scale.X, M13 / scale.X));
+            var right = Vec3.Cross(up, at);
 
             rotation = Identity;
             rotation.Right = right;
@@ -752,9 +752,9 @@ namespace math
             rotation.Backward = at;
 
             // In case of reflexions
-            scale.X = Vector3.Dot(right, Right) > 0.0f ? scale.X : -scale.X;
-            scale.Y = Vector3.Dot(up, Up) > 0.0f ? scale.Y : -scale.Y;
-            scale.Z = Vector3.Dot(at, Backward) > 0.0f ? scale.Z : -scale.Z;
+            scale.X = Vec3.Dot(right, Right) > 0.0f ? scale.X : -scale.X;
+            scale.Y = Vec3.Dot(up, Up) > 0.0f ? scale.Y : -scale.Y;
+            scale.Z = Vec3.Dot(at, Backward) > 0.0f ? scale.Z : -scale.Z;
 
             return true;
         }
@@ -1449,14 +1449,14 @@ namespace math
             //By separating the above algorithm into multiple lines, we actually increase accuracy.
             result = value;
 
-            result.Row2 = result.Row2 - (Vector4.Dot(result.Row1, result.Row2) / Vector4.Dot(result.Row1, result.Row1)) * result.Row1;
+            result.Row2 = result.Row2 - (Vec4.Dot(result.Row1, result.Row2) / Vec4.Dot(result.Row1, result.Row1)) * result.Row1;
 
-            result.Row3 = result.Row3 - (Vector4.Dot(result.Row1, result.Row3) / Vector4.Dot(result.Row1, result.Row1)) * result.Row1;
-            result.Row3 = result.Row3 - (Vector4.Dot(result.Row2, result.Row3) / Vector4.Dot(result.Row2, result.Row2)) * result.Row2;
+            result.Row3 = result.Row3 - (Vec4.Dot(result.Row1, result.Row3) / Vec4.Dot(result.Row1, result.Row1)) * result.Row1;
+            result.Row3 = result.Row3 - (Vec4.Dot(result.Row2, result.Row3) / Vec4.Dot(result.Row2, result.Row2)) * result.Row2;
 
-            result.Row4 = result.Row4 - (Vector4.Dot(result.Row1, result.Row4) / Vector4.Dot(result.Row1, result.Row1)) * result.Row1;
-            result.Row4 = result.Row4 - (Vector4.Dot(result.Row2, result.Row4) / Vector4.Dot(result.Row2, result.Row2)) * result.Row2;
-            result.Row4 = result.Row4 - (Vector4.Dot(result.Row3, result.Row4) / Vector4.Dot(result.Row3, result.Row3)) * result.Row3;
+            result.Row4 = result.Row4 - (Vec4.Dot(result.Row1, result.Row4) / Vec4.Dot(result.Row1, result.Row1)) * result.Row1;
+            result.Row4 = result.Row4 - (Vec4.Dot(result.Row2, result.Row4) / Vec4.Dot(result.Row2, result.Row2)) * result.Row2;
+            result.Row4 = result.Row4 - (Vec4.Dot(result.Row3, result.Row4) / Vec4.Dot(result.Row3, result.Row3)) * result.Row3;
         }
 
         /// <summary>
@@ -1513,19 +1513,19 @@ namespace math
             //By separating the above algorithm into multiple lines, we actually increase accuracy.
             result = value;
 
-            result.Row1 = Vector4.Normalize(result.Row1);
+            result.Row1 = Vec4.Normalize(result.Row1);
 
-            result.Row2 = result.Row2 - Vector4.Dot(result.Row1, result.Row2) * result.Row1;
-            result.Row2 = Vector4.Normalize(result.Row2);
+            result.Row2 = result.Row2 - Vec4.Dot(result.Row1, result.Row2) * result.Row1;
+            result.Row2 = Vec4.Normalize(result.Row2);
 
-            result.Row3 = result.Row3 - Vector4.Dot(result.Row1, result.Row3) * result.Row1;
-            result.Row3 = result.Row3 - Vector4.Dot(result.Row2, result.Row3) * result.Row2;
-            result.Row3 = Vector4.Normalize(result.Row3);
+            result.Row3 = result.Row3 - Vec4.Dot(result.Row1, result.Row3) * result.Row1;
+            result.Row3 = result.Row3 - Vec4.Dot(result.Row2, result.Row3) * result.Row2;
+            result.Row3 = Vec4.Normalize(result.Row3);
 
-            result.Row4 = result.Row4 - Vector4.Dot(result.Row1, result.Row4) * result.Row1;
-            result.Row4 = result.Row4 - Vector4.Dot(result.Row2, result.Row4) * result.Row2;
-            result.Row4 = result.Row4 - Vector4.Dot(result.Row3, result.Row4) * result.Row3;
-            result.Row4 = Vector4.Normalize(result.Row4);
+            result.Row4 = result.Row4 - Vec4.Dot(result.Row1, result.Row4) * result.Row1;
+            result.Row4 = result.Row4 - Vec4.Dot(result.Row2, result.Row4) * result.Row2;
+            result.Row4 = result.Row4 - Vec4.Dot(result.Row3, result.Row4) * result.Row3;
+            result.Row4 = Vec4.Normalize(result.Row4);
         }
 
         /// <summary>
@@ -1808,7 +1808,7 @@ namespace math
         /// the <paramref name="augmentResult"/> will contain the solution for the system. It is up to the user
         /// to analyze both the input and the result to determine if a solution really exists.</para>
         /// </remarks>
-        public static void ReducedRowEchelonForm(ref Matrix value, ref Vector4 augment, out Matrix result, out Vector4 augmentResult)
+        public static void ReducedRowEchelonForm(ref Matrix value, ref Vec4 augment, out Matrix result, out Vec4 augmentResult)
         {
             //Source: http://rosettacode.org
             //Reference: http://rosettacode.org/wiki/Reduced_row_echelon_form
@@ -1924,11 +1924,11 @@ namespace math
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <param name="result">When the method completes, contains the created billboard matrix.</param>
-        public static void Billboard(ref Vector3 objectPosition, ref Vector3 cameraPosition, ref Vector3 cameraUpVector, ref Vector3 cameraForwardVector, out Matrix result)
+        public static void Billboard(ref Vec3 objectPosition, ref Vec3 cameraPosition, ref Vec3 cameraUpVector, ref Vec3 cameraForwardVector, out Matrix result)
         {
-            Vector3 crossed;
-            Vector3 final;
-            Vector3 difference = objectPosition - cameraPosition;
+            Vec3 crossed;
+            Vec3 final;
+            Vec3 difference = objectPosition - cameraPosition;
 
             float lengthSq = difference.LengthSquared();
             if (lengthSq < MathUtil.ZeroTolerance)
@@ -1936,9 +1936,9 @@ namespace math
             else
                 difference *= (float)(1.0 / Math.Sqrt(lengthSq));
 
-            Vector3.Cross(ref cameraUpVector, ref difference, out crossed);
+            Vec3.Cross(ref cameraUpVector, ref difference, out crossed);
             crossed.Normalize();
-            Vector3.Cross(ref difference, ref crossed, out final);
+            Vec3.Cross(ref difference, ref crossed, out final);
 
             result.M11 = crossed.X;
             result.M12 = crossed.Y;
@@ -1966,7 +1966,7 @@ namespace math
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard matrix.</returns>
-        public static Matrix Billboard(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Matrix Billboard(Vec3 objectPosition, Vec3 cameraPosition, Vec3 cameraUpVector, Vec3 cameraForwardVector)
         {
             Matrix result;
             Billboard(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out result);
@@ -1980,21 +1980,21 @@ namespace math
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <param name="result">When the method completes, contains the created look-at matrix.</param>
-        public static void LookAtLH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Matrix result)
+        public static void LookAtLH(ref Vec3 eye, ref Vec3 target, ref Vec3 up, out Matrix result)
         {
-            Vector3 xaxis, yaxis, zaxis;
-            Vector3.Subtract(ref target, ref eye, out zaxis); zaxis.Normalize();
-            Vector3.Cross(ref up, ref zaxis, out xaxis); xaxis.Normalize();
-            Vector3.Cross(ref zaxis, ref xaxis, out yaxis);
+            Vec3 xaxis, yaxis, zaxis;
+            Vec3.Subtract(ref target, ref eye, out zaxis); zaxis.Normalize();
+            Vec3.Cross(ref up, ref zaxis, out xaxis); xaxis.Normalize();
+            Vec3.Cross(ref zaxis, ref xaxis, out yaxis);
 
             result = Matrix.Identity;
             result.M11 = xaxis.X; result.M21 = xaxis.Y; result.M31 = xaxis.Z;
             result.M12 = yaxis.X; result.M22 = yaxis.Y; result.M32 = yaxis.Z;
             result.M13 = zaxis.X; result.M23 = zaxis.Y; result.M33 = zaxis.Z;
 
-            Vector3.Dot(ref xaxis, ref eye, out result.M41);
-            Vector3.Dot(ref yaxis, ref eye, out result.M42);
-            Vector3.Dot(ref zaxis, ref eye, out result.M43);
+            Vec3.Dot(ref xaxis, ref eye, out result.M41);
+            Vec3.Dot(ref yaxis, ref eye, out result.M42);
+            Vec3.Dot(ref zaxis, ref eye, out result.M43);
 
             result.M41 = -result.M41;
             result.M42 = -result.M42;
@@ -2008,7 +2008,7 @@ namespace math
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <returns>The created look-at matrix.</returns>
-        public static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
+        public static Matrix LookAtLH(Vec3 eye, Vec3 target, Vec3 up)
         {
             Matrix result;
             LookAtLH(ref eye, ref target, ref up, out result);
@@ -2022,21 +2022,21 @@ namespace math
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <param name="result">When the method completes, contains the created look-at matrix.</param>
-        public static void LookAtRH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Matrix result)
+        public static void LookAtRH(ref Vec3 eye, ref Vec3 target, ref Vec3 up, out Matrix result)
         {
-            Vector3 xaxis, yaxis, zaxis;
-            Vector3.Subtract(ref eye, ref target, out zaxis); zaxis.Normalize();
-            Vector3.Cross(ref up, ref zaxis, out xaxis); xaxis.Normalize();
-            Vector3.Cross(ref zaxis, ref xaxis, out yaxis);
+            Vec3 xaxis, yaxis, zaxis;
+            Vec3.Subtract(ref eye, ref target, out zaxis); zaxis.Normalize();
+            Vec3.Cross(ref up, ref zaxis, out xaxis); xaxis.Normalize();
+            Vec3.Cross(ref zaxis, ref xaxis, out yaxis);
 
             result = Matrix.Identity;
             result.M11 = xaxis.X; result.M21 = xaxis.Y; result.M31 = xaxis.Z;
             result.M12 = yaxis.X; result.M22 = yaxis.Y; result.M32 = yaxis.Z;
             result.M13 = zaxis.X; result.M23 = zaxis.Y; result.M33 = zaxis.Z;
 
-            Vector3.Dot(ref xaxis, ref eye, out result.M41);
-            Vector3.Dot(ref yaxis, ref eye, out result.M42);
-            Vector3.Dot(ref zaxis, ref eye, out result.M43);
+            Vec3.Dot(ref xaxis, ref eye, out result.M41);
+            Vec3.Dot(ref yaxis, ref eye, out result.M42);
+            Vec3.Dot(ref zaxis, ref eye, out result.M43);
 
             result.M41 = -result.M41;
             result.M42 = -result.M42;
@@ -2050,7 +2050,7 @@ namespace math
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <returns>The created look-at matrix.</returns>
-        public static Matrix LookAtRH(Vector3 eye, Vector3 target, Vector3 up)
+        public static Matrix LookAtRH(Vec3 eye, Vec3 target, Vec3 up)
         {
             Matrix result;
             LookAtRH(ref eye, ref target, ref up, out result);
@@ -2450,7 +2450,7 @@ namespace math
         /// W component is 1, the light is a point light.</param>
         /// <param name="plane">The plane onto which to project the geometry as a shadow. This parameter is assumed to be normalized.</param>
         /// <param name="result">When the method completes, contains the shadow matrix.</param>
-        public static void Shadow(ref Vector4 light, ref Plane plane, out Matrix result)
+        public static void Shadow(ref Vec4 light, ref Plane plane, out Matrix result)
         {        
             float dot = (plane.Normal.X * light.X) + (plane.Normal.Y * light.Y) + (plane.Normal.Z * light.Z) + (plane.D * light.W);
             float x = -plane.Normal.X;
@@ -2483,7 +2483,7 @@ namespace math
         /// W component is 1, the light is a point light.</param>
         /// <param name="plane">The plane onto which to project the geometry as a shadow. This parameter is assumed to be normalized.</param>
         /// <returns>The shadow matrix.</returns>
-        public static Matrix Shadow(Vector4 light, Plane plane)
+        public static Matrix Shadow(Vec4 light, Plane plane)
         {
             Matrix result;
             Shadow(ref light, ref plane, out result);
@@ -2495,7 +2495,7 @@ namespace math
         /// </summary>
         /// <param name="scale">Scaling factor for all three axes.</param>
         /// <param name="result">When the method completes, contains the created scaling matrix.</param>
-        public static void Scaling(ref Vector3 scale, out Matrix result)
+        public static void Scaling(ref Vec3 scale, out Matrix result)
         {
             Scaling(scale.X, scale.Y, scale.Z, out result);
         }
@@ -2505,7 +2505,7 @@ namespace math
         /// </summary>
         /// <param name="scale">Scaling factor for all three axes.</param>
         /// <returns>The created scaling matrix.</returns>
-        public static Matrix Scaling(Vector3 scale)
+        public static Matrix Scaling(Vec3 scale)
         {
             Matrix result;
             Scaling(ref scale, out result);
@@ -2657,7 +2657,7 @@ namespace math
         /// <param name="axis">The axis around which to rotate. This parameter is assumed to be normalized.</param>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        public static void RotationAxis(ref Vector3 axis, float angle, out Matrix result)
+        public static void RotationAxis(ref Vec3 axis, float angle, out Matrix result)
         {
             float x = axis.X;
             float y = axis.Y;
@@ -2689,7 +2689,7 @@ namespace math
         /// <param name="axis">The axis around which to rotate. This parameter is assumed to be normalized.</param>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <returns>The created rotation matrix.</returns>
-        public static Matrix RotationAxis(Vector3 axis, float angle)
+        public static Matrix RotationAxis(Vec3 axis, float angle)
         {
             Matrix result;
             RotationAxis(ref axis, angle, out result);
@@ -2732,7 +2732,7 @@ namespace math
         /// <param name="rotation">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <param name="translation">The translation.</param>
         /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        public static void Transformation(ref Vector3 scaling, ref Quaternion rotation, ref Vector3 translation, out Matrix result)
+        public static void Transformation(ref Vec3 scaling, ref Quaternion rotation, ref Vec3 translation, out Matrix result)
         {
             // Equivalent to:
             //result =
@@ -2839,7 +2839,7 @@ namespace math
         /// </summary>
         /// <param name="value">The offset for all three coordinate planes.</param>
         /// <param name="result">When the method completes, contains the created translation matrix.</param>
-        public static void Translation(ref Vector3 value, out Matrix result)
+        public static void Translation(ref Vec3 value, out Matrix result)
         {
             Translation(value.X, value.Y, value.Z, out result);
         }
@@ -2849,7 +2849,7 @@ namespace math
         /// </summary>
         /// <param name="value">The offset for all three coordinate planes.</param>
         /// <returns>The created translation matrix.</returns>
-        public static Matrix Translation(Vector3 value)
+        public static Matrix Translation(Vec3 value)
         {
             Matrix result;
             Translation(ref value, out result);
@@ -2892,7 +2892,7 @@ namespace math
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation(float scaling, ref Quaternion rotation, ref Vector3 translation, out Matrix result)
+        public static void AffineTransformation(float scaling, ref Quaternion rotation, ref Vec3 translation, out Matrix result)
         {
             result = Scaling(scaling) * RotationQuaternion(rotation) * Translation(translation);
         }
@@ -2904,7 +2904,7 @@ namespace math
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix AffineTransformation(float scaling, Quaternion rotation, Vector3 translation)
+        public static Matrix AffineTransformation(float scaling, Quaternion rotation, Vec3 translation)
         {
             Matrix result;
             AffineTransformation(scaling, ref rotation, ref translation, out result);
@@ -2919,7 +2919,7 @@ namespace math
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation(float scaling, ref Vector3 rotationCenter, ref Quaternion rotation, ref Vector3 translation, out Matrix result)
+        public static void AffineTransformation(float scaling, ref Vec3 rotationCenter, ref Quaternion rotation, ref Vec3 translation, out Matrix result)
         {
             result = Scaling(scaling) * Translation(-rotationCenter) * RotationQuaternion(rotation) *
                 Translation(rotationCenter) * Translation(translation);
@@ -2933,7 +2933,7 @@ namespace math
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix AffineTransformation(float scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation)
+        public static Matrix AffineTransformation(float scaling, Vec3 rotationCenter, Quaternion rotation, Vec3 translation)
         {
             Matrix result;
             AffineTransformation(scaling, ref rotationCenter, ref rotation, ref translation, out result);
@@ -2949,7 +2949,7 @@ namespace math
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
         public static void AffineTransformation2D(float scaling, float rotation, ref Vec2 translation, out Matrix result)
         {
-            result = Scaling(scaling, scaling, 1.0f) * RotationZ(rotation) * Translation((Vector3)translation);
+            result = Scaling(scaling, scaling, 1.0f) * RotationZ(rotation) * Translation((Vec3)translation);
         }
 
         /// <summary>
@@ -2976,8 +2976,8 @@ namespace math
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
         public static void AffineTransformation2D(float scaling, ref Vec2 rotationCenter, float rotation, ref Vec2 translation, out Matrix result)
         {
-            result = Scaling(scaling, scaling, 1.0f) * Translation((Vector3)(-rotationCenter)) * RotationZ(rotation) *
-                Translation((Vector3)rotationCenter) * Translation((Vector3)translation);
+            result = Scaling(scaling, scaling, 1.0f) * Translation((Vec3)(-rotationCenter)) * RotationZ(rotation) *
+                Translation((Vec3)rotationCenter) * Translation((Vec3)translation);
         }
 
         /// <summary>
@@ -3005,7 +3005,7 @@ namespace math
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created transformation matrix.</param>
-        public static void Transformation(ref Vector3 scalingCenter, ref Quaternion scalingRotation, ref Vector3 scaling, ref Vector3 rotationCenter, ref Quaternion rotation, ref Vector3 translation, out Matrix result)
+        public static void Transformation(ref Vec3 scalingCenter, ref Quaternion scalingRotation, ref Vec3 scaling, ref Vec3 rotationCenter, ref Quaternion rotation, ref Vec3 translation, out Matrix result)
         {
             Matrix sr = RotationQuaternion(scalingRotation);
 
@@ -3023,7 +3023,7 @@ namespace math
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created transformation matrix.</returns>
-        public static Matrix Transformation(Vector3 scalingCenter, Quaternion scalingRotation, Vector3 scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation)
+        public static Matrix Transformation(Vec3 scalingCenter, Quaternion scalingRotation, Vec3 scaling, Vec3 rotationCenter, Quaternion rotation, Vec3 translation)
         {
             Matrix result;
             Transformation(ref scalingCenter, ref scalingRotation, ref scaling, ref rotationCenter, ref rotation, ref translation, out result);
@@ -3042,8 +3042,8 @@ namespace math
         /// <param name="result">When the method completes, contains the created transformation matrix.</param>
         public static void Transformation2D(ref Vec2 scalingCenter, float scalingRotation, ref Vec2 scaling, ref Vec2 rotationCenter, float rotation, ref Vec2 translation, out Matrix result)
         {
-            result = Translation((Vector3)(-scalingCenter)) * RotationZ(-scalingRotation) * Scaling((Vector3)scaling) * RotationZ(scalingRotation) * Translation((Vector3)scalingCenter) * 
-                Translation((Vector3)(-rotationCenter)) * RotationZ(rotation) * Translation((Vector3)rotationCenter) * Translation((Vector3)translation);
+            result = Translation((Vec3)(-scalingCenter)) * RotationZ(-scalingRotation) * Scaling((Vec3)scaling) * RotationZ(scalingRotation) * Translation((Vec3)scalingCenter) * 
+                Translation((Vec3)(-rotationCenter)) * RotationZ(rotation) * Translation((Vec3)rotationCenter) * Translation((Vec3)translation);
 
             result.M33 = 1f;
             result.M44 = 1f;

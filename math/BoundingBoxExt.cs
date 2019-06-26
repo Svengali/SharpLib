@@ -22,12 +22,12 @@ namespace math
         /// <summary>
         /// The center of this bounding box.
         /// </summary>
-        public Vector3 Center;
+        public Vec3 Center;
 
         /// <summary>
         /// The extent of this bounding box.
         /// </summary>
-        public Vector3 Extent;
+        public Vec3 Extent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="math.BoundingBoxExt" /> struct.
@@ -44,7 +44,7 @@ namespace math
         /// </summary>
         /// <param name="minimum">The minimum vertex of the bounding box.</param>
         /// <param name="maximum">The maximum vertex of the bounding box.</param>
-        public BoundingBoxExt(Vector3 minimum, Vector3 maximum)
+        public BoundingBoxExt(Vec3 minimum, Vec3 maximum)
         {
             this.Center = (minimum + maximum) / 2;
             this.Extent = (maximum - minimum) / 2;
@@ -54,7 +54,7 @@ namespace math
         /// Gets the minimum.
         /// </summary>
         /// <value>The minimum.</value>
-        public Vector3 Minimum
+        public Vec3 Minimum
         {
             get
             {
@@ -66,7 +66,7 @@ namespace math
         /// Gets the maximum.
         /// </summary>
         /// <value>The maximum.</value>
-        public Vector3 Maximum
+        public Vec3 Maximum
         {
             get
             {
@@ -85,7 +85,7 @@ namespace math
             var center = Center;
             var extent = Extent;
 
-            Vector3.TransformCoordinate(ref center, ref world, out Center);
+            Vec3.TransformCoordinate(ref center, ref world, out Center);
 
             // Update world matrix into absolute form
             unsafe
@@ -100,7 +100,7 @@ namespace math
                 }
             }
 
-            Vector3.TransformNormal(ref extent, ref world, out Extent);
+            Vec3.TransformNormal(ref extent, ref world, out Extent);
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Merge(ref BoundingBoxExt value1, ref BoundingBoxExt value2, out BoundingBoxExt result)
         {
-            var maximum = Vector3.Max(value1.Maximum, value2.Maximum);
-            var minimum = Vector3.Min(value1.Minimum, value2.Minimum);
+            var maximum = Vec3.Max(value1.Maximum, value2.Maximum);
+            var minimum = Vec3.Min(value1.Minimum, value2.Minimum);
 
             result.Center = (minimum + maximum) / 2;
             result.Extent = (maximum - minimum) / 2;

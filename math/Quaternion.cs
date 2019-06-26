@@ -97,7 +97,7 @@ namespace math
         /// Initializes a new instance of the <see cref="math.Quaternion"/> struct.
         /// </summary>
         /// <param name="value">A vector containing the values with which to initialize the components.</param>
-        public Quaternion(Vector4 value)
+        public Quaternion(Vec4 value)
         {
             X = value.X;
             Y = value.Y;
@@ -110,7 +110,7 @@ namespace math
         /// </summary>
         /// <param name="value">A vector containing the values with which to initialize the X, Y, and Z components.</param>
         /// <param name="w">Initial value for the W component of the quaternion.</param>
-        public Quaternion(Vector3 value, float w)
+        public Quaternion(Vec3 value, float w)
         {
             X = value.X;
             Y = value.Y;
@@ -205,27 +205,27 @@ namespace math
         /// Gets the axis components of the quaternion.
         /// </summary>
         /// <value>The axis components of the quaternion.</value>
-        public Vector3 Axis
+        public Vec3 Axis
         {
             get
             {
                 float length = (X * X) + (Y * Y) + (Z * Z);
                 if (length < MathUtil.ZeroTolerance)
-                    return Vector3.UnitX;
+                    return Vec3.UnitX;
 
                 float inv = 1.0f / length;
-                return new Vector3(X * inv, Y * inv, Z * inv);
+                return new Vec3(X * inv, Y * inv, Z * inv);
             }
         }
 
         /// <summary>
         /// Gets yaw/pitch/roll equivalent of the quaternion
         /// </summary>
-        public Vector3 YawPitchRoll
+        public Vec3 YawPitchRoll
         {
             get
             {
-                Vector3 yawPitchRoll;
+                Vec3 yawPitchRoll;
                 RotationYawPitchRoll(ref this, out yawPitchRoll.X, out yawPitchRoll.Y, out yawPitchRoll.Z);
                 return yawPitchRoll;
             }
@@ -750,7 +750,7 @@ namespace math
         /// Rotates a Vector3 by the specified quaternion rotation.
         /// </summary>
         /// <param name="vector">The vector to rotate.</param>
-        public void Rotate(ref Vector3 vector)
+        public void Rotate(ref Vec3 vector)
         {
             var pureQuaternion = new Quaternion(vector, 0);
             pureQuaternion = Conjugate(this) * pureQuaternion * this;
@@ -766,10 +766,10 @@ namespace math
         /// <param name="axis">The axis of rotation.</param>
         /// <param name="angle">The angle of rotation.</param>
         /// <param name="result">When the method completes, contains the newly created quaternion.</param>
-        public static void RotationAxis(ref Vector3 axis, float angle, out Quaternion result)
+        public static void RotationAxis(ref Vec3 axis, float angle, out Quaternion result)
         {
-            Vector3 normalized;
-            Vector3.Normalize(ref axis, out normalized);
+            Vec3 normalized;
+            Vec3.Normalize(ref axis, out normalized);
 
             float half = angle * 0.5f;
             float sin = (float)Math.Sin(half);
@@ -787,7 +787,7 @@ namespace math
         /// <param name="axis">The axis of rotation.</param>
         /// <param name="angle">The angle of rotation.</param>
         /// <returns>The newly created quaternion.</returns>
-        public static Quaternion RotationAxis(Vector3 axis, float angle)
+        public static Quaternion RotationAxis(Vec3 axis, float angle)
         {
             Quaternion result;
             RotationAxis(ref axis, angle, out result);
@@ -1015,7 +1015,7 @@ namespace math
         /// <param name="source">The source vector of the transformation.</param>
         /// <param name="target">The target vector of the transformation.</param>
         /// <returns>The resulting quaternion corresponding to the transformation of the source vector to the target vector.</returns>
-        public static Quaternion BetweenDirections(Vector3 source, Vector3 target)
+        public static Quaternion BetweenDirections(Vec3 source, Vec3 target)
         {
             Quaternion result;
             BetweenDirections(ref source, ref target, out result);
@@ -1028,10 +1028,10 @@ namespace math
         /// <param name="source">The source vector of the transformation.</param>
         /// <param name="target">The target vector of the transformation.</param>
         /// <param name="result">The resulting quaternion corresponding to the transformation of the source vector to the target vector.</param>
-        public static void BetweenDirections(ref Vector3 source, ref Vector3 target, out Quaternion result)
+        public static void BetweenDirections(ref Vec3 source, ref Vec3 target, out Quaternion result)
         {
             var norms = (float)Math.Sqrt(source.LengthSquared() * target.LengthSquared());
-            var real = norms + Vector3.Dot(source, target);
+            var real = norms + Vec3.Dot(source, target);
             if (real < MathUtil.ZeroTolerance * norms)
             {
                 // If source and target are exactly opposite, rotate 180 degrees around an arbitrary orthogonal axis.
@@ -1043,7 +1043,7 @@ namespace math
             else
             {
                 // Otherwise, build quaternion the standard way.
-                var axis = Vector3.Cross(source, target);
+                var axis = Vec3.Cross(source, target);
                 result = new Quaternion(axis, real);
             }
             result.Normalize();

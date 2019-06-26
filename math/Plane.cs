@@ -43,7 +43,7 @@ namespace math
         /// <summary>
         /// The normal vector of the plane.
         /// </summary>
-        public Vector3 Normal;
+        public Vec3 Normal;
 
         /// <summary>
         /// The distance of the plane along its normal from the origin.
@@ -79,10 +79,10 @@ namespace math
         /// </summary>
         /// <param name="point">Any point that lies along the plane.</param>
         /// <param name="normal">The normal vector to the plane.</param>
-        public Plane(Vector3 point, Vector3 normal)
+        public Plane(Vec3 point, Vec3 normal)
         {
             this.Normal = normal;
-            this.D = Vector3.Dot(normal, point);
+            this.D = Vec3.Dot(normal, point);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace math
         /// </summary>
         /// <param name="value">The normal of the plane.</param>
         /// <param name="d">The distance of the plane along its normal from the origin</param>
-        public Plane(Vector3 value, float d)
+        public Plane(Vec3 value, float d)
         {
             Normal = value;
             D = d;
@@ -102,7 +102,7 @@ namespace math
         /// <param name="point1">First point of a triangle defining the plane.</param>
         /// <param name="point2">Second point of a triangle defining the plane.</param>
         /// <param name="point3">Third point of a triangle defining the plane.</param>
-        public Plane(Vector3 point1, Vector3 point2, Vector3 point3)
+        public Plane(Vec3 point1, Vec3 point2, Vec3 point3)
         {
             float x1 = point2.X - point1.X;
             float y1 = point2.Y - point1.Y;
@@ -213,7 +213,7 @@ namespace math
         /// </summary>
         /// <param name="point">The point to test.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public PlaneIntersectionType Intersects(ref Vector3 point)
+        public PlaneIntersectionType Intersects(ref Vec3 point)
         {
             return CollisionHelper.PlaneIntersectsPoint(ref this, ref point);
         }
@@ -246,9 +246,9 @@ namespace math
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="math.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="math.Vec3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public bool Intersects(ref Ray ray, out Vector3 point)
+        public bool Intersects(ref Ray ray, out Vec3 point)
         {
             return CollisionHelper.RayIntersectsPlane(ref ray, ref this, out point);
         }
@@ -282,7 +282,7 @@ namespace math
         /// <param name="vertex2">The second vertex of the triagnle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <returns>Whether the two objects intersected.</returns>
-        public PlaneIntersectionType Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
+        public PlaneIntersectionType Intersects(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3)
         {
             return CollisionHelper.PlaneIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
         }
@@ -338,7 +338,7 @@ namespace math
         /// <param name="left">The source plane.</param>
         /// <param name="right">The source vector.</param>
         /// <param name="result">When the method completes, contains the dot product of the specified plane and vector.</param>
-        public static void Dot(ref Plane left, ref Vector4 right, out float result)
+        public static void Dot(ref Plane left, ref Vec4 right, out float result)
         {
             result = (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + (left.D * right.W);
         }
@@ -349,7 +349,7 @@ namespace math
         /// <param name="left">The source plane.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The dot product of the specified plane and vector.</returns>
-        public static float Dot(Plane left, Vector4 right)
+        public static float Dot(Plane left, Vec4 right)
         {
             return (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + (left.D * right.W);
         }
@@ -360,7 +360,7 @@ namespace math
         /// <param name="left">The source plane.</param>
         /// <param name="right">The source vector.</param>
         /// <param name="result">When the method completes, contains the dot product of a specified vector and the normal of the Plane plus the distance value of the plane.</param>
-        public static void DotCoordinate(ref Plane left, ref Vector3 right, out float result)
+        public static void DotCoordinate(ref Plane left, ref Vec3 right, out float result)
         {
             result = (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + left.D;
         }
@@ -371,7 +371,7 @@ namespace math
         /// <param name="left">The source plane.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The dot product of a specified vector and the normal of the Plane plus the distance value of the plane.</returns>
-        public static float DotCoordinate(Plane left, Vector3 right)
+        public static float DotCoordinate(Plane left, Vec3 right)
         {
             return (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + left.D;
         }
@@ -382,7 +382,7 @@ namespace math
         /// <param name="left">The source plane.</param>
         /// <param name="right">The source vector.</param>
         /// <param name="result">When the method completes, contains the dot product of the specified vector and the normal of the plane.</param>
-        public static void DotNormal(ref Plane left, ref Vector3 right, out float result)
+        public static void DotNormal(ref Plane left, ref Vec3 right, out float result)
         {
             result = (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z);
         }
@@ -393,7 +393,7 @@ namespace math
         /// <param name="left">The source plane.</param>
         /// <param name="right">The source vector.</param>
         /// <returns>The dot product of the specified vector and the normal of the plane.</returns>
-        public static float DotNormal(Plane left, Vector3 right)
+        public static float DotNormal(Plane left, Vec3 right)
         {
             return (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z);
         }
@@ -404,14 +404,14 @@ namespace math
         /// <param name="plane">The plane to project the point to.</param>
         /// <param name="point">The point to project.</param>
         /// <param name="result">The projected point.</param>
-        public static void Project(ref Plane plane, ref Vector3 point, out Vector3 result)
+        public static void Project(ref Plane plane, ref Vec3 point, out Vec3 result)
         {
             float distance;
             DotCoordinate(ref plane, ref point, out distance);
 
             // compute: point - distance * plane.Normal
-            Vector3.Multiply(ref plane.Normal, distance, out result);
-            Vector3.Subtract(ref point, ref result, out result);
+            Vec3.Multiply(ref plane.Normal, distance, out result);
+            Vec3.Subtract(ref point, ref result, out result);
         }
 
         /// <summary>
@@ -420,9 +420,9 @@ namespace math
         /// <param name="plane">The plane to project the point to.</param>
         /// <param name="point">The point to project.</param>
         /// <returns>The projected point.</returns>
-        public static Vector3 Project(Plane plane, Vector3 point)
+        public static Vec3 Project(Plane plane, Vec3 point)
         {
-            Vector3 result;
+            Vec3 result;
             Project(ref plane, ref point, out result);
             return result;
         }
@@ -762,11 +762,11 @@ namespace math
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="math.Vector4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="math.Vec4"/> is equal to this instance.
         /// </summary>
-        /// <param name="value">The <see cref="math.Vector4"/> to compare with this instance.</param>
+        /// <param name="value">The <see cref="math.Vec4"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="math.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="math.Vec4"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(Plane value)
         {

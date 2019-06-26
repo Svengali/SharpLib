@@ -557,23 +557,23 @@ namespace math
         }
 
         /// <summary>
-        ///   Performs an explicit conversion from <see cref = "Int4" /> to <see cref = "Vector3" />.
+        ///   Performs an explicit conversion from <see cref = "Int4" /> to <see cref = "Vec3" />.
         /// </summary>
         /// <param name = "value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(Int4 value)
+        public static explicit operator Vec3(Int4 value)
         {
-            return new Vector3(value.X, value.Y, value.Z);
+            return new Vec3(value.X, value.Y, value.Z);
         }
 
         /// <summary>
-        ///   Performs an explicit conversion from <see cref = "Int4" /> to <see cref = "Vector4" />.
+        ///   Performs an explicit conversion from <see cref = "Int4" /> to <see cref = "Vec4" />.
         /// </summary>
         /// <param name = "value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector4(Int4 value)
+        public static explicit operator Vec4(Int4 value)
         {
-            return new Vector4(value.X, value.Y, value.Z, value.W);
+            return new Vec4(value.X, value.Y, value.Z, value.W);
         }
 
         /// <summary>

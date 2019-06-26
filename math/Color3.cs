@@ -87,7 +87,7 @@ namespace math
         /// Initializes a new instance of the <see cref="Color3"/> struct.
         /// </summary>
         /// <param name="value">The red, green, and blue components of the color.</param>
-        public Color3(Vector3 value)
+        public Color3(Vec3 value)
         {
             R = value.X;
             G = value.Y;
@@ -204,9 +204,9 @@ namespace math
         /// Converts the color into a three component vector.
         /// </summary>
         /// <returns>A three component vector containing the red, green, and blue components of the color.</returns>
-        public Vector3 ToVector3()
+        public Vec3 ToVector3()
         {
-            return new Vector3(R, G, B);
+            return new Vec3(R, G, B);
         }
 
         /// <summary>
@@ -684,21 +684,21 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="Color3"/> to <see cref="math.Vector3"/>.
+        /// Performs an explicit conversion from <see cref="Color3"/> to <see cref="math.Vec3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector3(Color3 value)
+        public static explicit operator Vec3(Color3 value)
         {
-            return new Vector3(value.R, value.G, value.B);
+            return new Vec3(value.R, value.G, value.B);
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="math.Vector3"/> to <see cref="Color3"/>.
+        /// Performs an explicit conversion from <see cref="math.Vec3"/> to <see cref="Color3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Color3(Vector3 value)
+        public static explicit operator Color3(Vec3 value)
         {
             return new Color3(value.X, value.Y, value.Z);
         }

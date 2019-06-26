@@ -154,7 +154,7 @@ namespace math
         /// Initializes a new instance of the <see cref="math.Double4"/> struct.
         /// </summary>
         /// <param name="v">The Vector4 to construct the Double4 from.</param>
-        public Double4(Vector4 v)
+        public Double4(Vec4 v)
         {
             X = v.X;
             Y = v.Y;
@@ -1230,21 +1230,21 @@ namespace math
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="math.Double4"/> to <see cref="math.Vector4"/>.
+        /// Performs an explicit conversion from <see cref="math.Double4"/> to <see cref="math.Vec4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static explicit operator Vector4(Double4 value)
+        public static explicit operator Vec4(Double4 value)
         {
-            return new Vector4((float)value.X, (float)value.Y, (float)value.Z, (float)value.W);
+            return new Vec4((float)value.X, (float)value.Y, (float)value.Z, (float)value.W);
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="math.Vector4"/> to <see cref="math.Double4"/>.
+        /// Performs an implicit conversion from <see cref="math.Vec4"/> to <see cref="math.Double4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator Double4(Vector4 value)
+        public static implicit operator Double4(Vec4 value)
         {
             return new Double4(value);
         }

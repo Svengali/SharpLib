@@ -20,7 +20,7 @@ namespace math
         /// Return the X/Y components of the vector.
         /// </summary>
         /// <param name="vector">the input vector</param>
-        public static Vec2 XY(this Vector3 vector)
+        public static Vec2 XY(this Vec3 vector)
         {
             return new Vec2(vector.X, vector.Y);
         }
@@ -29,7 +29,7 @@ namespace math
         /// Return the X/Z components of the vector.
         /// </summary>
         /// <param name="vector">the input vector</param>
-        public static Vec2 XZ(this Vector3 vector)
+        public static Vec2 XZ(this Vec3 vector)
         {
             return new Vec2(vector.X, vector.Z);
         }
@@ -38,7 +38,7 @@ namespace math
         /// Return the Y/Z components of the vector.
         /// </summary>
         /// <param name="vector">the input vector</param>
-        public static Vec2 YZ(this Vector3 vector)
+        public static Vec2 YZ(this Vec3 vector)
         {
             return new Vec2(vector.Y, vector.Z);
         }
@@ -47,7 +47,7 @@ namespace math
         /// Return the X/Y components of the vector.
         /// </summary>
         /// <param name="vector">the input vector</param>
-        public static Vec2 XY(this Vector4 vector)
+        public static Vec2 XY(this Vec4 vector)
         {
             return new Vec2(vector.X, vector.Y);
         }
@@ -56,9 +56,9 @@ namespace math
         /// Return the X/Y/Z components of the vector.
         /// </summary>
         /// <param name="vector">the input vector</param>
-        public static Vector3 XYZ(this Vector4 vector)
+        public static Vec3 XYZ(this Vec4 vector)
         {
-            return new Vector3(vector.X, vector.Y, vector.Z);
+            return new Vec3(vector.X, vector.Y, vector.Z);
         }
     }
 }
