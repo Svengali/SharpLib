@@ -6,6 +6,18 @@ using System.Reflection;
 namespace lib
 {
 
+public class DescAttribute : Attribute
+{
+	public string Desc { get; private set; }
+
+	public DescAttribute( string desc )
+	{
+		Desc = desc;
+	}
+}
+
+
+
 [Serializable]
 public class ResRefConfig<T> : res.Ref<T> where T: Config 
 {
