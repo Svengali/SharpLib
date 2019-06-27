@@ -81,7 +81,7 @@ public class Conn
 			}
 			catch( Exception e )
 			{
-				lib.Log.warn( "Exception sending obj {0} of {1}", obj, e );
+				lib.Log.warn( $"Exception sending obj {obj} of {e}" );
 				throw;
 			}
 		}

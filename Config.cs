@@ -122,7 +122,7 @@ public class Config
 			}
 			catch( Exception e )
 			{
-				Log.error( "Caught exception {0}", e );
+				Log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
 			}
 
 			cfg.SetFilename( filename );
