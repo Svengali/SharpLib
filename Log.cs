@@ -3,6 +3,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Collections;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Reflection;
 //using System.Threading.Tasks;
 
 namespace lib
@@ -135,11 +137,40 @@ namespace lib
 
 		static public void log( string msg, LogType type = LogType.Debug, string cat = "unk", object obj = null )
 		{
-			lock(s_log)
+			lock( s_log )
 			{
 				var evt = new LogEvent( type, cat, msg, obj );
 
 				s_log.writeToAll( evt );
+			}
+		}
+
+
+		static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "unk"  )
+		{
+			var list = scr.GetAllProperties( obj.GetType() );
+
+
+			lock( s_log )
+			{
+				var evt = new LogEvent( type, cat, header, obj );
+
+				s_log.writeToAll( evt );
+
+				foreach( var pi in list )
+				{
+					try
+					{
+						var v = pi.GetValue( obj );
+
+						log( $"{pi.Name} = {v}", type, cat );
+					}
+					catch( Exception ex )
+					{
+						log( $"Exception processing {pi.Name} {ex.Message}", type, cat );
+					}
+				}
+
 			}
 		}
 
