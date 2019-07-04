@@ -20,7 +20,7 @@ public interface IProcess
 
 
 
-	public class Conn
+public class Conn
 {
 	public Socket Sock { get { return m_socket; } }
 	public Stream Stream { get { return m_streamNet; } }

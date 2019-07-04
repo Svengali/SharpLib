@@ -90,7 +90,7 @@ namespace lib
 			s_log = null;
 		}
 
-		static private Log s_log;
+		static public Log s_log;
 
 		/*
 		static public Log log
@@ -103,43 +103,59 @@ namespace lib
 		*/
 
 		// Forwards.
-		static public void fatal( string msg, string cat = "unknown", object obj = null )
+		static public void fatal( string msg, string cat = "unk", object obj = null )
 		{
 			log(msg, LogType.Fatal, cat, obj);
 		}
 
-		static public void error( string msg, string cat = "unknown", object obj = null )
+		static public void error( string msg, string cat = "unk", object obj = null )
 		{
 			log(msg, LogType.Error, cat, obj);
 		}
 
-		static public void warn( string msg, string cat = "unknown", object obj = null ) 
+		static public void warn( string msg, string cat = "unk", object obj = null ) 
 		{
 			log( msg, LogType.Warn, cat, obj );
 		}
 
-		static public void info( string msg, string cat = "unknown", object obj = null )
+		static public void info( string msg, string cat = "unk", object obj = null )
 		{
 			log(msg, LogType.Info, cat, obj);
 		}
 
-		static public void debug( string msg, string cat = "unknown", object obj = null )
+		static public void debug( string msg, string cat = "unk", object obj = null )
 		{
 			log(msg, LogType.Debug, cat, obj);
 		}
 
-		static public void trace( string msg, string cat = "unknown", object obj = null )
+		static public void trace( string msg, string cat = "unk", object obj = null )
 		{
 			log(msg, LogType.Trace, cat, obj);
 		}
 
-		static public void log( string msg, LogType type = LogType.Debug, string cat = "unknown", object obj = null )
+		static public void log( string msg, LogType type = LogType.Debug, string cat = "unk", object obj = null )
 		{
 			lock(s_log)
 			{
 				var evt = new LogEvent( type, cat, msg, obj );
 
 				s_log.writeToAll( evt );
+			}
+		}
+
+		//This might seem a little odd, but the intent is that usually you wont need to set notExpectedValue. 
+		static public void expected<T>( T value, string falseString, string trueString = "", T notExpectedValue = default(T) )
+		{
+
+			var name = nameof(value);
+
+			if( !value.Equals( notExpectedValue ) )
+			{
+				lib.Log.info( $"Properly got {value}{trueString}" );
+			}
+			else
+			{
+				lib.Log.warn( $"Got {notExpectedValue} instead of {value}{falseString}" );
 			}
 		}
 

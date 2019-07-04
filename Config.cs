@@ -17,29 +17,6 @@ public class DescAttribute : Attribute
 }
 
 
-
-[Serializable]
-public class ResRefConfig<T> : res.Ref<T> where T: Config 
-{
-	public ResRefConfig()
-	{
-	}
-
-	public ResRefConfig( string filename, T cfg )
-		: base( filename, cfg )
-	{
-	}
-
-	override public void OnDeserialize( object enclosing )
-	{
-		base.OnDeserialize( enclosing );
-
-		var cfg = Config.load<T>( filename );
-
-		res = cfg;
-	}
-}
-
 [Serializable]
 public class Config
 {
@@ -52,20 +29,22 @@ public class Config
 
 	static public void startup()
 	{
-		res.Mgr.register<Config>( res_load );
-		res.Mgr.registerSub<Config>( res_load );
+		res.Mgr.register<Config>( load );
+		res.Mgr.registerSub(typeof(Config));
 	}
 
 
 	#region SaveLoad
-	static public ResRefConfig<Config> res_load( string filename )
+	/*
+	static public res.Ref<Config> res_load( string filename )
 	{
-		return new ResRefConfig<Config>( filename, load( filename ) );
+		return new res.Ref<Config>( filename, load( filename ) );
 	}
+	*/
 
-	static public ResRefConfig<T> res_load<T>( string filename ) where T : Config
+	static public T res_load<T>( string filename ) where T : Config
 	{
-		return new ResRefConfig<T>( filename, load<T>( filename ) );
+		return load<T>( filename );
 	}
 
 	/*

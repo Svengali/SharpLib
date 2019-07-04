@@ -44,6 +44,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.6.0-preview3.19128.7\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -67,6 +70,7 @@
     <Compile Include="Clock.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="Imm.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="math\AngleSingle.cs" />
     <Compile Include="math\AngleType.cs" />
@@ -130,6 +134,9 @@
     <Compile Include="VersionFormatter.cs" />
     <Compile Include="XmlFormatter.cs" />
     <Compile Include="XmlFormatter2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
