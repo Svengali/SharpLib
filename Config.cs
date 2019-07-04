@@ -16,6 +16,13 @@ public class DescAttribute : Attribute
 	}
 }
 
+[Serializable]
+public class ConfigCfg : Config
+{
+	public readonly bool writeOutTemplateFiles = true;
+}
+
+
 
 [Serializable]
 public class Config
@@ -27,10 +34,15 @@ public class Config
 	}
 	*/
 
-	static public void startup()
+	static ConfigCfg s_cfg = new ConfigCfg();
+
+	static public void startup( string filename )
 	{
 		res.Mgr.register<Config>( load );
 		res.Mgr.registerSub(typeof(Config));
+
+		s_cfg = Config.load<ConfigCfg>( filename );
+
 	}
 
 
@@ -104,10 +116,21 @@ public class Config
 				Log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
 			}
 
-			cfg.SetFilename( filename );
+			//cfg.SetFilename( filename );
 
-			Config.save( cfg, filename );
-		}
+			if( s_cfg.writeOutTemplateFiles )
+			{
+				var templateFile = $"templates/{filename}";
+
+				var dirName = Path.GetDirectoryName( templateFile );
+
+				lib.Util.checkAndAddDirectory( dirName );
+
+				lib.Log.info( $"Writing out template config of type {t.Name} in {templateFile}" );
+
+				Config.save( cfg, templateFile );
+				}
+			}
 
 		return cfg;
 	}
