@@ -337,13 +337,22 @@ public class XmlFormatter2 : IFormatter
 
 				XmlElement childElem = getNamedChild( allChildren, name );
 
+
 				if( childElem != null )
 				{
 					object childObj = Deserialize( childElem, childFi.FieldType, obj );
 
 					childFi.SetValue( obj, childObj );
 				}
-			}
+				else if( miArr.Length == 1 )
+				{
+					object childObj = Deserialize( elem, childFi.FieldType, obj );
+
+					childFi.SetValue( obj, childObj );
+				}
+
+
+				}
 		}
 
 		return obj;
