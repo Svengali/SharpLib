@@ -56,7 +56,7 @@ namespace lib
         {
             int itemCount = info.GetInt32("ItemCount");
             for (int i = 0; i < itemCount; i++) {
-                KeyValuePair<TKey, TVal> kvp = (KeyValuePair<TKey, TVal>)info.GetValue(String.Format("Item{0}", i), typeof(KeyValuePair<TKey, TVal>));
+                KeyValuePair<TKey, TVal> kvp = (KeyValuePair<TKey, TVal>)info.GetValue(String.Format( $"Item{i}" ), typeof(KeyValuePair<TKey, TVal>));
                 this.Add(kvp.Key, kvp.Value);
             }
         }
@@ -67,7 +67,7 @@ namespace lib
             info.AddValue("ItemCount", this.Count);
             int itemIdx = 0;
             foreach (KeyValuePair<TKey, TVal> kvp in this) {
-                info.AddValue(String.Format("Item{0}", itemIdx), kvp, typeof(KeyValuePair<TKey, TVal>));
+                info.AddValue(String.Format( $"Item{itemIdx}" ), kvp, typeof(KeyValuePair<TKey, TVal>));
                 itemIdx++;
             }
         }

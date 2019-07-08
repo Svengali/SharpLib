@@ -88,7 +88,7 @@ namespace lib
 		{
 			if( !Directory.Exists( path ) )
 			{
-				lib.Log.info( "Creating directory {0}", path );
+				lib.Log.info( $"Creating directory {path}" );
 				Directory.CreateDirectory( path );
 			}
 

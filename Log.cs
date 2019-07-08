@@ -235,7 +235,7 @@ namespace lib
 		{
 			m_delegates.Add( cb );
 		}
-		
+
 		/*
 		private void writeFileAndLine( StackTrace st )
 		{
@@ -244,7 +244,7 @@ namespace lib
 			string srcFile = frame.GetFileName();
 			string srcLine = frame.GetFileLineNumber().Tostring();
 			
-			Console.WriteLine( "{0} ({1}):", srcFile, srcLine );
+			Console.WriteLine( $"{srcFile} ({srcLine}):" );
 		}
 		
 		private void writeStack( StackTrace st )
@@ -258,7 +258,7 @@ namespace lib
 			
 				if( srcFile != null )
 				{			
-					Console.WriteLine( "{0} ({1})", srcFile, srcLine );
+					Console.WriteLine( $"{srcFile} ({srcLine})" );
 				}
 			}
 		}

@@ -271,8 +271,7 @@ public class XmlFormatter2 : IFormatter
 
 				String childType = node.GetAttribute( "t" );
 
-				name = name.Replace( '+', '-' );
-				name = name.Replace( '`', '_' );
+				name = scr.TypeToIdentifier( name );
 
 				XmlElement childElem = getNamedChild( allChildren, name );
 
@@ -302,40 +301,39 @@ public class XmlFormatter2 : IFormatter
 				objUnOnDeser.OnDeserialization( objUnOnDeser );
 			}
 
-			/*
-			ser.GetObjectData( serInfo, Context );
+				/*
+				ser.GetObjectData( serInfo, Context );
 
-			//var serEnum = ;
+				//var serEnum = ;
 
-			foreach( var serMember in serInfo )
-			{
-				String name = serMember.Name;
+				foreach( var serMember in serInfo )
+				{
+					String name = serMember.Name;
 
-				name = name.Replace( '+', '-' );
-				name = name.Replace( '`', '_' );
+					name = scr.TypeToIdentifier( name );
 
-				XmlElement childElem = getNamedChild( allChildren, name );
+					XmlElement childElem = getNamedChild( allChildren, name );
 
-				var des = Deserialize( childElem, name );
+					var des = Deserialize( childElem, name );
+				}
+				*/
 			}
-			*/
-		}
-		else
+			else
 		{
-			MemberInfo[] miArr = FormatterServices.GetSerializableMembers( finalType );
-
 			XmlNodeList allChildren = elem.ChildNodes;
 
-			for( int i = 0; i < miArr.Length; ++i )
-			{
-				FieldInfo childFi = (FieldInfo)miArr[ i ];
+				var fields = scr.GetAllFields( type );
 
-				String name = childFi.Name;
+				//MemberInfo[] miArr = FormatterServices.GetSerializableMembers( type, Context );
 
-				name = name.Replace( '+', '-' );
-				name = name.Replace( '`', '_' );
+				foreach( var childFi in fields )
+				{ 
 
-				XmlElement childElem = getNamedChild( allChildren, name );
+					String name = childFi.Name;
+
+					name = scr.TypeToIdentifier( name );
+
+					XmlElement childElem = getNamedChild( allChildren, name );
 
 
 				if( childElem != null )
@@ -344,7 +342,7 @@ public class XmlFormatter2 : IFormatter
 
 					childFi.SetValue( obj, childObj );
 				}
-				else if( miArr.Length == 1 )
+				else if( fields.Count == 1 )
 				{
 					object childObj = Deserialize( elem, childFi.FieldType, obj );
 
@@ -593,10 +591,9 @@ public class XmlFormatter2 : IFormatter
 				{
 					String name = serMember.Name;
 
-					name = name.Replace( '+', '-' );
-					name = name.Replace( '`', '_' );
+						name = scr.TypeToIdentifier( name );
 
-					Serialize( writer, serMember.Value, name, true );
+						Serialize( writer, serMember.Value, name, true );
 				}
 
 				//var sc = new SerializationContext( 
@@ -606,11 +603,12 @@ public class XmlFormatter2 : IFormatter
 			else
 			//*/
 			{
-				MemberInfo[] miArr = FormatterServices.GetSerializableMembers( type, Context );
+				var fields = scr.GetAllFields( type );
 
-				for( int i = 0; i < miArr.Length; ++i )
+				//MemberInfo[] miArr = FormatterServices.GetSerializableMembers( type, Context );
+
+				foreach( var childFi in fields )
 				{
-					FieldInfo childFi = (FieldInfo)miArr[ i ];
 
 					object[] objs = childFi.GetCustomAttributes( typeof( NonSerializedAttribute ), true );
 
@@ -621,10 +619,9 @@ public class XmlFormatter2 : IFormatter
 
 					String name = childFi.Name;
 
-					name = name.Replace( '+', '-' );
-					name = name.Replace( '`', '_' );
+						name = scr.TypeToIdentifier( name );
 
-					Serialize( writer, childFi.GetValue( root ), name, false );
+						Serialize( writer, childFi.GetValue( root ), name, false );
 				}
 			}
 		}

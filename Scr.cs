@@ -200,4 +200,15 @@ static public class scr
 
 
 
+
+	//SLOW
+	static public string TypeToIdentifier( string typename )
+	{
+		return typename.Replace( '<', '_' ).Replace( '>', '_' ).Replace( ',', '_' ).Replace( ' ', '_' ).Replace( '.', '_' ).Replace( '+', '_' ).Replace( '[', '_' ).Replace( ']', '_' ).Replace( '$', '_' ).Replace( ':', '_' );
+	}
+
+
+
+
+
 }

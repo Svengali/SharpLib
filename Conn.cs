@@ -52,9 +52,9 @@ public class Conn
 		{
 			obj = formatter.Deserialize( stream );
 		}
-		catch( System.Xml.XmlException e )
+		catch( System.Xml.XmlException ex )
 		{
-			lib.Log.error( "Outer Exception {0}", e.ToString() );
+			lib.Log.error( $"Outer Exception {ex.Message}" );
 		}
 
 		return obj;
@@ -70,11 +70,11 @@ public class Conn
 			var ms = new MemoryStream( 1024 );
 			formatter.Serialize( ms, obj );
 
-			//var str = System.Text.Encoding.Default.GetString( mm_buffer, 0, (int)ms.Position );
-			//lib.Log.info( "Sent data {0} of length {1}", str, ms.Position );
-			//lib.Log.info( "Sent {0}", obj );
+				//var str = System.Text.Encoding.Default.GetString( mm_buffer, 0, (int)ms.Position );
+				//lib.Log.info( $"Sent data {str} of length {ms.Position}" );
+				//lib.Log.info( $"Sent {obj}" );
 
-			byte[] byteSize = BitConverter.GetBytes( (uint)ms.Position );
+				byte[] byteSize = BitConverter.GetBytes( (uint)ms.Position );
 			m_streamNet.Write( byteSize, 0, 4 );
 			m_streamNet.Write( ms.GetBuffer(), 0, (int)ms.Position );
 
