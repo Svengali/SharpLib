@@ -21,14 +21,30 @@ namespace lib
 	void OnDeserialize( object enclosing );
 }
 
+public enum Datastructure
+{
+	Invalid,
+	Tree,
+	Full,
+
+}
+
+public class XmlFormatter2Cfg : Config
+{
+	public readonly Datastructure datastructure = Datastructure.Full;
+	}
 
 public class XmlFormatter2 : IFormatter
 {
 	public StreamingContext Context { get; set; }
 
-	static private Random s_rnd = new Random();
-	private int m_rndVal = s_rnd.Next();
-		
+	static Random s_rnd = new Random();
+	int m_rndVal = s_rnd.Next();
+	
+	XmlFormatter2Cfg m_cfg = new XmlFormatter2Cfg();
+	
+
+
 	#region Unimplimented
 	public ISurrogateSelector SurrogateSelector
 	{
@@ -41,7 +57,11 @@ public class XmlFormatter2 : IFormatter
 		get { throw new NotImplementedException(); }
 		set { throw new NotImplementedException(); }
 	}
-	#endregion
+		#endregion
+
+
+
+
 
 
 	public XmlFormatter2()
@@ -51,8 +71,18 @@ public class XmlFormatter2 : IFormatter
 
 
 
-	#region Deserialize
-	private static FormatterConverter s_conv = new FormatterConverter();
+
+	public XmlFormatter2( XmlFormatter2Cfg cfg )
+	{
+		Context = new StreamingContext( StreamingContextStates.All );
+
+		m_cfg = cfg;
+	}
+
+
+
+		#region Deserialize
+		private static FormatterConverter s_conv = new FormatterConverter();
 
 	public object Deserialize( Stream stream )
 	{
@@ -416,19 +446,44 @@ public class XmlFormatter2 : IFormatter
 	{
 		TypeCode tc = Type.GetTypeCode( type );
 
-		if( refInt > 0 && m_alreadySerialized.ContainsKey( refInt ) )
+		if( m_cfg.datastructure == Datastructure.Full && refInt > 0 && m_alreadySerialized.ContainsKey( refInt ) )
 		{
 			//lib.log.info( "Reusing object for {0}", refInt );
 			return m_alreadySerialized[ refInt ];
 		}
 		else
 		{
-			//lib.log.info( "Creating new object for {0}", refInt );
-			object obj = Activator.CreateInstance( type );
+			object obj = null;
 
-			if( refInt > 0 )
+			try
 			{
-				m_alreadySerialized[ refInt ] = obj;
+				//Trying the nice way to creat objects first.
+				obj = Activator.CreateInstance( type );
+
+			}
+			catch( Exception ex )
+			{
+				try
+				{
+						obj = System.Runtime.Serialization.FormatterServices.GetUninitializedObject( type );
+				}
+				catch( Exception exInner )
+				{
+					lib.Log.error( $"Got exception {exInner.Message} trying to make an uninitialized object" );
+				}
+
+			}
+
+			if( obj == null )
+			{
+				lib.Log.warn( $"Could not create object of type {type.Name}" );
+
+				return obj;
+			}
+
+			if( m_cfg.datastructure == Datastructure.Full && refInt > 0 )
+			{
+				m_alreadySerialized[refInt] = obj;
 			}
 
 			return obj;
@@ -446,7 +501,7 @@ public class XmlFormatter2 : IFormatter
 	{
 		TypeCode elemTC = Type.GetTypeCode( elemType );
 
-		if( refInt > 0 && m_alreadySerialized.ContainsKey( refInt ) )
+		if( m_cfg.datastructure == Datastructure.Full && refInt > 0 && m_alreadySerialized.ContainsKey( refInt ) )
 		{
 			return (Array)m_alreadySerialized[ refInt ];
 		}
@@ -454,7 +509,11 @@ public class XmlFormatter2 : IFormatter
 		{
 			Array arr = Array.CreateInstance( elemType, length ) ;
 
-			m_alreadySerialized[ refInt ] = arr;
+			if( m_cfg.datastructure == Datastructure.Full )
+			{
+				m_alreadySerialized[ refInt ] = arr;
+
+			}
 
 			return arr;
 		}
@@ -566,11 +625,18 @@ public class XmlFormatter2 : IFormatter
 
 		long refInt = m_objectID.GetId( root, out first );
 
-		writer.WriteAttributeString( "ref", refInt.ToString() );
+		if( m_cfg.datastructure == Datastructure.Full )
+		{
+			writer.WriteAttributeString( "ref", refInt.ToString() );
+
+		}
 
 		if( first )
 		{
-			m_alreadySerialized[ refInt ] = root;
+			if( m_cfg.datastructure == Datastructure.Full )
+			{
+				m_alreadySerialized[ refInt ] = root;
+			}
 
 			Type type = root.GetType();
 
@@ -641,11 +707,17 @@ public class XmlFormatter2 : IFormatter
 
 		long refInt = m_objectID.GetId( root, out first );
 
-		writer.WriteAttributeString( "ref", refInt.ToString() );
+		if( m_cfg.datastructure == Datastructure.Full )
+		{
+			writer.WriteAttributeString( "ref", refInt.ToString() );
+		}
 
 		if( first )
 		{
-			m_alreadySerialized[ refInt ] = root;
+			if( m_cfg.datastructure == Datastructure.Full )
+			{
+				m_alreadySerialized[ refInt ] = root;
+			}
 
 
 			for( int i = 0; i < arr.Length; ++i )
