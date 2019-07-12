@@ -3,6 +3,9 @@ using System.Diagnostics;
 
 namespace lib
 {
+
+//TODO PERF fix this and make it fast.  
+
 [Serializable]
 public struct Token
 {

@@ -178,8 +178,6 @@ namespace lib
 		static public void expected<T>( T value, string falseString, string trueString = "", T notExpectedValue = default(T) )
 		{
 
-			var name = nameof(value);
-
 			if( !value.Equals( notExpectedValue ) )
 			{
 				lib.Log.info( $"Properly got {value}{trueString}" );

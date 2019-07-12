@@ -461,7 +461,7 @@ public class XmlFormatter2 : IFormatter
 				obj = Activator.CreateInstance( type );
 
 			}
-			catch( Exception ex )
+			catch( Exception )
 			{
 				try
 				{
