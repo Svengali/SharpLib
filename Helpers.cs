@@ -80,8 +80,8 @@ namespace lib
 
 			Type[] types = dict.GetType().GetGenericArguments();
 
-			xmlWriter.WriteAttributeString( "keyType", types[ 0 ].FullName );
-			xmlWriter.WriteAttributeString( "valType", types[ 1 ].FullName );
+			xmlWriter.WriteAttributeString( "keyType", types[0].FullName );
+			xmlWriter.WriteAttributeString( "valType", types[1].FullName );
 
 			foreach( KeyValuePair<TKey, TVal> kvp in dict )
 			{
@@ -135,15 +135,15 @@ namespace lib
 						{
 							if( node.Attributes != null )
 							{
-								args[ 0 ] = node.GetAttribute( "key" );
+								args[0] = node.GetAttribute( "key" );
 
 								TKey key = (TKey)keyMI.Invoke( null, args );
 
-								args[ 0 ] = node.GetAttribute( "value" );
+								args[0] = node.GetAttribute( "value" );
 
 								TVal val = (TVal)valMI.Invoke( null, args );
 
-								dict[ key ] = val;
+								dict[key] = val;
 							}
 							else
 							{
@@ -162,7 +162,7 @@ namespace lib
 						Log.error( String.Format( $"Key type conversion not found for type {keyType}" ) );
 
 					if( valMI == null )
-						Log.error( String.Format( $"Val type conversion not found for type {valType}" ) );		
+						Log.error( String.Format( $"Val type conversion not found for type {valType}" ) );
 				}
 
 			}

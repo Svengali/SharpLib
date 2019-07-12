@@ -14,18 +14,18 @@ namespace lib
 			m_lastTime = m_timer.Current;
 
 			m_totalMillis = timeOffset;
-			m_totalSeconds= (double)m_totalMillis / 1000.0;
+			m_totalSeconds = (double)m_totalMillis / 1000.0;
 		}
 
 		public void tick()
 		{
 			long current = m_timer.Current;
 
-			m_dtMillis = (int)(current - m_lastTime);
+			m_dtMillis = (int)( current - m_lastTime );
 
 			m_dtSeconds = (double)m_dtMillis / 1000.0;
 
-			m_totalMillis  += m_dtMillis;
+			m_totalMillis += m_dtMillis;
 			m_totalSeconds = (double)m_totalMillis / 1000.0;
 
 			m_lastTime = current;
@@ -34,8 +34,8 @@ namespace lib
 		public int dtMs { get { return m_dtMillis; } }
 		public double dtSec { get { return m_dtSeconds; } }
 
-		public long		ms { get { return m_totalMillis; } }
-		public double	sec{ get { return m_totalSeconds; } }
+		public long ms { get { return m_totalMillis; } }
+		public double sec { get { return m_totalSeconds; } }
 
 
 		Timer m_timer;

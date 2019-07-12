@@ -49,7 +49,7 @@ namespace res
 
 		private string m_filename;
 	}
-		
+
 	[Serializable]
 	public class Ref<T> : Ref where T : class
 	{
@@ -156,14 +156,14 @@ namespace res
 
 			var lh = new LoadHolder<T>( loader );
 
-			ImmutableInterlocked.TryAdd( ref Resource.mgr.m_loaders, typeof(T), lh );
+			ImmutableInterlocked.TryAdd( ref Resource.mgr.m_loaders, typeof( T ), lh );
 		}
 
 		//Register all subclasses of a particular type
 		//???? Should we just always do this?  
 		static public void registerSub( Type baseType )
 		{
-		
+
 			Type[] typeParams = new Type[1];
 			foreach( var mi in baseType.GetMethods() )
 			{
@@ -194,7 +194,7 @@ namespace res
 							}
 						}
 					}
-					return;				
+					return;
 				}
 			}
 		}
@@ -244,7 +244,8 @@ namespace res
 		{
 			if( ResCache<T>.s_cache.TryGetValue( filename, out var wr ) )
 			{
-				if( wr.TryGetTarget(out var v) ) return v;
+				if( wr.TryGetTarget( out var v ) )
+					return v;
 
 				lib.Log.info( $"{filename} was in cache, but its been dropped, reloading." );
 			}
@@ -275,7 +276,7 @@ namespace res
 
 			if( ImmutableInterlocked.TryAdd( ref s_loading, filename, evtNew ) )
 			{
-				if( Resource.mgr.m_loaders.TryGetValue( typeof(T), out var loaderGen ) )
+				if( Resource.mgr.m_loaders.TryGetValue( typeof( T ), out var loaderGen ) )
 				{
 					var loader = loaderGen as LoadHolder<T>;
 
@@ -302,7 +303,7 @@ namespace res
 				}
 				else
 				{
-					lib.Log.error( $"Loader could not be found for type {typeof(T)}" );
+					lib.Log.error( $"Loader could not be found for type {typeof( T )}" );
 
 					return ResCache<T>.s_default;
 				}

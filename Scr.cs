@@ -48,11 +48,12 @@ static public class scr
 		{
 			var success = m_en.MoveNext();
 
-			if( !success ) return false;
+			if( !success )
+				return false;
 
-			while( !m_pred( m_en.Current ) && (success = m_en.MoveNext()) )
+			while( !m_pred( m_en.Current ) && ( success = m_en.MoveNext() ) )
 			{
-				
+
 			}
 
 			return success;
@@ -99,8 +100,8 @@ static public class scr
 		}
 		#endregion
 
-		IEnumerator<T>	m_en;
-		Predicate<T>		m_pred;
+		IEnumerator<T>  m_en;
+		Predicate<T>    m_pred;
 	}
 
 
@@ -181,7 +182,8 @@ static public class scr
 
 	public static ImmutableList<PropertyInfo> GetAllProperties( Type t )
 	{
-		if( s_propCache.TryGetValue( t, out var info ) ) return info;
+		if( s_propCache.TryGetValue( t, out var info ) )
+			return info;
 
 		var list = new List<PropertyInfo>();
 

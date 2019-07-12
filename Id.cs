@@ -85,7 +85,7 @@ namespace lib
 		{
 			return m_value == obj;
 		}
-		
+
 		public override int GetHashCode()
 		{
 			return (int)m_value ^ (int)( m_value >> 32 );
@@ -197,7 +197,7 @@ namespace lib
 		//   T:System.OverflowException:
 		//     The s parameter represents a number less than System.UInt64.MinValue or greater
 		//     than System.UInt64.MaxValue.
-		
+
 
 		public static ulong Parse( string s )
 		{
@@ -237,7 +237,7 @@ namespace lib
 		//   T:System.OverflowException:
 		//     The s parameter represents a number less than System.UInt64.MinValue or greater
 		//     than System.UInt64.MaxValue. -or-s includes non-zero, fractional digits.
-		
+
 
 		public static ulong Parse( string s, NumberStyles style )
 		{
@@ -269,7 +269,7 @@ namespace lib
 		//   T:System.OverflowException:
 		//     The s parameter represents a number less than System.UInt64.MinValue or greater
 		//     than System.UInt64.MaxValue.
-		
+
 
 		public static ulong Parse( string s, IFormatProvider provider )
 		{
@@ -311,7 +311,7 @@ namespace lib
 		//   T:System.OverflowException:
 		//     The s parameter represents a number less than System.UInt64.MinValue or greater
 		//     than System.UInt64.MaxValue. -or-s includes non-zero, fractional digits.
-		
+
 
 		public static ulong Parse( string s, NumberStyles style, IFormatProvider provider )
 		{
@@ -337,7 +337,7 @@ namespace lib
 		//
 		// Returns:
 		//     true if s was converted successfully; otherwise, false.
-		
+
 
 		public static bool TryParse( string s, out ulong result )
 		{
@@ -377,7 +377,7 @@ namespace lib
 		//     /// style is not a System.Globalization.NumberStyles value. -or-style is not
 		//     a combination of System.Globalization.NumberStyles.AllowHexSpecifier and System.Globalization.NumberStyles.HexNumber
 		//     values.
-		
+
 
 		public static bool TryParse( string s, NumberStyles style, IFormatProvider provider, out ulong result )
 		{

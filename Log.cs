@@ -15,26 +15,26 @@ namespace lib
 	[Flags]
 	public enum LogTypeNew
 	{
-		Invalid		= 0,
+		Invalid = 0,
 
 		// Frequency
-		FrequencyBase		= 1,
-		FrequencyBits		= 2,
-		FrequencyMask		= ( ( 1 << FrequencyBits ) - 1 ) << FrequencyBase,
+		FrequencyBase = 1,
+		FrequencyBits = 2,
+		FrequencyMask = ( ( 1 << FrequencyBits ) - 1 ) << FrequencyBase,
 
-		Detail		= 0b01 << FrequencyBase,
-		Normal		= 0b10 << FrequencyBase,
-		Overview	= 0b11 << FrequencyBase,
+		Detail = 0b01 << FrequencyBase,
+		Normal = 0b10 << FrequencyBase,
+		Overview = 0b11 << FrequencyBase,
 
 		// Type
 		TypeBase = FrequencyBase + FrequencyBits,
 		TypeBits = 3,
 		TypeMask = ( ( 1 << TypeBits ) - 1 ) << TypeBase,
 
-		Startup	= 0b001 << TypeBase,
-		Running	= 0b010 << TypeBase,
-		Shutdown= 0b011 << TypeBase,
-		Error		= 0b101 << TypeBase,
+		Startup = 0b001 << TypeBase,
+		Running = 0b010 << TypeBase,
+		Shutdown = 0b011 << TypeBase,
+		Error = 0b101 << TypeBase,
 
 	}
 
@@ -42,22 +42,22 @@ namespace lib
 	[Flags]
 	public enum LogType
 	{
-		Invalid	= 0,
-		Trace		= 1,
-		Debug		= 2,
-		Info		= 3,
-		Warn		= 4,
-		Error		= 5,
-		Fatal		= 6,
+		Invalid = 0,
+		Trace = 1,
+		Debug = 2,
+		Info = 3,
+		Warn = 4,
+		Error = 5,
+		Fatal = 6,
 	}
 
 	public struct LogEvent
 	{
 		public DateTime Time;
-		public LogType	LogType;
-		public string		Cat;
-		public string		Msg;
-		public object		Obj;
+		public LogType  LogType;
+		public string   Cat;
+		public string   Msg;
+		public object   Obj;
 
 		public LogEvent( LogType logType, string cat, string msg, object obj )
 		{
@@ -72,7 +72,7 @@ namespace lib
 	public delegate void Log_delegate( LogEvent evt );
 
 
-	public class Log : TraceListener 
+	public class Log : TraceListener
 	{
 		static public void create( string filename )
 		{
@@ -107,32 +107,32 @@ namespace lib
 		// Forwards.
 		static public void fatal( string msg, string cat = "unk", object obj = null )
 		{
-			log(msg, LogType.Fatal, cat, obj);
+			log( msg, LogType.Fatal, cat, obj );
 		}
 
 		static public void error( string msg, string cat = "unk", object obj = null )
 		{
-			log(msg, LogType.Error, cat, obj);
+			log( msg, LogType.Error, cat, obj );
 		}
 
-		static public void warn( string msg, string cat = "unk", object obj = null ) 
+		static public void warn( string msg, string cat = "unk", object obj = null )
 		{
 			log( msg, LogType.Warn, cat, obj );
 		}
 
 		static public void info( string msg, string cat = "unk", object obj = null )
 		{
-			log(msg, LogType.Info, cat, obj);
+			log( msg, LogType.Info, cat, obj );
 		}
 
 		static public void debug( string msg, string cat = "unk", object obj = null )
 		{
-			log(msg, LogType.Debug, cat, obj);
+			log( msg, LogType.Debug, cat, obj );
 		}
 
 		static public void trace( string msg, string cat = "unk", object obj = null )
 		{
-			log(msg, LogType.Trace, cat, obj);
+			log( msg, LogType.Trace, cat, obj );
 		}
 
 		static public void log( string msg, LogType type = LogType.Debug, string cat = "unk", object obj = null )
@@ -146,7 +146,7 @@ namespace lib
 		}
 
 
-		static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "unk"  )
+		static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "unk" )
 		{
 			var list = scr.GetAllProperties( obj.GetType() );
 
@@ -175,7 +175,7 @@ namespace lib
 		}
 
 		//This might seem a little odd, but the intent is that usually you wont need to set notExpectedValue. 
-		static public void expected<T>( T value, string falseString, string trueString = "", T notExpectedValue = default(T) )
+		static public void expected<T>( T value, string falseString, string trueString = "", T notExpectedValue = default( T ) )
 		{
 
 			if( !value.Equals( notExpectedValue ) )
@@ -196,10 +196,10 @@ namespace lib
 
 			m_stream = new FileStream( filename, FileMode.Append, FileAccess.Write );
 			m_writer = new StreamWriter( m_stream );
-			
+
 			m_errorStream = new FileStream( filename + ".error", FileMode.Append, FileAccess.Write );
 			m_errorWriter = new StreamWriter( m_errorStream );
-			
+
 			Debug.Listeners.Add( this );
 
 			string msg = "\n==============================================================================\nLogfile " +  filename + " startup at " + DateTime.Now.ToString();
@@ -213,7 +213,7 @@ namespace lib
 		{
 			WriteLine( msg );
 		}
-		
+
 		public override void WriteLine( string msg )
 		{
 			error( msg );
@@ -278,7 +278,8 @@ namespace lib
 				return '*';
 				case LogType.Fatal:
 				return '*';
-				default: return '?';
+				default:
+				return '?';
 			}
 		}
 
@@ -376,22 +377,22 @@ namespace lib
 			//} );
 		}
 		*/
-		
+
 		private Stream       m_stream;
 		private StreamWriter m_writer;
-		
+
 		private Stream       m_errorStream;
 		private StreamWriter m_errorWriter;
-		
+
 		private ArrayList    m_delegates = new ArrayList();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 }

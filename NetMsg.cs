@@ -18,7 +18,7 @@ namespace lib.Net
 			m_username = name;
 			m_password = pass;
 		}
-	
+
 		public readonly String m_username;
 		public readonly String m_password;
 	}
@@ -30,7 +30,7 @@ namespace lib.Net
 		{
 			m_resp = resp;
 		}
-	
+
 		public readonly bool m_resp;
 	}
 
@@ -39,13 +39,13 @@ namespace lib.Net
 	[Serializable]
 	public class Admin
 	{
-		
+
 	};
 
 	[Serializable]
 	public class CreateEntity : Admin
 	{
-		
+
 	}
 
 
@@ -54,7 +54,7 @@ namespace lib.Net
 	{
 
 	}
-	#endregion 
+	#endregion
 
 	[Serializable]
 	public class EntityBase
@@ -63,7 +63,7 @@ namespace lib.Net
 		{
 			m_id = id;
 		}
-		
+
 		public readonly int m_id;
 	};
 
@@ -78,7 +78,7 @@ namespace lib.Net
 			m_y = y;
 			m_z = z;
 		}
-	
+
 		public readonly float m_x;
 		public readonly float m_y;
 		public readonly float m_z;
@@ -91,13 +91,13 @@ namespace lib.Net
 			base( id )
 		{
 		}
-	
+
 		//Should an entity have a mesh?  Be made up of multiple meshes?
-		public readonly String m_mesh;	
+		public readonly String m_mesh;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

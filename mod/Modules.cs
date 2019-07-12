@@ -9,79 +9,79 @@ using System.Reflection;
 namespace mod
 {
 
-[Serializable]
-public class Config : lib.Config
-{
-	public String name = "Generic";
-}
-
-public class View
-{
-}
-
-public class Base
-{
-	public Config Cfg { get { return m_cfg; } }
-
-	public Base( Config cfg )
+	[Serializable]
+	public class Config : lib.Config
 	{
-		m_cfg = cfg;
+		public String name = "Generic";
 	}
 
-	private Config m_cfg;
-}
-
-
-[Serializable]
-public class FluidConfig : Config
-{
-	public String type = "none";
-}
-
-
-public class FluidBase : Base
-{
-	public new FluidConfig Cfg { get { return (FluidConfig)base.Cfg; } }
-
-	public FluidBase( FluidConfig cfg )
-		: base( cfg )
+	public class View
 	{
 	}
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[Serializable]
-public class SystemConfig : Config
-{
-	public String type = "none";
-}
-
-
-public class System
-{
-	public SystemConfig Cfg { get { return m_cfg; } }
-
-	public System( SystemConfig cfg )
+	public class Base
 	{
-		m_cfg = cfg;
+		public Config Cfg { get { return m_cfg; } }
+
+		public Base( Config cfg )
+		{
+			m_cfg = cfg;
+		}
+
+		private Config m_cfg;
 	}
 
-	private SystemConfig m_cfg;
-}
+
+	[Serializable]
+	public class FluidConfig : Config
+	{
+		public String type = "none";
+	}
+
+
+	public class FluidBase : Base
+	{
+		public new FluidConfig Cfg { get { return (FluidConfig)base.Cfg; } }
+
+		public FluidBase( FluidConfig cfg )
+			: base( cfg )
+		{
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	[Serializable]
+	public class SystemConfig : Config
+	{
+		public String type = "none";
+	}
+
+
+	public class System
+	{
+		public SystemConfig Cfg { get { return m_cfg; } }
+
+		public System( SystemConfig cfg )
+		{
+			m_cfg = cfg;
+		}
+
+		private SystemConfig m_cfg;
+	}
 
 
 }

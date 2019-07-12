@@ -6,167 +6,167 @@ using System.Reflection;
 namespace lib
 {
 
-public class DescAttribute : Attribute
-{
-	public string Desc { get; private set; }
-
-	public DescAttribute( string desc )
+	public class DescAttribute : Attribute
 	{
-		Desc = desc;
+		public string Desc { get; private set; }
+
+		public DescAttribute( string desc )
+		{
+			Desc = desc;
+		}
 	}
-}
 
-[Serializable]
-public class ConfigCfg : Config
-{
-	public readonly bool writeOutTemplateFiles = true;
-}
-
-
-
-[Serializable]
-public class Config
-{
-	/*
-	static public Config Load( string filename )
+	[Serializable]
+	public class ConfigCfg : Config
 	{
-		return null;
-	}
-	*/
-
-	static ConfigCfg s_cfg = new ConfigCfg();
-
-	static public void startup( string filename )
-	{
-		res.Mgr.register<Config>( load );
-		res.Mgr.registerSub(typeof(Config));
-
-		s_cfg = Config.load<ConfigCfg>( filename );
-
+		public readonly bool writeOutTemplateFiles = true;
 	}
 
 
-	#region SaveLoad
-	/*
-	static public res.Ref<Config> res_load( string filename )
+
+	[Serializable]
+	public class Config
 	{
-		return new res.Ref<Config>( filename, load( filename ) );
-	}
-	*/
+		/*
+		static public Config Load( string filename )
+		{
+			return null;
+		}
+		*/
 
-	static public T res_load<T>( string filename ) where T : Config
-	{
-		return load<T>( filename );
-	}
+		static ConfigCfg s_cfg = new ConfigCfg();
 
-	/*
-	static public ResRefConfig res_load( string filename, Type t )
-	{
-		return new ResRefConfig( filename, load( filename, t ) );
-	}
-	*/
+		static public void startup( string filename )
+		{
+			res.Mgr.register<Config>( load );
+			res.Mgr.registerSub( typeof( Config ) );
+
+			s_cfg = Config.load<ConfigCfg>( filename );
+
+		}
 
 
-	static public Config load( string filename )
-	{
-		FileStream fs = new FileStream( filename, FileMode.Open, FileAccess.Read );
+		#region SaveLoad
+		/*
+		static public res.Ref<Config> res_load( string filename )
+		{
+			return new res.Ref<Config>( filename, load( filename ) );
+		}
+		*/
 
-		XmlFormatter2 formatter = new XmlFormatter2();
+		static public T res_load<T>( string filename ) where T : Config
+		{
+			return load<T>( filename );
+		}
 
-		Config cfg = (Config)formatter.Deserialize( fs );
+		/*
+		static public ResRefConfig res_load( string filename, Type t )
+		{
+			return new ResRefConfig( filename, load( filename, t ) );
+		}
+		*/
 
-		return cfg;
-	}
 
-	static public T load<T>( string filename ) where T : Config
-	{
-		return (T)load( filename, typeof( T ) );
-	}
-
-	static public Config load( string filename, Type t )
-	{
-		Config cfg = null;
-
-		try
+		static public Config load( string filename )
 		{
 			FileStream fs = new FileStream( filename, FileMode.Open, FileAccess.Read );
 
 			XmlFormatter2 formatter = new XmlFormatter2();
 
-			cfg = (Config)( t != null ? formatter.DeserializeKnownType( fs,t ) : formatter.Deserialize( fs ) );
+			Config cfg = (Config)formatter.Deserialize( fs );
 
-			cfg.SetFilename( filename );
+			return cfg;
 		}
-		catch( FileNotFoundException )
+
+		static public T load<T>( string filename ) where T : Config
 		{
-			Type[] types = new Type[ 0 ];
-			object[] parms = new object[ 0 ];
+			return (T)load( filename, typeof( T ) );
+		}
 
-			//types[ 0 ] = typeof( string );
-			//parms[ 0 ] = filename;
-
-			ConstructorInfo cons = t.GetConstructor( types );
+		static public Config load( string filename, Type t )
+		{
+			Config cfg = null;
 
 			try
 			{
-				cfg = (Config)cons.Invoke( parms );
+				FileStream fs = new FileStream( filename, FileMode.Open, FileAccess.Read );
+
+				XmlFormatter2 formatter = new XmlFormatter2();
+
+				cfg = (Config)( t != null ? formatter.DeserializeKnownType( fs, t ) : formatter.Deserialize( fs ) );
+
+				cfg.SetFilename( filename );
 			}
-			catch( Exception e )
+			catch( FileNotFoundException )
 			{
-				Log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
-			}
+				Type[] types = new Type[ 0 ];
+				object[] parms = new object[ 0 ];
 
-			//cfg.SetFilename( filename );
+				//types[ 0 ] = typeof( string );
+				//parms[ 0 ] = filename;
 
-			if( s_cfg.writeOutTemplateFiles )
-			{
-				var templateFile = $"templates/{filename}";
+				ConstructorInfo cons = t.GetConstructor( types );
 
-				var dirName = Path.GetDirectoryName( templateFile );
+				try
+				{
+					cfg = (Config)cons.Invoke( parms );
+				}
+				catch( Exception e )
+				{
+					Log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
+				}
 
-				lib.Util.checkAndAddDirectory( dirName );
+				//cfg.SetFilename( filename );
 
-				lib.Log.info( $"Writing out template config of type {t.Name} in {templateFile}" );
+				if( s_cfg.writeOutTemplateFiles )
+				{
+					var templateFile = $"templates/{filename}";
 
-				Config.save( cfg, templateFile );
+					var dirName = Path.GetDirectoryName( templateFile );
+
+					lib.Util.checkAndAddDirectory( dirName );
+
+					lib.Log.info( $"Writing out template config of type {t.Name} in {templateFile}" );
+
+					Config.save( cfg, templateFile );
 				}
 			}
 
-		return cfg;
+			return cfg;
+		}
+
+		static public void save( Config cfg )
+		{
+			Config.save( cfg, cfg.m_filename );
+		}
+
+		static public void save( Config cfg, String filename )
+		{
+			FileStream fs = new FileStream( filename, FileMode.Create, FileAccess.Write );
+
+			XmlFormatter2 formatter = new XmlFormatter2();
+
+			formatter.Serialize( fs, cfg );
+
+			fs.Close();
+		}
+		#endregion
+
+		private string m_filename = "";
+
+		public Config()
+		{
+		}
+
+		public Config( string filename )
+		{
+			m_filename = filename;
+		}
+
+		public String Filename { get { return m_filename; } }
+
+		protected void SetFilename( String filename ) { m_filename = filename; }
+
 	}
-
-	static public void save( Config cfg )
-	{
-		Config.save( cfg, cfg.m_filename );
-	}
-
-	static public void save( Config cfg, String filename )
-	{
-		FileStream fs = new FileStream( filename, FileMode.Create, FileAccess.Write );
-
-		XmlFormatter2 formatter = new XmlFormatter2();
-
-		formatter.Serialize( fs, cfg );
-
-		fs.Close();
-	}
-	#endregion 
-
-	private string m_filename = "";
-
-	public Config()
-	{
-	}
-
-	public Config( string filename )
-	{
-		m_filename = filename;
-	}
-
-	public String Filename { get { return m_filename; } }
-
-	protected void SetFilename( String filename ) { m_filename = filename; }
-
-}
 }
 
