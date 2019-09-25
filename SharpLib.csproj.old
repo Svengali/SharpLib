@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DED134FC-C282-49C9-BA02-3CE6257E91FC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>lib</RootNamespace>
+    <AssemblyName>SharpLib</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="att\CanBeNullAttribute.cs" />
+    <Compile Include="att\NotNullAttribute.cs" />
+    <Compile Include="Conn.cs" />
+    <Compile Include="Clock.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Id.cs" />
+    <Compile Include="Imm.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="math\AngleSingle.cs" />
+    <Compile Include="math\AngleType.cs" />
+    <Compile Include="math\BoundingBox.cs" />
+    <Compile Include="math\BoundingBoxExt.cs" />
+    <Compile Include="math\BoundingFrustum.cs" />
+    <Compile Include="math\BoundingSphere.cs" />
+    <Compile Include="math\CollisionHelper.cs" />
+    <Compile Include="math\Color.cs" />
+    <Compile Include="math\Color.Palette.cs" />
+    <Compile Include="math\Color3.cs" />
+    <Compile Include="math\Color4.cs" />
+    <Compile Include="math\ColorBGRA.cs" />
+    <Compile Include="math\ColorExtensions.cs" />
+    <Compile Include="math\ColorHSV.cs" />
+    <Compile Include="math\ContainmentType.cs" />
+    <Compile Include="math\DataMemberIgnoreAttribute.cs" />
+    <Compile Include="math\DataStyleAttribute.cs" />
+    <Compile Include="math\Double2.cs" />
+    <Compile Include="math\Double3.cs" />
+    <Compile Include="math\Double4.cs" />
+    <Compile Include="math\GuillotinePacker.cs" />
+    <Compile Include="math\Half.cs" />
+    <Compile Include="math\Half2.cs" />
+    <Compile Include="math\Half3.cs" />
+    <Compile Include="math\Half4.cs" />
+    <Compile Include="math\HalfUtils.cs" />
+    <Compile Include="math\Int2.cs" />
+    <Compile Include="math\Int3.cs" />
+    <Compile Include="math\Int4.cs" />
+    <Compile Include="math\MathUtil.cs" />
+    <Compile Include="math\Matrix.cs" />
+    <Compile Include="math\NamespaceDoc.cs" />
+    <Compile Include="math\Plane.cs" />
+    <Compile Include="math\PlaneIntersectionType.cs" />
+    <Compile Include="math\Point.cs" />
+    <Compile Include="math\Quaternion.cs" />
+    <Compile Include="math\RandomSeed.cs" />
+    <Compile Include="math\Ray.cs" />
+    <Compile Include="math\Rectangle.cs" />
+    <Compile Include="math\RectangleF.cs" />
+    <Compile Include="math\Size2.cs" />
+    <Compile Include="math\Size2F.cs" />
+    <Compile Include="math\Size3.cs" />
+    <Compile Include="math\SphericalHarmonics.cs" />
+    <Compile Include="math\UInt4.cs" />
+    <Compile Include="math\Vector2.cs" />
+    <Compile Include="math\Vector3.cs" />
+    <Compile Include="math\Vector4.cs" />
+    <Compile Include="math\VectorExtensions.cs" />
+    <Compile Include="mod\Modules.cs" />
+    <Compile Include="NetMsg.cs" />
+    <Compile Include="Pos.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="res\Resource.cs" />
+    <Compile Include="Scr.cs" />
+    <Compile Include="SerializableDictionary.cs" />
+    <Compile Include="Timer.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities.Interop.cs" />
+    <Compile Include="VersionFormatter.cs" />
+    <Compile Include="XmlFormatter.cs" />
+    <Compile Include="XmlFormatter2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

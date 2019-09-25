@@ -200,7 +200,7 @@ namespace lib
 			m_errorStream = new FileStream( filename + ".error", FileMode.Append, FileAccess.Write );
 			m_errorWriter = new StreamWriter( m_errorStream );
 
-			Debug.Listeners.Add( this );
+			//Debug.Listeners.Add( this );
 
 			string msg = "\n==============================================================================\nLogfile " +  filename + " startup at " + DateTime.Now.ToString();
 
@@ -297,6 +297,7 @@ namespace lib
 					//Console.WriteLine( finalMsg );
 					//Console.Out.Write( finalMsg );
 
+					/*
 					foreach( var l_obj in Debug.Listeners )
 					{
 						var l = l_obj as TraceListener;
@@ -305,6 +306,7 @@ namespace lib
 							l.WriteLine( finalMsg );
 						}
 					}
+					*/
 
 					m_writer.WriteLine( finalMsg );
 

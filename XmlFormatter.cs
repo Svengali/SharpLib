@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Runtime.Serialization;
-using System.Web.Configuration;
+//using System.Web.Configuration;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,15 +20,16 @@ namespace lib
 	class XmlFormatter : IFormatter
 	{
 		StreamingContext m_context;
-		SerializationMode m_mode;
+		//SerializationMode m_mode;
 		//KnownTypeCollection known_types;
-		IDataContractSurrogate m_surrogate;
+		//IDataContractSurrogate m_surrogate;
 		//int m_maxItems;
 
 		public XmlFormatter()
 		{
 		}
 
+		/*
 		public XmlFormatter( SerializationMode mode )
 		{
 			m_mode = mode;
@@ -45,6 +46,7 @@ namespace lib
 			m_mode = mode;
 			m_context = context;
 		}
+		*/
 
 		//public XmlFormatter (SerializationMode mode,
 		//	StreamingContext context, KnownTypeCollection knownTypes)
@@ -69,11 +71,6 @@ namespace lib
 			set { m_context = value; }
 		}
 
-		public IDataContractSurrogate DataContractSurrogate
-		{
-			get { return m_surrogate; }
-			set { m_surrogate = value; }
-		}
 
 		/*
 		public KnownTypeCollection KnownTypes {
@@ -86,10 +83,6 @@ namespace lib
 		}
 		*/
 
-		public SerializationMode Mode
-		{
-			get { return m_mode; }
-		}
 
 		object IFormatter.Deserialize( Stream stream )
 		{
