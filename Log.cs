@@ -105,32 +105,32 @@ namespace lib
 		*/
 
 		// Forwards.
-		static public void fatal( string msg, string cat = "unk", object obj = null )
+		static public void fatal( string msg, string cat = "fatal", object obj = null )
 		{
 			log( msg, LogType.Fatal, cat, obj );
 		}
 
-		static public void error( string msg, string cat = "unk", object obj = null )
+		static public void error( string msg, string cat = "error", object obj = null )
 		{
 			log( msg, LogType.Error, cat, obj );
 		}
 
-		static public void warn( string msg, string cat = "unk", object obj = null )
+		static public void warn( string msg, string cat = "warn", object obj = null )
 		{
 			log( msg, LogType.Warn, cat, obj );
 		}
 
-		static public void info( string msg, string cat = "unk", object obj = null )
+		static public void info( string msg, string cat = "info", object obj = null )
 		{
 			log( msg, LogType.Info, cat, obj );
 		}
 
-		static public void debug( string msg, string cat = "unk", object obj = null )
+		static public void debug( string msg, string cat = "dbg", object obj = null )
 		{
 			log( msg, LogType.Debug, cat, obj );
 		}
 
-		static public void trace( string msg, string cat = "unk", object obj = null )
+		static public void trace( string msg, string cat = "", object obj = null )
 		{
 			log( msg, LogType.Trace, cat, obj );
 		}
