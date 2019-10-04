@@ -105,27 +105,27 @@ namespace lib
 		*/
 
 		// Forwards.
-		static public void fatal( string msg, string cat = "fatal", object obj = null )
+		static public void fatal( string msg, string cat = "", object obj = null )
 		{
 			log( msg, LogType.Fatal, cat, obj );
 		}
 
-		static public void error( string msg, string cat = "error", object obj = null )
+		static public void error( string msg, string cat = "", object obj = null )
 		{
 			log( msg, LogType.Error, cat, obj );
 		}
 
-		static public void warn( string msg, string cat = "warn", object obj = null )
+		static public void warn( string msg, string cat = "", object obj = null )
 		{
 			log( msg, LogType.Warn, cat, obj );
 		}
 
-		static public void info( string msg, string cat = "info", object obj = null )
+		static public void info( string msg, string cat = "", object obj = null )
 		{
 			log( msg, LogType.Info, cat, obj );
 		}
 
-		static public void debug( string msg, string cat = "dbg", object obj = null )
+		static public void debug( string msg, string cat = "", object obj = null )
 		{
 			log( msg, LogType.Debug, cat, obj );
 		}
@@ -146,10 +146,9 @@ namespace lib
 		}
 
 
-		static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "unk" )
+		static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "", string prefix = "" )
 		{
 			var list = scr.GetAllProperties( obj.GetType() );
-
 
 			lock( s_log )
 			{
@@ -163,7 +162,7 @@ namespace lib
 					{
 						var v = pi.GetValue( obj );
 
-						log( $"{pi.Name} = {v}", type, cat );
+						log( $"{prefix}{pi.Name} = {v}", type, cat );
 					}
 					catch( Exception ex )
 					{

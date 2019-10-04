@@ -167,10 +167,14 @@ static public class scr
 		var propArr = t.GetProperties(
 					 BindingFlags.DeclaredOnly |
 					 BindingFlags.NonPublic |
-					 BindingFlags.Public |
-					 BindingFlags.Instance);
+					 BindingFlags.Public | 
+					 BindingFlags.Instance
+					 );
 
-		var en = PredEnumerator.Create<PropertyInfo>( propArr.AsEnumerable<PropertyInfo>(), fa => fa.GetCustomAttribute( typeof( NonSerializedAttribute ) ) == null );
+		
+
+		var en = PredEnumerator.Create<PropertyInfo>( propArr.AsEnumerable<PropertyInfo>(), 
+			fa => fa.GetCustomAttribute( typeof( NonSerializedAttribute ) ) == null && !list.Exists( f => f.Name == fa.Name ) );
 
 		list.AddRange( new PredEnumerable<PropertyInfo>( en ) );
 
