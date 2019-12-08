@@ -91,6 +91,10 @@ namespace lib
 				lib.Log.info( $"Creating directory {path}" );
 				Directory.CreateDirectory( path );
 			}
+			else
+			{
+				lib.Log.debug( $"{path} already exists." );
+			}
 
 		}
 
