@@ -84,7 +84,7 @@ namespace lib
 				{
 					var pathPieces = path.Split('\\');
 
-					var lastDir = pathPieces[pathPieces.Length - 1];
+					var lastDir = pathPieces[pathPieces.Length - 2];
 
 					ImmutableInterlocked.AddOrUpdate( ref m_shortname, path, lastDir, ( key, value ) => { return lastDir; } );
 
@@ -313,7 +313,7 @@ namespace lib
 		}
 		*/
 
-		private char getSymbol( LogType type )
+		public static char getSymbol( LogType type )
 		{
 			switch( type )
 			{
@@ -322,7 +322,7 @@ namespace lib
 				case LogType.Debug:
 				return ' ';
 				case LogType.Info:
-				return ':';
+				return ' ';
 				case LogType.High:
 				return '+';
 				case LogType.Warn:
@@ -345,7 +345,9 @@ namespace lib
 				{
 					char sym = getSymbol( evt.LogType );
 
-					string finalMsg = string.Format( "{0,-6}{1}| {2}", evt.Cat, sym, evt.Msg );
+					var truncatedCat = evt.Cat.Substring(0, Math.Min( 8, evt.Cat.Length ) );
+
+					string finalLine = string.Format( "{0,-8}{1}| {2}", truncatedCat, sym, evt.Msg );
 
 					//Console.WriteLine( finalMsg );
 					//Console.Out.Write( finalMsg );
@@ -361,7 +363,7 @@ namespace lib
 					}
 					*/
 
-					m_writer.WriteLine( finalMsg );
+					m_writer.WriteLine( finalLine );
 
 					m_writer.Flush();
 
@@ -374,7 +376,7 @@ namespace lib
 					}
 				}
 			}
-			catch( Exception )
+			catch( Exception ex )
 			{
 				//oops.  
 				//int dummy = 0;
