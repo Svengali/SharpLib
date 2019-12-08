@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Reflection;
 //using System.Threading.Tasks;
 
@@ -43,33 +44,67 @@ namespace lib
 	public enum LogType
 	{
 		Invalid = 0,
-		Trace = 1,
-		Debug = 2,
-		Info = 3,
-		Warn = 4,
-		Error = 5,
-		Fatal = 6,
+		Trace   = 1,
+		Debug   = 2,
+		Info    = 3,
+		High    = 4,
+		Warn    = 5,
+		Error   = 6,
+		Fatal   = 7,
 	}
 
 	public struct LogEvent
 	{
 		public DateTime Time;
 		public LogType  LogType;
-		public string   Cat;
 		public string   Msg;
+		public string   Path;
+		public int      Line;
+		public string   Member;
+
+		public string   Cat;
 		public object   Obj;
 
-		public LogEvent( LogType logType, string cat, string msg, object obj )
+
+
+		static ImmutableDictionary<string, string> m_shortname = ImmutableDictionary<string, string>.Empty;
+
+
+		public LogEvent( LogType logType, string msg, string path, int line, string member, string cat, object obj )
 		{
+
+			//Cache the automatic category names
+			if( string.IsNullOrEmpty( cat ) )
+			{
+				if( m_shortname.TryGetValue( path, out var autoCat ) )
+				{
+					cat = autoCat;
+				}
+				else
+				{
+					var pathPieces = path.Split('\\');
+
+					var lastDir = pathPieces[pathPieces.Length - 1];
+
+					ImmutableInterlocked.AddOrUpdate( ref m_shortname, path, lastDir, ( key, value ) => { return lastDir; } );
+
+					cat = lastDir;
+				}
+			}
+
 			Time = DateTime.Now;
 			LogType = logType;
-			Cat = cat;
 			Msg = msg;
+			Path = path;
+			Line = line;
+			Member = member;
+			Cat = cat;
 			Obj = obj;
 		}
 	}
 
 	public delegate void Log_delegate( LogEvent evt );
+
 
 
 	public class Log : TraceListener
@@ -79,11 +114,12 @@ namespace lib
 			s_log = new Log( filename );
 		}
 
+
 		static public void destroy()
 		{
 			string msg = "==============================================================================\nLogfile shutdown at " + DateTime.Now.ToString();
 
-			var evt = new LogEvent( LogType.Info, "System", msg, null );
+			var evt = CreateLogEvent( LogType.Info, msg, "System", null );
 
 			s_log.writeToAll( evt );
 
@@ -104,47 +140,63 @@ namespace lib
 		}
 		*/
 
+
+		static LogEvent CreateLogEvent( LogType logType, string msg, string cat, object obj, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
+		{
+			var logEvent = new LogEvent( logType, msg, path, line, member, cat, obj );
+
+			return logEvent;
+		}
+
+
+
+
 		// Forwards.
-		static public void fatal( string msg, string cat = "", object obj = null )
+		static public void fatal( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 		{
-			log( msg, LogType.Fatal, cat, obj );
+			log( msg, LogType.Fatal, path, line, member, cat, obj );
 		}
 
-		static public void error( string msg, string cat = "", object obj = null )
+		static public void error( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 		{
-			log( msg, LogType.Error, cat, obj );
+			log( msg, LogType.Error, path, line, member, cat, obj );
 		}
 
-		static public void warn( string msg, string cat = "", object obj = null )
+		static public void warn( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 		{
-			log( msg, LogType.Warn, cat, obj );
+			log( msg, LogType.Warn, path, line, member, cat, obj );
 		}
 
-		static public void info( string msg, string cat = "", object obj = null )
+		static public void info( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 		{
-			log( msg, LogType.Info, cat, obj );
+			log( msg, LogType.Info, path, line, member, cat, obj );
 		}
 
-		static public void debug( string msg, string cat = "", object obj = null )
+		static public void high( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 		{
-			log( msg, LogType.Debug, cat, obj );
+			log( msg, LogType.High, path, line, member, cat, obj );
 		}
 
-		static public void trace( string msg, string cat = "", object obj = null )
+		static public void debug( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 		{
-			log( msg, LogType.Trace, cat, obj );
+			log( msg, LogType.Debug, path, line, member, cat, obj );
 		}
 
-		static public void log( string msg, LogType type = LogType.Debug, string cat = "unk", object obj = null )
+		static public void trace( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 		{
+			log( msg, LogType.Trace, path, line, member, cat, obj );
+		}
+
+		static public void log( string msg, LogType type = LogType.Debug, string path = "", int line = -1, string member = "", string cat = "unk", object obj = null )
+		{
+			// @@@@@ TODO Get rid of this lock. 
+			var evt = new LogEvent( type, msg, path, line, member, cat, obj );
+
 			lock( s_log )
 			{
-				var evt = new LogEvent( type, cat, msg, obj );
-
 				s_log.writeToAll( evt );
 			}
 		}
-
 
 		static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "", string prefix = "" )
 		{
@@ -152,7 +204,7 @@ namespace lib
 
 			lock( s_log )
 			{
-				var evt = new LogEvent( type, cat, header, obj );
+				var evt = CreateLogEvent( type, header, cat, obj );
 
 				s_log.writeToAll( evt );
 
@@ -166,7 +218,7 @@ namespace lib
 					}
 					catch( Exception ex )
 					{
-						log( $"Exception processing {pi.Name} {ex.Message}", type, cat );
+						log( $"Exception processing {pi.Name} {ex.Message}", LogType.Error, "log" );
 					}
 				}
 
@@ -203,7 +255,7 @@ namespace lib
 
 			string msg = "\n==============================================================================\nLogfile " +  filename + " startup at " + DateTime.Now.ToString();
 
-			var evt = new LogEvent( LogType.Info, "System", msg, null );
+			var evt = CreateLogEvent( LogType.Info, msg, "System", null );
 
 			writeToAll( evt );
 		}
@@ -266,11 +318,13 @@ namespace lib
 			switch( type )
 			{
 				case LogType.Trace:
-				return '.';
-				case LogType.Debug:
-				return '-';
-				case LogType.Info:
 				return ' ';
+				case LogType.Debug:
+				return ' ';
+				case LogType.Info:
+				return ':';
+				case LogType.High:
+				return '+';
 				case LogType.Warn:
 				return '+';
 				case LogType.Error:
