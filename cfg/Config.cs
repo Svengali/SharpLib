@@ -69,13 +69,7 @@ namespace lib
 
 		static public Config load( string filename )
 		{
-			FileStream fs = new FileStream( filename, FileMode.Open, FileAccess.Read );
-
-			XmlFormatter2 formatter = new XmlFormatter2();
-
-			Config cfg = (Config)formatter.Deserialize( fs );
-
-			return cfg;
+			return load( filename, null );
 		}
 
 		static public T load<T>( string filename ) where T : Config
@@ -105,11 +99,11 @@ namespace lib
 				//types[ 0 ] = typeof( string );
 				//parms[ 0 ] = filename;
 
-				ConstructorInfo cons = t.GetConstructor( types );
+				ConstructorInfo cons = t?.GetConstructor( types );
 
 				try
 				{
-					cfg = (Config)cons.Invoke( parms );
+					cfg = (Config)cons?.Invoke( parms );
 				}
 				catch( Exception e )
 				{
@@ -126,7 +120,7 @@ namespace lib
 
 					lib.Util.checkAndAddDirectory( dirName );
 
-					lib.Log.info( $"Writing out template config of type {t.Name} in {templateFile}" );
+					lib.Log.info( $"Writing out template config of type {t?.Name} in {templateFile}" );
 
 					Config.save( cfg, templateFile );
 				}
