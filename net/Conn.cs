@@ -18,12 +18,33 @@ namespace lib
 	}
 
 
+	public interface ISerDes<T> where T : IFormatter
+	{
+	
+		T getInstance();
 
 
-	public class Conn
+
+	}
+
+
+	public class NewEveryCall<T> : ISerDes<T> where T : IFormatter, new()
+	{
+		public T getInstance()
+		{
+			return new T();
+		}
+	}
+
+
+	public class Conn<T, TInst> where T : IFormatter, new()
+	                            where TInst : ISerDes<T>, new()
 	{
 		public Socket Sock { get { return m_socket; } }
 		public Stream Stream { get { return m_streamNet; } }
+
+
+		private TInst m_formatter = new TInst();
 
 
 		public Conn( Socket sock, IProcess proc )
@@ -46,7 +67,7 @@ namespace lib
 		{
 			object obj = null;
 
-			var formatter = new XmlFormatter2();
+			var formatter = m_formatter.getInstance();
 
 			try
 			{
