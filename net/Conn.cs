@@ -36,9 +36,15 @@ namespace lib
 		}
 	}
 
+	public class Conn
+	{
+		public static int BufferSize = 2048;
+	}
 
-	public class Conn<T, TInst> where T : IFormatter, new()
-															where TInst : ISerDes<T>, new()
+
+	public class Conn<T, TInst> : Conn
+	                              where T : IFormatter, new()
+	                              where TInst : ISerDes<T>, new()
 	{
 		public Socket Sock { get { return m_socket; } }
 		public Stream Stream { get { return m_streamNet; } }
@@ -84,11 +90,11 @@ namespace lib
 		public void send( object obj )
 		{
 
-			var formatter = new XmlFormatter2();
+			var formatter = m_formatter.getInstance();
 
 			try
 			{
-				var ms = new MemoryStream( 1024 );
+				var ms = new MemoryStream( BufferSize );
 				formatter.Serialize( ms, obj );
 
 				//var str = System.Text.Encoding.Default.GetString( mm_buffer, 0, (int)ms.Position );
