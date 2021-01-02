@@ -91,7 +91,7 @@ namespace lib
 
 				cfg.SetFilename( filename );
 			}
-			catch( FileNotFoundException )
+			catch( IOException )
 			{
 				Type[] types = new Type[0];
 				object[] parms = new object[0];
