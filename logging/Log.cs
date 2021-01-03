@@ -6,6 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Collections.Concurrent;
+using System.Linq;
+using System.Threading;
 //using System.Threading.Tasks;
 
 static public class log
@@ -92,7 +95,7 @@ static public class log
 
 		var evt = CreateLogEvent( LogType.Info, msg, "System", null );
 
-		writeToAll( evt );
+			s_events.Enqueue( evt );
 
 		stop();
 	}
@@ -102,8 +105,19 @@ static public class log
 	{
 		var logEvent = new LogEvent( logType, msg, path, line, member, cat, obj );
 
-		return logEvent;
-	}
+		static internal ConcurrentQueue<LogEvent> s_events = new ConcurrentQueue<LogEvent>();
+
+		private Thread m_thread;
+
+		/*
+		static public Log log
+		{
+			get 
+			{
+				return s_log;
+			}
+		}
+		*/
 
 
 
@@ -157,6 +171,19 @@ static public class log
 		}
 	}
 
+		static public void log( string msg, LogType type = LogType.Debug, string path = "", int line = -1, string member = "", string cat = "unk", object obj = null )
+		{
+			var evt = new LogEvent( type, msg, path, line, member, cat, obj );
+
+			s_events.Enqueue( evt );
+
+			/*
+			lock( s_log )
+			{
+				s_log.writeToAll( evt );
+			}
+			*/
+		}
 	static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "", string prefix = "", [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 	{
 		var list = refl.GetAllProperties( obj.GetType() );
@@ -166,7 +193,13 @@ static public class log
 			var evt = new LogEvent( type, header, path, line, member, cat, obj );
 			//var evt = CreateLogEvent( type, header, cat, obj );
 
-			writeToAll( evt );
+			//lock( s_log )
+			{
+				var evt = CreateLogEvent( type, header, cat, obj );
+
+				s_events.Enqueue( evt );
+
+				//s_log.writeToAll( evt );
 
 			foreach( var pi in list )
 			{
@@ -200,8 +233,15 @@ static public class log
 	}
 
 
-	static private void createLog( string filename )
-	{
+		private Log( string filename )
+		{
+			var start = new ThreadStart( run );
+
+			m_thread = new Thread( start );
+			m_thread.Start();
+
+			//TODO: Fix this so itll work without a directory.
+			Directory.CreateDirectory( Path.GetDirectoryName( filename ) );
 
 		string dir = Path.GetDirectoryName( filename );
 
@@ -218,23 +258,42 @@ static public class log
 
 		//Debug.Listeners.Add( this );
 
-		string msg = "\n==============================================================================\nLogfile " + filename + " startup at " + DateTime.Now.ToString();
+			s_events.Enqueue( evt );
+
+			//writeToAll( evt );
+		}
 
 		var evt = CreateLogEvent( LogType.Info, msg, "System", null );
 
 		writeToAll( evt );
 	}
 
-	/*
-static public override void Write( string msg ) {
-		WriteLine( msg );
-	}
+		bool m_running = true;
 
-static public override void WriteLine( string msg ) {
-		error( msg );
-		//base.WriteLine( msg );
-	}
-	*/
+		void run()
+		{
+			while( m_running )
+			{
+				while( s_events.TryDequeue( out var evt ) )
+				{
+					writeToAll( evt );
+				}
+
+				Thread.Sleep( 0 );
+			}
+		}
+
+		void stop()
+		{
+			m_running = false;
+
+			m_writer.Close();
+			m_stream.Close();
+
+			m_errorWriter.Close();
+			m_errorStream.Close();
+
+		}
 
 	static void stop()
 	{
