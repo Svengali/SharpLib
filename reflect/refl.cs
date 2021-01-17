@@ -148,18 +148,26 @@ static public class refl
 
 	public static ImmutableList<FieldInfo> GetAllFields( Type t )
 	{
-		if( s_fieldCache.TryGetValue( t, out var info ) )
-			return info;
+		{
+			if( s_fieldCache.TryGetValue( t, out var first ) )
+				return first;
+		}
 
-		var list = new List<FieldInfo>();
+		lock( t )
+		{
+			if( s_fieldCache.TryGetValue( t, out var second ) )
+				return second;
 
-		GetAllFields( t, list );
+			var list = new List<FieldInfo>();
 
-		var immList = list.ToImmutableList();
+			GetAllFields( t, list );
 
-		Interlocked.Exchange( ref s_fieldCache, s_fieldCache.Add( t, immList ) );
+			var immList = list.ToImmutableList();
 
-		return immList;
+			Interlocked.Exchange( ref s_fieldCache, s_fieldCache.Add( t, immList ) );
+
+			return immList;
+		}
 	}
 
 
