@@ -5,6 +5,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -156,7 +157,7 @@ static public class refl
 
 		var immList = list.ToImmutableList();
 
-		s_fieldCache = s_fieldCache.Add( t, immList );
+		Interlocked.Exchange( ref s_fieldCache, s_fieldCache.Add( t, immList ) );
 
 		return immList;
 	}
