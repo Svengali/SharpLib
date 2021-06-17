@@ -43,14 +43,14 @@ namespace lib.Net
 	};
 
 	[Serializable]
-	public class CreateEntity : Admin
+	public class CreateEntity: Admin
 	{
 
 	}
 
 
 	[Serializable]
-	public class MoveEntity : Admin
+	public class MoveEntity: Admin
 	{
 
 	}
@@ -69,7 +69,7 @@ namespace lib.Net
 
 
 	[Serializable]
-	public class EntityPos : EntityBase
+	public class EntityPos: EntityBase
 	{
 		public EntityPos( int id, float x, float y, float z ) :
 			base( id )
@@ -85,7 +85,7 @@ namespace lib.Net
 	}
 
 	[Serializable]
-	public class EntityDesc : EntityBase
+	public class EntityDesc: EntityBase
 	{
 		public EntityDesc( int id ) :
 			base( id )

@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 #pragma warning disable SA1405 // Debug.Assert must provide message text
 using att;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -88,12 +89,12 @@ namespace lib
 		{
 			if( !Directory.Exists( path ) )
 			{
-				lib.Log.info( $"Creating directory {path}" );
+				log.info( $"Creating directory {path}" );
 				Directory.CreateDirectory( path );
 			}
 			else
 			{
-				lib.Log.debug( $"{path} already exists." );
+				log.debug( $"{path} already exists." );
 			}
 
 		}
@@ -216,7 +217,7 @@ namespace lib
 
 			unsafe
 			{
-				fixed ( void* pBuffer = buffer )
+				fixed( void* pBuffer = buffer )
 					Interop.Write( pBuffer, source, 0, source.Length );
 			}
 			return buffer;
@@ -339,7 +340,7 @@ namespace lib
 		{
 			unsafe
 			{
-				fixed ( void* pDest = destination )
+				fixed( void* pDest = destination )
 				{
 					Write( (IntPtr)pDest, data, offset, count );
 				}

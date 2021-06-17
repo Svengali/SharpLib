@@ -10,7 +10,7 @@ namespace mod
 {
 
 	[Serializable]
-	public class Config : lib.Config
+	public class Config: lib.Config
 	{
 		public String name = "Generic";
 	}
@@ -33,13 +33,13 @@ namespace mod
 
 
 	[Serializable]
-	public class FluidConfig : Config
+	public class FluidConfig: Config
 	{
 		public String type = "none";
 	}
 
 
-	public class FluidBase : Base
+	public class FluidBase: Base
 	{
 		public new FluidConfig Cfg { get { return (FluidConfig)base.Cfg; } }
 
@@ -65,7 +65,7 @@ namespace mod
 
 
 	[Serializable]
-	public class SystemConfig : Config
+	public class SystemConfig: Config
 	{
 		public String type = "none";
 	}

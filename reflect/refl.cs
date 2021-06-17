@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 
 
-static public class scr
+static public class refl
 {
 
 	public class PredEnumerator
@@ -30,7 +30,7 @@ static public class scr
 		}
 	}
 
-	public class PredEnumerator<T> : PredEnumerator, IEnumerator<T>
+	public class PredEnumerator<T>: PredEnumerator, IEnumerator<T>
 	{
 
 		public T Current => m_en.Current;
@@ -100,12 +100,12 @@ static public class scr
 		}
 		#endregion
 
-		IEnumerator<T>  m_en;
-		Predicate<T>    m_pred;
+		IEnumerator<T> m_en;
+		Predicate<T> m_pred;
 	}
 
 
-	public class PredEnumerable<T> : IEnumerable<T>
+	public class PredEnumerable<T>: IEnumerable<T>
 	{
 		public PredEnumerable( PredEnumerator<T> en )
 		{
@@ -132,7 +132,7 @@ static public class scr
 					 BindingFlags.DeclaredOnly |
 					 BindingFlags.NonPublic |
 					 BindingFlags.Public |
-					 BindingFlags.Instance);
+					 BindingFlags.Instance );
 
 		var en = PredEnumerator.Create<FieldInfo>( fieldArr.AsEnumerable<FieldInfo>(), fa => fa.GetCustomAttribute( typeof( NonSerializedAttribute ) ) == null );
 
@@ -167,13 +167,13 @@ static public class scr
 		var propArr = t.GetProperties(
 					 BindingFlags.DeclaredOnly |
 					 BindingFlags.NonPublic |
-					 BindingFlags.Public | 
+					 BindingFlags.Public |
 					 BindingFlags.Instance
 					 );
 
-		
 
-		var en = PredEnumerator.Create<PropertyInfo>( propArr.AsEnumerable<PropertyInfo>(), 
+
+		var en = PredEnumerator.Create<PropertyInfo>( propArr.AsEnumerable<PropertyInfo>(),
 			fa => fa.GetCustomAttribute( typeof( NonSerializedAttribute ) ) == null && !list.Exists( f => f.Name == fa.Name ) );
 
 		list.AddRange( new PredEnumerable<PropertyInfo>( en ) );

@@ -147,28 +147,28 @@ namespace lib
 							}
 							else
 							{
-								Log.error( String.Format( $"No attributes in node while loading file {filename}" ) );
+								log.error( String.Format( $"No attributes in node while loading file {filename}" ) );
 							}
 						}
 						else
 						{
-							Log.error( String.Format( $"Incorrect key {node.Name} found while loading file {filename}" ) );
+							log.error( String.Format( $"Incorrect key {node.Name} found while loading file {filename}" ) );
 						}
 					}
 				}
 				else
 				{
 					if( keyMI == null )
-						Log.error( String.Format( $"Key type conversion not found for type {keyType}" ) );
+						log.error( String.Format( $"Key type conversion not found for type {keyType}" ) );
 
 					if( valMI == null )
-						Log.error( String.Format( $"Val type conversion not found for type {valType}" ) );
+						log.error( String.Format( $"Val type conversion not found for type {valType}" ) );
 				}
 
 			}
 			else
 			{
-				Log.error( String.Format( $"No dictionary element found while loading file {filename}" ) );
+				log.error( String.Format( $"No dictionary element found while loading file {filename}" ) );
 			}
 		}
 

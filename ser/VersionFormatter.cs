@@ -12,7 +12,7 @@ namespace lib
 	/// <summary>
 	/// 
 	/// </summary>
-	public class VersionFormatter : IFormatter
+	public class VersionFormatter: IFormatter
 	{
 		public enum ETypes
 		{
@@ -160,44 +160,44 @@ namespace lib
 				switch( typeName )
 				{
 					case "Int32":
-					writer.Write( (char)ETypes.Int32 );
-					writer.Write( name.GetHashCode() );
+						writer.Write( (char)ETypes.Int32 );
+						writer.Write( name.GetHashCode() );
 
-					write( writer, Convert.ToInt32( fi.GetValue( parentObj ) ) );
-					break;
+						write( writer, Convert.ToInt32( fi.GetValue( parentObj ) ) );
+						break;
 					case "Single":
-					writer.Write( (char)ETypes.Single );
-					writer.Write( name.GetHashCode() );
+						writer.Write( (char)ETypes.Single );
+						writer.Write( name.GetHashCode() );
 
-					write( writer, Convert.ToSingle( fi.GetValue( parentObj ) ) );
-					break;
+						write( writer, Convert.ToSingle( fi.GetValue( parentObj ) ) );
+						break;
 					case "Double":
-					writer.Write( (char)ETypes.Double );
-					writer.Write( name.GetHashCode() );
+						writer.Write( (char)ETypes.Double );
+						writer.Write( name.GetHashCode() );
 
-					write( writer, Convert.ToDouble( fi.GetValue( parentObj ) ) );
-					break;
+						write( writer, Convert.ToDouble( fi.GetValue( parentObj ) ) );
+						break;
 					case "Char":
-					writer.Write( (char)ETypes.Char );
-					writer.Write( name.GetHashCode() );
+						writer.Write( (char)ETypes.Char );
+						writer.Write( name.GetHashCode() );
 
-					write( writer, Convert.ToChar( fi.GetValue( parentObj ) ) );
-					break;
+						write( writer, Convert.ToChar( fi.GetValue( parentObj ) ) );
+						break;
 					case "String":
-					writer.Write( (char)ETypes.String );
-					writer.Write( name.GetHashCode() );
+						writer.Write( (char)ETypes.String );
+						writer.Write( name.GetHashCode() );
 
-					write( writer, Convert.ToString( fi.GetValue( parentObj ) ) );
-					break;
+						write( writer, Convert.ToString( fi.GetValue( parentObj ) ) );
+						break;
 					case "Boolean":
-					writer.Write( (char)ETypes.Boolean );
-					writer.Write( name.GetHashCode() );
+						writer.Write( (char)ETypes.Boolean );
+						writer.Write( name.GetHashCode() );
 
-					writer.Write( Convert.ToBoolean( fi.GetValue( parentObj ) ) );
-					break;
+						writer.Write( Convert.ToBoolean( fi.GetValue( parentObj ) ) );
+						break;
 					default:
-					Console.WriteLine( "VersionFormatter does not understand type " + typeName );
-					break;
+						Console.WriteLine( "VersionFormatter does not understand type " + typeName );
+						break;
 				}
 			}
 		}
@@ -433,35 +433,35 @@ namespace lib
 				switch( type )
 				{
 					case ETypes.Array:
-					readArray( reader, obj, fi );
-					break;
+						readArray( reader, obj, fi );
+						break;
 					case ETypes.Int32:
-					readInt( reader, obj, fi );
-					break;
+						readInt( reader, obj, fi );
+						break;
 					case ETypes.Single:
-					readSingle( reader, obj, fi );
-					break;
+						readSingle( reader, obj, fi );
+						break;
 					case ETypes.Double:
-					readDouble( reader, obj, fi );
-					break;
+						readDouble( reader, obj, fi );
+						break;
 					case ETypes.Char:
-					readChar( reader, obj, fi );
-					break;
+						readChar( reader, obj, fi );
+						break;
 					case ETypes.Boolean:
-					readBool( reader, obj, fi );
-					break;
+						readBool( reader, obj, fi );
+						break;
 					case ETypes.String:
-					readString( reader, obj, fi );
-					break;
+						readString( reader, obj, fi );
+						break;
 					case ETypes.Ref:
-					readRef( reader, obj, fi );
-					break;
+						readRef( reader, obj, fi );
+						break;
 					case ETypes.Object:
-					readObject( reader );
-					break;
+						readObject( reader );
+						break;
 					default:
-					Debug.Fail( "Unknown type on read." );
-					break;
+						Debug.Fail( "Unknown type on read." );
+						break;
 				}
 			}
 			catch( Exception ex )

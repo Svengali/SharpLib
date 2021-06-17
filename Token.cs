@@ -47,8 +47,8 @@ namespace lib
 			return m_str;
 		}
 
-		int     m_hash;
-		String  m_str;
+		int m_hash;
+		String m_str;
 	}
 
 }

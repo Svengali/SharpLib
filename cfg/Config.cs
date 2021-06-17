@@ -6,7 +6,7 @@ using System.Reflection;
 namespace lib
 {
 
-	public class DescAttribute : Attribute
+	public class DescAttribute: Attribute
 	{
 		public string Desc { get; private set; }
 
@@ -17,7 +17,7 @@ namespace lib
 	}
 
 	[Serializable]
-	public class ConfigCfg : Config
+	public class ConfigCfg: Config
 	{
 		public readonly bool writeOutTemplateFiles = true;
 	}
@@ -83,7 +83,7 @@ namespace lib
 
 			try
 			{
-				FileStream fs = new FileStream( filename, FileMode.Open, FileAccess.Read );
+				FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
 				XmlFormatter2 formatter = new XmlFormatter2();
 
@@ -93,13 +93,13 @@ namespace lib
 			}
 			catch( FileNotFoundException )
 			{
-				Type[] types = new Type[ 0 ];
-				object[] parms = new object[ 0 ];
+				Type[] types = new Type[0];
+				object[] parms = new object[0];
 
 				//types[ 0 ] = typeof( string );
 				//parms[ 0 ] = filename;
 
-				ConstructorInfo cons = t?.GetConstructor( types );
+				ConstructorInfo cons = t?.GetConstructor(types);
 
 				try
 				{
@@ -107,7 +107,7 @@ namespace lib
 				}
 				catch( Exception e )
 				{
-					Log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
+					log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
 				}
 
 				//cfg.SetFilename( filename );
@@ -116,11 +116,11 @@ namespace lib
 				{
 					var templateFile = $"templates/{filename}";
 
-					var dirName = Path.GetDirectoryName( templateFile );
+					var dirName = Path.GetDirectoryName(templateFile);
 
 					lib.Util.checkAndAddDirectory( dirName );
 
-					lib.Log.info( $"Writing out template config of type {t?.Name} in {templateFile}" );
+					log.info( $"Writing out template config of type {t?.Name} in {templateFile}" );
 
 					Config.save( cfg, templateFile );
 				}
@@ -136,7 +136,7 @@ namespace lib
 
 		static public void save( Config cfg, String filename )
 		{
-			FileStream fs = new FileStream( filename, FileMode.Create, FileAccess.Write );
+			FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
 
 			XmlFormatter2 formatter = new XmlFormatter2();
 

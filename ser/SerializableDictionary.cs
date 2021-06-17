@@ -11,7 +11,7 @@ using System.Security.Permissions;
 namespace lib
 {
 	[Serializable]
-	public class SerializableDictionary<TKey, TVal> : Dictionary<TKey, TVal>, IXmlSerializable, ISerializable
+	public class SerializableDictionary<TKey, TVal>: Dictionary<TKey, TVal>, IXmlSerializable, ISerializable
 	{
 		#region Constants
 		private const string DictionaryNodeName = "Dictionary";

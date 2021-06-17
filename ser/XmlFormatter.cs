@@ -17,7 +17,7 @@ using System.Reflection;
 namespace lib
 {
 	//Old, use 2 now.
-	class XmlFormatter : IFormatter
+	class XmlFormatter: IFormatter
 	{
 		StreamingContext m_context;
 		//SerializationMode m_mode;
@@ -230,7 +230,7 @@ namespace lib
 					}
 					else //More than 1.
 					{
-						//Log.error( "Too many fields named the same thing" );
+						//log.error( "Too many fields named the same thing" );
 					}
 				}
 			}

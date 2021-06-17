@@ -6,7 +6,7 @@ using System.Threading;
 namespace lib
 {
 
-	public class MicroStopwatch : System.Diagnostics.Stopwatch
+	public class MicroStopwatch: System.Diagnostics.Stopwatch
 	{
 		readonly double _microSecPerTick
 						= 1000000D / System.Diagnostics.Stopwatch.Frequency;
@@ -189,7 +189,7 @@ namespace lib
 	/// <summary>
 	/// MicroTimer Event Argument class
 	/// </summary>
-	public class MicroTimerEventArgs : EventArgs
+	public class MicroTimerEventArgs: EventArgs
 	{
 		// Simple counter, number times timed event (callback function) executed
 		public int TimerCount { get; private set; }

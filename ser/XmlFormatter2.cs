@@ -29,12 +29,12 @@ namespace lib
 
 	}
 
-	public class XmlFormatter2Cfg : Config
+	public class XmlFormatter2Cfg: Config
 	{
 		public readonly Datastructure datastructure = Datastructure.Full;
 	}
 
-	public class XmlFormatter2 : IFormatter
+	public class XmlFormatter2: IFormatter
 	{
 		public StreamingContext Context { get; set; }
 
@@ -95,10 +95,10 @@ namespace lib
 		{
 			//lib.log.info( "DeserializeKnownType( Stream stream, Type t ) {0} {1}", m_rndVal, m_alreadySerialized.Count );
 
-			XmlTextReader reader = new XmlTextReader( stream );
+			XmlTextReader reader = new XmlTextReader(stream);
 			//reader.Settings = System.Text.Encoding.ASCII;
 
-			object obj = Deserialize( reader, t );
+			object obj = Deserialize(reader, t);
 			//lib.log.info( "DeserializeKnownType END( Stream stream, Type t ) {0} {1}", m_rndVal, m_alreadySerialized.Count );
 			return obj;
 		}
@@ -128,7 +128,7 @@ namespace lib
 		{
 			//lib.log.info( "object Deserialize( XmlElement elem ) {0} {1}", m_rndVal, m_alreadySerialized.Count );
 
-			string typename = elem.HasAttribute( "t" ) ? elem.GetAttribute( "t" ) : elem.Name;
+			string typename = elem.HasAttribute("t") ? elem.GetAttribute("t") : elem.Name;
 
 			return Deserialize( elem, typename );
 		}
@@ -160,7 +160,7 @@ namespace lib
 
 		private object Deserialize( XmlElement elem, Type type, object enclosing = null )
 		{
-			TypeCode typeCode = Type.GetTypeCode( type );
+			TypeCode typeCode = Type.GetTypeCode(type);
 
 			if( typeCode != TypeCode.Object )
 			{
@@ -170,7 +170,7 @@ namespace lib
 			{
 				if( !type.IsArray )
 				{
-					object obj = DeserializeObject( elem, type );
+					object obj = DeserializeObject(elem, type);
 
 					if( obj is I_Serialize )
 					{
@@ -193,7 +193,7 @@ namespace lib
 		{
 			mm_types[0] = t;
 
-			var fn = GetType().GetMethod( "GetDefaultGeneric" ).MakeGenericMethod( mm_types );
+			var fn = GetType().GetMethod("GetDefaultGeneric").MakeGenericMethod(mm_types);
 
 			return fn.Invoke( this, null );
 		}
@@ -205,7 +205,7 @@ namespace lib
 
 		private object DeserializeConcrete( XmlElement elem, Type type )
 		{
-			string val = elem.GetAttribute( "v" );
+			string val = elem.GetAttribute("v");
 
 			if( !type.IsEnum )
 			{
@@ -244,7 +244,7 @@ namespace lib
 
 			foreach( Assembly a in ass )
 			{
-				Type t = a.GetType( shortname );
+				Type t = a.GetType(shortname);
 
 				if( t != null )
 				{
@@ -255,25 +255,25 @@ namespace lib
 			return null;
 		}
 
-		private Type[] mm_consType = new Type[ 2 ];
-		private object[] mm_args = new object[ 2 ];
+		private Type[] mm_consType = new Type[2];
+		private object[] mm_args = new object[2];
 		private object DeserializeObject( XmlElement elem, Type type )
 		{
-			string refString = elem.GetAttribute( "ref" );
+			string refString = elem.GetAttribute("ref");
 
-			int refInt = refString.Length > 0 ? Convert.ToInt32( refString ) : -1;
+			int refInt = refString.Length > 0 ? Convert.ToInt32(refString) : -1;
 
 			var finalType = type;
 			if( elem.HasAttribute( "t" ) )
 			{
-				var typename = elem.GetAttribute( "t" );
+				var typename = elem.GetAttribute("t");
 				finalType = FindType( typename );
 
 				if( finalType == null )
 					finalType = type;
 			}
 
-			object obj = createObject( finalType, refInt );
+			object obj = createObject(finalType, refInt);
 
 			if( obj is IList )
 			{
@@ -282,7 +282,7 @@ namespace lib
 				return DeserializeList( elem, type, list );
 			}
 
-			Type typeISerializable = typeof( ISerializable );
+			Type typeISerializable = typeof(ISerializable);
 
 			if( obj is ISerializable ) //   type.IsSubclassOf( typeISerializable ) )
 			{
@@ -290,7 +290,7 @@ namespace lib
 
 				//ISerializable ser = obj as ISerializable;
 
-				var serInfo = new SerializationInfo( finalType, new FormatterConverter() );
+				var serInfo = new SerializationInfo(finalType, new FormatterConverter());
 
 				//var serInfoForTypes = new SerializationInfo( type, new FormatterConverter() );
 
@@ -302,13 +302,13 @@ namespace lib
 
 					String name = node.Name;
 
-					String childType = node.GetAttribute( "t" );
+					String childType = node.GetAttribute("t");
 
-					name = scr.TypeToIdentifier( name );
+					name = refl.TypeToIdentifier( name );
 
-					XmlElement childElem = getNamedChild( allChildren, name );
+					XmlElement childElem = getNamedChild(allChildren, name);
 
-					var des = Deserialize( childElem, childType );
+					var des = Deserialize(childElem, childType);
 
 					serInfo.AddValue( name, des, des.GetType() );
 				}
@@ -323,7 +323,7 @@ namespace lib
 
 				mm_consType[0] = typeof( SerializationInfo );
 				mm_consType[1] = typeof( StreamingContext );
-				ConstructorInfo serCons = finalType.GetConstructor( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, mm_consType, null );
+				ConstructorInfo serCons = finalType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, mm_consType, null);
 
 				mm_args[0] = serInfo;
 				mm_args[1] = Context;
@@ -343,7 +343,7 @@ namespace lib
 				{
 					String name = serMember.Name;
 
-					name = scr.TypeToIdentifier( name );
+					name = refl.TypeToIdentifier( name );
 
 					XmlElement childElem = getNamedChild( allChildren, name );
 
@@ -355,7 +355,7 @@ namespace lib
 			{
 				XmlNodeList allChildren = elem.ChildNodes;
 
-				var fields = scr.GetAllFields( type );
+				var fields = refl.GetAllFields(type);
 
 				//MemberInfo[] miArr = FormatterServices.GetSerializableMembers( type, Context );
 
@@ -364,20 +364,20 @@ namespace lib
 
 					String name = childFi.Name;
 
-					name = scr.TypeToIdentifier( name );
+					name = refl.TypeToIdentifier( name );
 
-					XmlElement childElem = getNamedChild( allChildren, name );
+					XmlElement childElem = getNamedChild(allChildren, name);
 
 
 					if( childElem != null )
 					{
-						object childObj = Deserialize( childElem, childFi.FieldType, obj );
+						object childObj = Deserialize(childElem, childFi.FieldType, obj);
 
 						childFi.SetValue( obj, childObj );
 					}
 					else if( fields.Count == 1 )
 					{
-						object childObj = Deserialize( elem, childFi.FieldType, obj );
+						object childObj = Deserialize(elem, childFi.FieldType, obj);
 
 						childFi.SetValue( obj, childObj );
 					}
@@ -403,7 +403,7 @@ namespace lib
 			{
 				if( arrNodeList.Item( i ) is XmlElement )
 				{
-					XmlElement arrElem = (XmlElement)arrNodeList.Item( i );
+					XmlElement arrElem = (XmlElement)arrNodeList.Item(i);
 
 					list.Add( Deserialize( arrElem, genT[0] ) );
 				}
@@ -416,20 +416,20 @@ namespace lib
 		{
 			Type typeElem = type.GetElementType();
 
-			string refString = elem.GetAttribute( "ref" );
-			int refInt = refString.Length > 0 ? Convert.ToInt32( refString ) : -1;
+			string refString = elem.GetAttribute("ref");
+			int refInt = refString.Length > 0 ? Convert.ToInt32(refString) : -1;
 
 			XmlNodeList arrNodeList = elem.ChildNodes;
 
 			int length = arrNodeList.Count;
 
-			Array arr = createArray( typeElem, refInt, length );
+			Array arr = createArray(typeElem, refInt, length);
 
 			for( int i = 0; i < arr.Length; ++i )
 			{
 				if( arrNodeList.Item( i ) is XmlElement )
 				{
-					XmlElement arrElem = (XmlElement)arrNodeList.Item( i );
+					XmlElement arrElem = (XmlElement)arrNodeList.Item(i);
 
 					arr.SetValue( Deserialize( arrElem, typeElem ), i );
 				}
@@ -440,14 +440,14 @@ namespace lib
 
 		private object createObject( string typename, int refInt )
 		{
-			Type type = Type.GetType( typename );
+			Type type = Type.GetType(typename);
 
 			return createObject( type, refInt );
 		}
 
 		private object createObject( Type type, int refInt )
 		{
-			TypeCode tc = Type.GetTypeCode( type );
+			TypeCode tc = Type.GetTypeCode(type);
 
 			if( m_cfg.datastructure == Datastructure.Full && refInt > 0 && m_alreadySerialized.ContainsKey( refInt ) )
 			{
@@ -472,14 +472,14 @@ namespace lib
 					}
 					catch( Exception exInner )
 					{
-						lib.Log.error( $"Got exception {exInner.Message} trying to make an uninitialized object" );
+						log.error( $"Got exception {exInner.Message} trying to make an uninitialized object" );
 					}
 
 				}
 
 				if( obj == null )
 				{
-					lib.Log.warn( $"Could not create object of type {type.Name}" );
+					log.warn( $"Could not create object of type {type.Name}" );
 
 					return obj;
 				}
@@ -495,14 +495,14 @@ namespace lib
 
 		private Array createArray( string elemTypename, int refInt, int length )
 		{
-			Type elemType = Type.GetType( elemTypename );
+			Type elemType = Type.GetType(elemTypename);
 
 			return createArray( elemType, refInt, length );
 		}
 
 		private Array createArray( Type elemType, int refInt, int length )
 		{
-			TypeCode elemTC = Type.GetTypeCode( elemType );
+			TypeCode elemTC = Type.GetTypeCode(elemType);
 
 			if( m_cfg.datastructure == Datastructure.Full && refInt > 0 && m_alreadySerialized.ContainsKey( refInt ) )
 			{
@@ -510,7 +510,7 @@ namespace lib
 			}
 			else
 			{
-				Array arr = Array.CreateInstance( elemType, length ) ;
+				Array arr = Array.CreateInstance(elemType, length);
 
 				if( m_cfg.datastructure == Datastructure.Full )
 				{
@@ -545,7 +545,7 @@ namespace lib
 			m_alreadySerialized.Clear();
 			m_objectID = new ObjectIDGenerator();
 
-			XmlTextWriter writer = new XmlTextWriter( stream, System.Text.Encoding.ASCII );
+			XmlTextWriter writer = new XmlTextWriter(stream, System.Text.Encoding.ASCII);
 
 			writer.Formatting = Formatting.Indented;
 
@@ -573,7 +573,7 @@ namespace lib
 			{
 				Type type = root.GetType();
 
-				TypeCode typeCode = Type.GetTypeCode( type );
+				TypeCode typeCode = Type.GetTypeCode(type);
 
 				if( typeCode != TypeCode.Object )
 				{
@@ -626,7 +626,7 @@ namespace lib
 
 			bool first;
 
-			long refInt = m_objectID.GetId( root, out first );
+			long refInt = m_objectID.GetId(root, out first);
 
 			if( m_cfg.datastructure == Datastructure.Full )
 			{
@@ -644,13 +644,13 @@ namespace lib
 				Type type = root.GetType();
 
 				//*
-				Type typeISerializable = typeof( ISerializable );
+				Type typeISerializable = typeof(ISerializable);
 
 				if( root is ISerializable ) //   type.IsSubclassOf( typeISerializable ) )
 				{
 					ISerializable ser = root as ISerializable;
 
-					var serInfo = new SerializationInfo( type, new FormatterConverter() );
+					var serInfo = new SerializationInfo(type, new FormatterConverter());
 
 					ser.GetObjectData( serInfo, Context );
 
@@ -660,7 +660,7 @@ namespace lib
 					{
 						String name = serMember.Name;
 
-						name = scr.TypeToIdentifier( name );
+						name = refl.TypeToIdentifier( name );
 
 						Serialize( writer, serMember.Value, name, true );
 					}
@@ -672,14 +672,14 @@ namespace lib
 				else
 				//*/
 				{
-					var fields = scr.GetAllFields( type );
+					var fields = refl.GetAllFields(type);
 
 					//MemberInfo[] miArr = FormatterServices.GetSerializableMembers( type, Context );
 
 					foreach( var childFi in fields )
 					{
 
-						object[] objs = childFi.GetCustomAttributes( typeof( NonSerializedAttribute ), true );
+						object[] objs = childFi.GetCustomAttributes(typeof(NonSerializedAttribute), true);
 
 						if( objs.Length > 0 )
 						{
@@ -688,7 +688,7 @@ namespace lib
 
 						String name = childFi.Name;
 
-						name = scr.TypeToIdentifier( name );
+						name = refl.TypeToIdentifier( name );
 
 						Serialize( writer, childFi.GetValue( root ), name, false );
 					}
@@ -708,7 +708,7 @@ namespace lib
 
 			bool first;
 
-			long refInt = m_objectID.GetId( root, out first );
+			long refInt = m_objectID.GetId(root, out first);
 
 			if( m_cfg.datastructure == Datastructure.Full )
 			{

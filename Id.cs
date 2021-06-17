@@ -13,7 +13,7 @@ namespace lib
 {
 
 
-	public struct Id<T> : IComparable, IFormattable, IConvertible, IComparable<ulong>, IEquatable<ulong>
+	public struct Id<T>: IComparable, IFormattable, IConvertible, IComparable<ulong>, IEquatable<ulong>
 	{
 		public const ulong Min = 0uL;
 		public const ulong Max = 18446744073709551615uL;
@@ -29,7 +29,7 @@ namespace lib
 
 			s_rand.NextBytes( buf );
 
-			var newId = BitConverter.ToUInt64( buf, 0 );
+			var newId = BitConverter.ToUInt64(buf, 0);
 
 			return new Id<T> { m_value = newId };
 		}
