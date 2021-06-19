@@ -16,7 +16,7 @@ namespace res
 
 
 	[Serializable]
-	public class Ref: lib.I_Serialize
+	public class Ref : lib.I_Serialize
 	{
 		public string filename { get { return m_filename; } }
 
@@ -51,7 +51,7 @@ namespace res
 	}
 
 	[Serializable]
-	public class Ref<T>: Ref where T : class
+	public class Ref<T> : Ref where T : class
 	{
 		public T res => m_res != null ? m_res : m_res = Mgr.load<T>( filename );
 
@@ -116,7 +116,7 @@ namespace res
 	}
 
 
-	class LoadHolder<T>: LoadHolder
+	class LoadHolder<T> : LoadHolder
 	{
 		public LoadHolder( Load<T> _dlgtLoad )
 		{
@@ -249,10 +249,10 @@ namespace res
 				if( wr.TryGetTarget( out var v ) )
 					return v;
 
-				log.info( $"{filename} was in cache, but its been dropped, reloading." );
+				lib.Log.info( $"{filename} was in cache, but its been dropped, reloading." );
 			}
 
-			log.warn( $"Block Loading {filename}." );
+			lib.Log.warn( $"Block Loading {filename}." );
 
 			var newV = actualLoad<T>( filename );
 
@@ -270,7 +270,7 @@ namespace res
 					if( wr.TryGetTarget( out var v ) )
 						return v;
 
-					log.error( $"{filename} was in cache, but its been dropped, reloading." );
+					lib.Log.error( $"{filename} was in cache, but its been dropped, reloading." );
 				}
 			}
 
@@ -293,19 +293,19 @@ namespace res
 					//Done loading 
 					if( !ImmutableInterlocked.TryRemove( ref s_loading, filename, out var oldEvt ) )
 					{
-						log.error( $"Error removing loading event for {filename}" );
+						lib.Log.error( $"Error removing loading event for {filename}" );
 					}
 
 					if( alreadyAdded )
 					{
-						log.error( $"Key {filename} already existed, though it shouldnt." );
+						lib.Log.error( $"Key {filename} already existed, though it shouldnt." );
 					}
 
 					return v;
 				}
 				else
 				{
-					log.error( $"Loader could not be found for type {typeof( T )}" );
+					lib.Log.error( $"Loader could not be found for type {typeof( T )}" );
 
 					return ResCache<T>.s_default;
 				}
