@@ -85,7 +85,7 @@ static public class log
 
 	static public void create( string filename )
 	{
-		createLog( filename );
+		startup( filename );
 	}
 
 
@@ -95,7 +95,7 @@ static public class log
 
 		var evt = CreateLogEvent( LogType.Info, msg, "System", null );
 
-			s_events.Enqueue( evt );
+		s_events.Enqueue( evt );
 
 		stop();
 	}
@@ -105,19 +105,22 @@ static public class log
 	{
 		var logEvent = new LogEvent( logType, msg, path, line, member, cat, obj );
 
-		static internal ConcurrentQueue<LogEvent> s_events = new ConcurrentQueue<LogEvent>();
+		return logEvent;
+	}
 
-		private Thread m_thread;
+	static internal ConcurrentQueue<LogEvent> s_events = new ConcurrentQueue<LogEvent>();
 
-		/*
-		static public Log log
+	static private Thread s_thread;
+
+	/*
+	static public Log log
+	{
+		get 
 		{
-			get 
-			{
-				return s_log;
-			}
+			return s_log;
 		}
-		*/
+	}
+	*/
 
 
 
@@ -160,7 +163,7 @@ static public class log
 
 	static object s_lock = new object();
 
-	static public void logBase( string msg, LogType type = LogType.Debug, string path = "", int line = -1, string member = "", string cat = "unk", object obj = null )
+	static public void logBase_old( string msg, LogType type = LogType.Debug, string path = "", int line = -1, string member = "", string cat = "unk", object obj = null )
 	{
 		// @@@@@ TODO Get rid of this lock. 
 		var evt = new LogEvent( type, msg, path, line, member, cat, obj );
@@ -171,19 +174,14 @@ static public class log
 		}
 	}
 
-		static public void log( string msg, LogType type = LogType.Debug, string path = "", int line = -1, string member = "", string cat = "unk", object obj = null )
-		{
-			var evt = new LogEvent( type, msg, path, line, member, cat, obj );
+	static public void logBase( string msg, LogType type = LogType.Debug, string path = "", int line = -1, string member = "", string cat = "unk", object obj = null )
+	{
+		var evt = new LogEvent( type, msg, path, line, member, cat, obj );
 
-			s_events.Enqueue( evt );
+		s_events.Enqueue( evt );
+	}
 
-			/*
-			lock( s_log )
-			{
-				s_log.writeToAll( evt );
-			}
-			*/
-		}
+
 	static public void logProps( object obj, string header, LogType type = LogType.Debug, string cat = "", string prefix = "", [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 	{
 		var list = refl.GetAllProperties( obj.GetType() );
@@ -195,26 +193,27 @@ static public class log
 
 			//lock( s_log )
 			{
-				var evt = CreateLogEvent( type, header, cat, obj );
+				//var evt = CreateLogEvent( type, header, cat, obj );
 
 				s_events.Enqueue( evt );
 
 				//s_log.writeToAll( evt );
 
-			foreach( var pi in list )
-			{
-				try
+				foreach( var pi in list )
 				{
-					var v = pi.GetValue( obj );
+					try
+					{
+						var v = pi.GetValue( obj );
 
-					logBase( $"{prefix}{pi.Name} = {v}", type, path, line, member, cat );
+						logBase( $"{prefix}{pi.Name} = {v}", type, path, line, member, cat );
+					}
+					catch( Exception ex )
+					{
+						logBase( $"Exception processing {pi.Name} {ex.Message}", LogType.Error, "log" );
+					}
 				}
-				catch( Exception ex )
-				{
-					logBase( $"Exception processing {pi.Name} {ex.Message}", LogType.Error, "log" );
-				}
+
 			}
-
 		}
 	}
 
@@ -233,15 +232,15 @@ static public class log
 	}
 
 
-		private Log( string filename )
-		{
-			var start = new ThreadStart( run );
+	static void startup( string filename )
+	{
+		var start = new ThreadStart( run );
 
-			m_thread = new Thread( start );
-			m_thread.Start();
+		s_thread = new Thread( start );
+		s_thread.Start();
 
-			//TODO: Fix this so itll work without a directory.
-			Directory.CreateDirectory( Path.GetDirectoryName( filename ) );
+		//TODO: Fix this so itll work without a directory.
+		Directory.CreateDirectory( Path.GetDirectoryName( filename ) );
 
 		string dir = Path.GetDirectoryName( filename );
 
@@ -258,50 +257,39 @@ static public class log
 
 		//Debug.Listeners.Add( this );
 
-			s_events.Enqueue( evt );
+		//var evt = CreateLogEvent( LogType.Info, $"startup", "System", null );
 
-			//writeToAll( evt );
-		}
+		//s_events.Enqueue( evt );
 
-		var evt = CreateLogEvent( LogType.Info, msg, "System", null );
+		info( $"startup" );
 
-		writeToAll( evt );
 	}
 
-		bool m_running = true;
+	static bool s_running = true;
 
-		void run()
+	static void run()
+	{
+		while( s_running )
 		{
-			while( m_running )
+			while( s_events.TryDequeue( out var evt ) )
 			{
-				while( s_events.TryDequeue( out var evt ) )
-				{
-					writeToAll( evt );
-				}
-
-				Thread.Sleep( 0 );
+				writeToAll( evt );
 			}
+
+			Thread.Sleep( 0 );
 		}
-
-		void stop()
-		{
-			m_running = false;
-
-			m_writer.Close();
-			m_stream.Close();
-
-			m_errorWriter.Close();
-			m_errorStream.Close();
-
-		}
+	}
 
 	static void stop()
 	{
+		s_running = false;
+
 		s_writer.Close();
 		s_stream.Close();
 
 		s_errorWriter.Close();
 		s_errorStream.Close();
+
 	}
 
 	static public void addDelegate( Log_delegate cb )
