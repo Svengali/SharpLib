@@ -3,6 +3,13 @@ using System.IO;
 using System.Xml;
 using System.Reflection;
 
+/*
+
+TODO:
+x) 
+
+*/
+
 namespace lib
 {
 
@@ -83,47 +90,62 @@ namespace lib
 
 			try
 			{
-				FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+				if( File.Exists( filename ) )
+				{
+					FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
-				XmlFormatter2 formatter = new XmlFormatter2();
+					XmlFormatter2 formatter = new XmlFormatter2();
 
-				cfg = (Config)( t != null ? formatter.DeserializeKnownType( fs, t ) : formatter.Deserialize( fs ) );
+					cfg = (Config)( t != null ? formatter.DeserializeKnownType( fs, t ) : formatter.Deserialize( fs ) );
 
-				cfg.SetFilename( filename );
+					cfg.SetFilename( filename );
+				}
+				else
+				{
+					cfg = CreateTemplate( filename, t );
+				}
 			}
 			catch( IOException )
 			{
-				Type[] types = new Type[0];
-				object[] parms = new object[0];
+				cfg = CreateTemplate( filename, t );
+			}
 
-				//types[ 0 ] = typeof( string );
-				//parms[ 0 ] = filename;
+			return cfg;
+		}
 
-				ConstructorInfo cons = t?.GetConstructor(types);
+		private static Config CreateTemplate( string filename, Type t )
+		{
+			Type[] types = new Type[0];
+			object[] parms = new object[0];
 
-				try
-				{
-					cfg = (Config)cons?.Invoke( parms );
-				}
-				catch( Exception e )
-				{
-					log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
-				}
+			//types[ 0 ] = typeof( string );
+			//parms[ 0 ] = filename;
+			Config cfg = null;
 
-				//cfg.SetFilename( filename );
+			ConstructorInfo cons = t?.GetConstructor(types);
 
-				if( s_cfg.writeOutTemplateFiles )
-				{
-					var templateFile = $"templates/{filename}";
+			try
+			{
+				cfg = (Config)cons?.Invoke( parms );
+			}
+			catch( Exception e )
+			{
+				log.error( $"Exception while creating config {t.ToString()}, Msg {e.Message}" );
+			}
 
-					var dirName = Path.GetDirectoryName(templateFile);
+			//cfg.SetFilename( filename );
 
-					lib.Util.checkAndAddDirectory( dirName );
+			if( s_cfg.writeOutTemplateFiles )
+			{
+				var templateFile = $"templates/{filename}";
 
-					log.info( $"Writing out template config of type {t?.Name} in {templateFile}" );
+				var dirName = Path.GetDirectoryName(templateFile);
 
-					Config.save( cfg, templateFile );
-				}
+				lib.Util.checkAndAddDirectory( dirName );
+
+				log.info( $"Writing out template config of type {t?.Name} in {templateFile}" );
+
+				Config.save( cfg, templateFile );
 			}
 
 			return cfg;
@@ -146,7 +168,7 @@ namespace lib
 		}
 		#endregion
 
-		private string m_filename = "";
+		private string m_filename = "{unknown}";
 
 		public Config()
 		{

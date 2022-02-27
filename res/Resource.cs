@@ -58,7 +58,7 @@ namespace res
 		//For serialization
 		public Ref()
 			:
-			base( "<unknown>" )
+			base( "{unknown}" )
 		{
 		}
 

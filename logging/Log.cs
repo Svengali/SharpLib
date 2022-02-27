@@ -276,6 +276,7 @@ static public class log
 				writeToAll( evt );
 			}
 
+			// TODO PERF Replace this with a semaphore/mutex
 			Thread.Sleep( 0 );
 		}
 	}
@@ -320,6 +321,37 @@ static public class log
 		}
 	}
 
+	private static void setConsoleColor( log.LogEvent evt )
+	{
+		switch( evt.LogType )
+		{
+			case log.LogType.Trace:
+				Console.ForegroundColor = ConsoleColor.DarkGray;
+				break;
+			case log.LogType.Debug:
+				Console.ForegroundColor = ConsoleColor.Gray;
+				break;
+			case log.LogType.Info:
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
+				break;
+			case log.LogType.High:
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				break;
+			case log.LogType.Warn:
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				break;
+			case log.LogType.Error:
+				Console.ForegroundColor = ConsoleColor.DarkRed;
+				Console.BackgroundColor = ConsoleColor.DarkGray;
+				break;
+			case log.LogType.Fatal:
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.BackgroundColor = ConsoleColor.DarkGray;
+				break;
+		}
+	}
+
+
 	static private void writeToAll( LogEvent evt )
 	{
 		try
@@ -328,6 +360,7 @@ static public class log
 			//lock( this )
 			{
 				char sym = getSymbol( evt.LogType );
+
 
 				var truncatedCat = evt.Cat.Substring( 0, Math.Min( 8, evt.Cat.Length ) );
 
@@ -338,7 +371,10 @@ static public class log
 
 				s_writer.WriteLine( finalLine );
 
-				Console.WriteLine( finalLine );
+				setConsoleColor( evt );
+					Console.WriteLine( finalLine );
+				Console.ResetColor();
+
 
 				Debug.WriteLine( finalLine );
 
