@@ -120,7 +120,8 @@ public sealed class PpmCompress
 			enc.write(ctx.frequencies, 256);
 			outerContinue:;
 		}
-		outerBreak:
+
+		//outerBreak:
 		// Logic for order = -1
 		enc.write(model.orderMinus1Freqs, symbol);
 	}

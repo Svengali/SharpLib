@@ -47,7 +47,7 @@ namespace res
 
 		}
 
-		private string m_filename;
+		protected string m_filename;
 	}
 
 	[Serializable]
@@ -68,19 +68,22 @@ namespace res
 		{
 		}
 
+		/*
 		public Ref( string filename, T res ) : base( filename )
 		{
 			m_res = res;
 		}
-
+		*/
 
 		override internal void load()
 		{
 			m_res = Mgr.load<T>( filename );
 		}
 
+
 		[NonSerialized]
 		private T m_res;
+
 	}
 
 
@@ -118,13 +121,13 @@ namespace res
 
 	class LoadHolder<T> : LoadHolder
 	{
-		public LoadHolder( Load<T> _dlgtLoad )
+		public LoadHolder( Load<T> fnLoad )
 		{
-			dlgtLoad = _dlgtLoad;
+			m_fnLoad = fnLoad;
 		}
 
 
-		public Load<T> dlgtLoad;
+		public Load<T> m_fnLoad;
 
 		internal override object load()
 		{
@@ -282,7 +285,7 @@ namespace res
 				{
 					var loader = loaderGen as LoadHolder<T>;
 
-					var v = loader.dlgtLoad( filename );
+					var v = loader.m_fnLoad( filename );
 
 					var weak = new WeakReference<T>( v );
 

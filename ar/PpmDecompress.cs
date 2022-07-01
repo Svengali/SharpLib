@@ -113,7 +113,8 @@ public sealed class PpmDecompress
 			// Else we read the context escape symbol, so continue decrementing the order
 			outerContinue:;
 		}
-		outerBreak:
+
+		//outerBreak:
 		// Logic for order = -1
 		return dec.read(model.orderMinus1Freqs);
 	}
