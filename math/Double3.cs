@@ -977,11 +977,11 @@ namespace math
             //q5 = ...
 
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("_source");
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the _source array.");
 
             for (int i = 0; i < source.Length; ++i)
             {
@@ -1024,11 +1024,11 @@ namespace math
             //q5 = ...
 
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("_source");
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the _source array.");
 
             for (int i = 0; i < source.Length; ++i)
             {
@@ -1096,11 +1096,11 @@ namespace math
         public static void Transform(Double3[] source, ref Quaternion rotation, Double3[] destination)
         {
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("_source");
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the _source array.");
 
             double x = rotation.X + rotation.X;
             double y = rotation.Y + rotation.Y;
@@ -1187,11 +1187,11 @@ namespace math
         public static void Transform(Double3[] source, ref Matrix transform, Double4[] destination)
         {
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("_source");
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the _source array.");
 
             for (int i = 0; i < source.Length; ++i)
             {
@@ -1260,11 +1260,11 @@ namespace math
         public static void TransformCoordinate(Double3[] source, ref Matrix transform, Double3[] destination)
         {
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("_source");
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the _source array.");
 
             for (int i = 0; i < source.Length; ++i)
             {
@@ -1332,11 +1332,11 @@ namespace math
         public static void TransformNormal(Double3[] source, ref Matrix transform, Double3[] destination)
         {
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("_source");
             if (destination == null)
                 throw new ArgumentNullException("destination");
             if (destination.Length < source.Length)
-                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the source array.");
+                throw new ArgumentOutOfRangeException("destination", "The destination array must be of same length or larger length than the _source array.");
 
             for (int i = 0; i < source.Length; ++i)
             {

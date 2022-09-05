@@ -133,9 +133,7 @@ namespace db
 				}
 
 				return CommitResults.Perfect;
-
 			}
-
 		}
 
 

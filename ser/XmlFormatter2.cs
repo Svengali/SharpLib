@@ -91,6 +91,14 @@ namespace lib
 			//lib.log.info( "Deserialize END ( Stream stream ) {0} {1}", m_rndVal, m_alreadySerialized.Count );
 		}
 
+
+		public T Deserialize<T>(Stream stream)
+		{
+			//lib.log.info( "Deserialize( Stream stream ) {0} {1}", m_rndVal, m_alreadySerialized.Count );
+			return (T)DeserializeKnownType(stream, typeof(T));
+			//lib.log.info( "Deserialize END ( Stream stream ) {0} {1}", m_rndVal, m_alreadySerialized.Count );
+		}
+
 		public object DeserializeKnownType( Stream stream, Type t )
 		{
 			//lib.log.info( "DeserializeKnownType( Stream stream, Type t ) {0} {1}", m_rndVal, m_alreadySerialized.Count );

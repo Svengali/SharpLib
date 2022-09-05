@@ -28,6 +28,15 @@ static public class log
 		Fatal = 7,
 	}
 
+	[Flags]
+	public enum Endpoints
+	{
+		Invalid = 0,
+		File = 1 <<	0,
+		Console = 1 << 1,
+	}
+
+
 	public struct LogEvent
 	{
 		public DateTime Time;
@@ -83,9 +92,10 @@ static public class log
 
 
 
-	static public void create( string filename )
+
+	static public void create( string filename, Endpoints endpoints )
 	{
-		startup( filename );
+		startup( filename, endpoints );
 	}
 
 
@@ -141,14 +151,14 @@ static public class log
 		logBase( msg, LogType.Warn, path, line, member, cat, obj );
 	}
 
+	static public void high(string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+	{
+		logBase(msg, LogType.High, path, line, member, cat, obj);
+	}
+
 	static public void info( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
 	{
 		logBase( msg, LogType.Info, path, line, member, cat, obj );
-	}
-
-	static public void high( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
-	{
-		logBase( msg, LogType.High, path, line, member, cat, obj );
 	}
 
 	static public void debug( string msg, string cat = "", object obj = null, [CallerFilePath] string path = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "" )
@@ -232,7 +242,7 @@ static public class log
 	}
 
 
-	static void startup( string filename )
+	static void startup( string filename, Endpoints endpoints )
 	{
 		var start = new ThreadStart( run );
 
@@ -260,6 +270,13 @@ static public class log
 		//var evt = CreateLogEvent( LogType.Info, $"startup", "System", null );
 
 		//s_events.Enqueue( evt );
+
+		if( (endpoints & Endpoints.Console) == Endpoints.Console )
+		{
+			addDelegate(WriteToConsole);
+		}
+
+
 
 		info( $"startup" );
 
@@ -405,6 +422,20 @@ static public class log
 			Debug.WriteLine( $"Exception {ex}" );
 		}
 	}
+
+	public static void WriteToConsole(LogEvent evt)
+	{
+		char sym = getSymbol(evt.LogType);
+
+		var truncatedCat = evt.Cat.Substring(0, Math.Min(8, evt.Cat.Length));
+
+		string finalLine = string.Format("{0,-8}{1}| {2}", truncatedCat, sym, evt.Msg);
+
+		Console.WriteLine(finalLine);
+	}
+
+
+
 
 	private static Stream s_stream;
 	private static StreamWriter s_writer;
