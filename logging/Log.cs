@@ -271,10 +271,12 @@ static public class log
 
 		//s_events.Enqueue( evt );
 
+		/*
 		if( (endpoints & Endpoints.Console) == Endpoints.Console )
 		{
 			addDelegate(WriteToConsole);
 		}
+		*/
 
 
 
@@ -393,7 +395,7 @@ static public class log
 				Console.ResetColor();
 
 
-				Debug.WriteLine( finalLine );
+				//Debug.WriteLine( finalLine );
 
 				s_writer.Flush();
 

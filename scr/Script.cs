@@ -1,4 +1,14 @@
-﻿using System;
+﻿
+
+
+
+
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
+using Microsoft.CodeAnalysis.Text;
+
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
@@ -6,12 +16,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Emit;
-using Microsoft.CodeAnalysis.Text;
 
 public class MemoryRefResolver : SourceReferenceResolver
 {
@@ -53,75 +57,9 @@ public class MemoryRefResolver : SourceReferenceResolver
 public static class scr
 {
 
-
-	public static bool firstErrorSourceLogged = false;
-
-	private static class ReferencesCache
+	public static FieldInfo? GetFieldInfo(Type? t, string name)
 	{
-		// create the list of references on first use, but if two threads both *start* making the list thats fine since we'll just use whichever wins.
-		private static readonly Lazy<ImmutableArray<MetadataReference>> lazyReferences = new Lazy<ImmutableArray<MetadataReference>>(GetReferences, LazyThreadSafetyMode.PublicationOnly);
-
-		public static IReadOnlyList<MetadataReference> References => lazyReferences.Value;
-
-		private static ImmutableArray<MetadataReference> GetReferences()
-		{
-			var builder = ImmutableArray.CreateBuilder<MetadataReference>();
-
-			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-			foreach (var ass in assemblies)
-			{
-				if (ass != null && !ass.IsDynamic && ass.Location != null)
-				{
-					try
-					{
-						builder.Add(MetadataReference.CreateFromFile(ass.Location));
-					}
-					catch (Exception)
-					{
-					}
-				}
-			}
-
-			return builder.ToImmutable();
-		}
-	}
-
-	public static string CleanString(string dirty)
-	{
-		// TODO @@ Get a clean string implementation in
-		return dirty; //return Newtonsoft.Json.JsonConvert.ToString(dirty);
-	}
-
-	public static string PrettyName(Type type)
-	{
-		if (type.GetGenericArguments().Length == 0)
-		{
-			return type.FullName.Replace('+', '.');
-		}
-		var genericArguments = type.GetGenericArguments();
-		var typeDef = type.FullName;
-
-		var indexOfTick = typeDef.IndexOf("`");
-
-		var unmangledOuterName = typeDef.Substring(0, typeDef.IndexOf('`')).Replace('+', '.');
-
-		var innerName = "";
-
-		//Check for inner class
-		if (typeDef.ElementAt(indexOfTick + 2) != '[')
-		{
-			var indexOfOpenBracket = typeDef.IndexOf('[', indexOfTick);
-
-			innerName = typeDef.Substring(indexOfTick + 2, indexOfOpenBracket - (indexOfTick + 2)).Replace('+', '.');
-		}
-
-		return unmangledOuterName + "<" + String.Join(",", genericArguments.Select(PrettyName)) + ">" + innerName;
-	}
-
-	public static FieldInfo GetFieldInfo(Type t, string name)
-	{
-		if (t == null)
-			return null;
+		if (t == null) return null;
 
 		var fi = t.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 
@@ -161,59 +99,98 @@ public static class scr
 		return typeSetLazy.Value.Contains(type);
 	}
 
+	static HashSet<char> s_badChars = new( new char[] { '<', '>', ' ', ',', '.', '+', '[', ']', '$', ':' } );
+
 	static public string TypeToIdentifier(string typename)
 	{
-		return typename.Replace('<', '_').Replace('>', '_').Replace(',', '_').Replace(' ', '_').Replace('.', '_').Replace('+', '_').Replace('[', '_').Replace(']', '_').Replace('$', '_').Replace(':', '_');
+		var safeStr = new StringBuilder( typename );
+
+		for( int i = 0; i < safeStr.Length; ++i )
+		{
+			if( s_badChars.Contains(safeStr[i]) ) safeStr[i] = '_';
+		}
+
+		return safeStr.ToString();
 	}
 
-	public static void LogDiagnosticErrorsAndWarnings(ImmutableArray<Diagnostic> diagnostics, string sourceFile)
+	static public FileSystemWatcher s_watcher;
+	static public Action<Assembly> s_fnAss = (ass) => {
+		log.warn( $"Need to replace s_fnAss with custom function" );
+	};
+
+	public static void WatchPluginDir( string dir, Action<Assembly> fnAss )
 	{
-		foreach (Diagnostic diagnostic in diagnostics)
+		log.info( $"Watching {dir} for changes" );
+
+		s_fnAss = fnAss;
+
+		s_watcher = new FileSystemWatcher( dir );
+
+		s_watcher.Created += OnCreated;
+		s_watcher.Deleted += OnDeleted;
+		s_watcher.Renamed += OnRenamed;
+
+		s_watcher.Filter = "*.cs";
+		s_watcher.IncludeSubdirectories = true;
+		s_watcher.EnableRaisingEvents = true;
+
+		var existingFiles = Directory.GetFiles( dir, "*.cs", SearchOption.AllDirectories );
+
+		foreach( var filename in existingFiles )
 		{
-			//if (diagnostic.Severity != DiagnosticSeverity.Hidden)
-			{
-				switch (diagnostic.Severity)
-				{
-					case DiagnosticSeverity.Error:
-						{
-							var msg = $"{sourceFile}({diagnostic.Location.GetLineSpan().StartLinePosition.Line + 1}): {diagnostic.GetMessage()}";
-							System.Diagnostics.Debug.WriteLine(msg);
+			Process( filename );
+		}
 
-						}
-						break;
+	}
 
-					case DiagnosticSeverity.Warning:
-					case DiagnosticSeverity.Info:
-						{
-							var msg = $"{sourceFile}({diagnostic.Location.GetLineSpan().StartLinePosition.Line + 1}): {diagnostic.GetMessage()}";
-							System.Diagnostics.Debug.WriteLine(msg);
-						}
-						break;
-				}
-			}
+	static void OnCreated( object sender, FileSystemEventArgs e )
+	{
+		log.debug( $"{e.Name} got {e.ChangeType}" );
+
+		if( e.Name.EndsWith( ".cs" ) )
+		{
+			Process( e.FullPath );
 		}
 	}
 
-	public static void Compile(string dynamicScript, string uniquePath, Action<Assembly> onSuccess, Action<ImmutableArray<Diagnostic>> onFailure, Platform platform = Platform.X86)
+	static void OnDeleted( object sender, FileSystemEventArgs e )
+	{
+		log.debug( $"{e.Name} got {e.ChangeType}" );
+	}
+
+	static void OnRenamed( object sender, FileSystemEventArgs e )
+	{
+		log.debug( $"{e.Name} got {e.ChangeType}" );
+
+		if( e.Name.EndsWith(".cs") )
+		{
+			Process( e.FullPath );
+		}
+	}
+
+	static void Process( string filename )
+	{
+		CompileFile( filename, ( ass ) => { s_fnAss( ass ); }, ( diags ) => { } );
+	}
+
+	public static void CompileFile( string filename, Action<Assembly> onSuccess, Action<ImmutableArray<Diagnostic>> onFailure, Platform platform = Platform.X86 )
+	{
+		string text = System.IO.File.ReadAllText( filename );
+
+		Compile( text, filename, onSuccess, onFailure );
+	}
+
+
+	public static void Compile( string script, string uniquePath, Action<Assembly> onSuccess, Action<ImmutableArray<Diagnostic>> onFailure, Platform platform = Platform.X86 )
 	{
 		string assemblyName = Path.GetRandomFileName();
 
-		var parseOptions = new CSharpParseOptions(documentationMode: DocumentationMode.Diagnose, kind: SourceCodeKind.Regular);
+		var options = new CSharpParseOptions(documentationMode: DocumentationMode.Diagnose, kind: SourceCodeKind.Regular);
 
-		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(dynamicScript, parseOptions, uniquePath, encoding: System.Text.Encoding.UTF8);
+		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(script, options, uniquePath, encoding: System.Text.Encoding.UTF8);
 
 		var memRef = new MemoryRefResolver();
 
-		/*
-		CSharpCompilation compilation = CSharpCompilation.Create(
-				assemblyName,
-				syntaxTrees: new[] { syntaxTree },
-				references: ReferencesCache.References,
-				options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-						sourceReferenceResolver: memRef,
-						optimizationLevel: OptimizationLevel.Debug,
-						platform: platform));
-		*/
 
 		using (var ms = new MemoryStream())
 		using (var pdb = new MemoryStream())
@@ -224,53 +201,30 @@ public static class scr
 			{
 				if (onFailure == null)
 				{
-					LogDiagnosticErrorsAndWarnings(result.Diagnostics, "unknown");
 				}
 				else
 				{
-					onFailure(result.Diagnostics);
+					LogDiags( uniquePath, result.Diagnostics.Length, result.Diagnostics );
+
+					onFailure( result.Diagnostics );
 				}
 			}
 			else
 			{
-				/*
-				foreach (Diagnostic diagnostic in result.Diagnostics)
-				{
-						//if (diagnostic.Severity != DiagnosticSeverity.Hidden)
-						{
-								if (diagnostic.Id == "CS1591") continue;
-
-								switch (diagnostic.Severity)
-								{
-										case DiagnosticSeverity.Error:
-										{
-												var msg = $"{source.file}({diagnostic.Location.GetLineSpan().StartLinePosition.Line + 1}): {diagnostic.GetMessage()}";
-												log.Error(msg);
-												System.Diagnostics.Debug.WriteLine(msg);
-
-										}
-										break;
-
-										case DiagnosticSeverity.Warning:
-										case DiagnosticSeverity.Info:
-										{
-												var msg = $"{source.file}({diagnostic.Location.GetLineSpan().StartLinePosition.Line + 1}): {diagnostic.GetMessage()}";
-												log.Warn(msg);
-												System.Diagnostics.Debug.WriteLine(msg);
-										}
-										break;
-								}
-						}
-				}
-				*/
-
 				ms.Seek(0, SeekOrigin.Begin);
 				var assembly = Assembly.Load(ms.ToArray(), pdb.ToArray());
 
-				onSuccess(assembly);
-
-
+				onSuccess( assembly );
 			}
+		}
+	}
+
+	public static void LogDiags( string uniquePath, int count, IEnumerable<Diagnostic> diags )
+	{
+		log.warn( $"{count} Problems building script with name {uniquePath}" );
+		foreach( var diag in diags )
+		{
+			log.debug( $"{diag}" );
 		}
 	}
 
@@ -281,7 +235,7 @@ public static class scr
 		CSharpCompilation compilation = CSharpCompilation.Create(
 				assemblyName,
 				syntaxTrees: syntaxTrees,
-				references: ReferencesCache.References,
+				references: RefCache.References,
 				options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
 						sourceReferenceResolver: memRef,
 						optimizationLevel: OptimizationLevel.Debug,
@@ -293,6 +247,65 @@ public static class scr
 
 		return compilation.Emit(ms, pdb);
 	}
+
+	private static class RefCache
+	{
+		// create the list of references on first use, but if two threads both *start* making the list thats fine since we'll just use whichever wins.
+		private static readonly Lazy<ImmutableArray<MetadataReference>> lazyRef = new Lazy<ImmutableArray<MetadataReference>>(GetReferences, LazyThreadSafetyMode.PublicationOnly);
+
+		public static IReadOnlyList<MetadataReference> References => lazyRef.Value;
+
+		private static ImmutableArray<MetadataReference> GetReferences()
+		{
+			var builder = ImmutableArray.CreateBuilder<MetadataReference>();
+
+			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+			foreach( var ass in assemblies )
+			{
+				if( ass != null && !ass.IsDynamic && ass.Location != null )
+				{
+					try
+					{
+						builder.Add( MetadataReference.CreateFromFile( ass.Location ) );
+					}
+					catch( Exception ex )
+					{
+						log.warn( $"Got {ex.GetType().Name} sayaing {ex.Message}" );
+					}
+				}
+			}
+
+			return builder.ToImmutable();
+		}
+	}
+
+	public static string PrettyName( Type t )
+	{
+		if( t.GetGenericArguments().Length == 0 )
+		{
+			return t.FullName.Replace( '+', '.' );
+		}
+		var genArgs = t.GetGenericArguments();
+		var typeDef = t.FullName;
+
+		var indexOfTick = typeDef.IndexOf("`");
+
+		var unmangledOuterName = typeDef.Substring(0, typeDef.IndexOf('`')).Replace('+', '.');
+
+		var innerName = "";
+
+		//Check for inner class
+		if( typeDef.ElementAt( indexOfTick + 2 ) != '[' )
+		{
+			var indexOfOpenBracket = typeDef.IndexOf('[', indexOfTick);
+
+			innerName = typeDef.Substring( indexOfTick + 2, indexOfOpenBracket - (indexOfTick + 2) ).Replace( '+', '.' );
+		}
+
+		return unmangledOuterName + "<" + String.Join( ",", genArgs.Select( PrettyName ) ) + ">" + innerName;
+	}
+
 
 	private static void AddIfFirst<TKey, TValue>(IDictionary<TKey, TValue> dict, TKey key, TValue value)
 	{
