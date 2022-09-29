@@ -164,7 +164,26 @@ public static class scr
 
 		if( e.Name.EndsWith(".cs") )
 		{
-			Process( e.FullPath );
+			while( true )
+			{
+				try
+				{
+					Process( e.FullPath );
+					return;
+				}
+				catch( System.IO.IOException ex )
+				{
+
+				}
+				catch( Exception ex )
+				{
+					log.error( $"Got ex {ex.GetType().Name} trying to process {e.FullPath}" );
+					log.error( $"-> {ex.Message}" );
+					return;
+				}
+
+				Thread.Sleep( 100 );
+			}
 		}
 	}
 
