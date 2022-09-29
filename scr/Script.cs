@@ -194,19 +194,34 @@ public static class scr
 
 	public static void CompileFile( string filename, Action<Assembly> onSuccess, Action<ImmutableArray<Diagnostic>> onFailure, Platform platform = Platform.X86 )
 	{
-		string text = System.IO.File.ReadAllText( filename );
+		var fullpath = Path.GetFullPath( filename );
 
-		Compile( text, filename, onSuccess, onFailure );
+		//string text = System.IO.File.ReadAllText( fullpath );
+
+		var stream = File.OpenRead( fullpath );
+
+		var sourceText = SourceText.From( stream );
+
+		Compile( sourceText, fullpath, onSuccess, onFailure );
+	}
+
+	public static void Compile( string str, string uniquePath, Action<Assembly> onSuccess, Action<ImmutableArray<Diagnostic>> onFailure, Platform platform = Platform.X86 )
+	{
+		var sourceText = SourceText.From( str );
+
+		Compile( sourceText, uniquePath, onSuccess, onFailure );
 	}
 
 
-	public static void Compile( string script, string uniquePath, Action<Assembly> onSuccess, Action<ImmutableArray<Diagnostic>> onFailure, Platform platform = Platform.X86 )
+	public static void Compile( SourceText sourceText, string uniquePath, Action<Assembly> onSuccess, Action<ImmutableArray<Diagnostic>> onFailure, Platform platform = Platform.X86 )
 	{
 		string assemblyName = Path.GetRandomFileName();
 
 		var options = new CSharpParseOptions(documentationMode: DocumentationMode.Diagnose, kind: SourceCodeKind.Regular);
 
-		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(script, options, uniquePath, encoding: System.Text.Encoding.UTF8);
+		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText( sourceText, options, uniquePath );
+
+		//SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sourceText, options, uniquePath, encoding: System.Text.Encoding.UTF8);
 
 		var memRef = new MemoryRefResolver();
 
