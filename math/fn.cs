@@ -32,6 +32,45 @@ namespace math
 
 	static public class fn
 	{
+
+		static public float Clamp( float v, float min, float max )
+		{
+			return v < min ? min : v > max ? max : v;
+		}
+
+		//Tracked these down in Desmos
+		static public float s_a =   0.0f;
+		static public float s_b =   0.155f;
+		static public float s_c =   1.03f;
+		static public float s_d =   6.13f;
+		static public float s_f = -10.2f;
+		static public float s_g =   4.06f;
+
+		static public float Quintic( float v )
+		{
+			var vv   = v * v;
+			var vvv  = vv * v;
+			var vvvv = vvv * v;
+			var vvvvv= vvvv * v;
+
+			var res = s_a + s_b*v + s_c*vv + s_d*vvv + s_f*vvvv + s_g * vvvvv;
+
+			return res;
+		}
+
+		static public float s_p =  0.37f;
+		static public float s_o =  0.15f;
+		static public float s_m =  2.11f;
+		static public float s_n = -0.57f;
+
+		static public float PerlinToContinent( float h )
+		{
+			var res = Quintic( s_m * h + s_n ) * s_o + s_p;
+
+			return res;
+		}
+
+
 		static public float SmoothStepCos( float v )
 		{
 			var dV = (double)v;

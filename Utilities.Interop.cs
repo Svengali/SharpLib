@@ -144,7 +144,7 @@ namespace lib
 		[MethodImpl( MethodImplOptions.AggressiveInlining )]
 		public static int SizeOf<T>()
 		{
-			throw new NotImplementedException();
+			return System.Runtime.InteropServices.Marshal.SizeOf(typeof( T ));
 		}
 
 		public static unsafe void* Write<T>( void* pDest, ref T data ) where T : struct

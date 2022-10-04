@@ -196,8 +196,6 @@ public static class scr
 	{
 		var fullpath = Path.GetFullPath( filename );
 
-		//string text = System.IO.File.ReadAllText( fullpath );
-
 		var stream = File.OpenRead( fullpath );
 
 		var sourceText = SourceText.From( stream );
@@ -220,8 +218,6 @@ public static class scr
 		var options = new CSharpParseOptions(documentationMode: DocumentationMode.Diagnose, kind: SourceCodeKind.Regular);
 
 		SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText( sourceText, options, uniquePath );
-
-		//SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sourceText, options, uniquePath, encoding: System.Text.Encoding.UTF8);
 
 		var memRef = new MemoryRefResolver();
 
@@ -266,13 +262,14 @@ public static class scr
 	{
 		var memRef = new MemoryRefResolver();
 
+		// @@@@ TODO :: Config release / debug
 		CSharpCompilation compilation = CSharpCompilation.Create(
 				assemblyName,
 				syntaxTrees: syntaxTrees,
 				references: RefCache.References,
 				options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
 						sourceReferenceResolver: memRef,
-						optimizationLevel: OptimizationLevel.Debug,
+						optimizationLevel: OptimizationLevel.Release,
 						platform: platform,
 						specificDiagnosticOptions: new Dictionary<string, ReportDiagnostic>
 						{
